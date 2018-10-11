@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "489099959960",
+    "firebase_url": "https://jobit-e18f7.firebaseio.com",
+    "project_id": "jobit-e18f7",
+    "storage_bucket": "jobit-e18f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489099959960:android:6b7e767cb122a3da",
+        "android_client_info": {
+          "package_name": "com.example.team32gb.jobit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489099959960-v9cam83sefi50dj656qlohg79lb2c6h5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.team32gb.jobit",
+            "certificate_hash": "9f638c16d9e5457c2b84f57eec5a489f2a5fa06c"
+          }
+        },
+        {
+          "client_id": "489099959960-iie2manjl8rmjsm36vhilnr7uppq07b3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUAm_QlbYQ2Wx0B-mTAOPDCJQWLB6LUAI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489099959960-iie2manjl8rmjsm36vhilnr7uppq07b3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
