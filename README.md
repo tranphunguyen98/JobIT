@@ -7,3 +7,6 @@
 |1612367| Trần Thị Lý |tranly237@gmail.com ||
 [Link Trello](https://trello.com/ise_ntmt_nhom18)
 [Link Slack](https://isentmtnhom18.slack.com)
+
+Nguyễn Lê Thị Mỹ Linh ///-_-///
+
