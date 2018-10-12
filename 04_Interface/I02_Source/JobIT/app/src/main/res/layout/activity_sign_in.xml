@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_signin"
+    android:background="@drawable/background"
     tools:context=".SignInActivity">
 
     <LinearLayout
@@ -12,68 +12,69 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/bgRedTransparent90"
+        android:background="@color/bgBlackTransparent40"
         android:orientation="vertical"
-        android:padding="50dp">
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        android:paddingBottom="30dp">
 
         <ImageView
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/jobit_text_white" />
 
         <EditText
             android:id="@+id/edtEmailLogIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_exit_to_app_white_24dp"
             android:drawablePadding="10dp"
             android:hint="Email"
-            android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff" />
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <EditText
             android:id="@+id/edtpasswordLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
             android:drawablePadding="10dp"
-            android:hint="Password"
-            android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff" />
+            android:hint="Mật khẩu"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:background="@drawable/custom_button_login"
-            android:drawableStart="@drawable/ic_exit_to_app_white_24dp"
+            android:background="@drawable/custom_button_sign_in"
             android:drawablePadding="10dp"
-            android:drawableTint="@color/backgroundRed"
+            android:drawableTint="@color/white"
             android:paddingStart="60dp"
             android:paddingEnd="60dp"
-            android:text="Login"
+            android:text="Đăng nhập"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundRed"
+            android:textColor="@color/white"
             android:textSize="17sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="15dp">
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#ffffff" />
@@ -83,58 +84,106 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Or"
+                android:text="Hoặc đăng nhập với"
                 android:textAllCaps="false"
                 android:textColor="#ffffff" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#ffffff" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnLoginGoogle"
-            android:layout_marginTop="10dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/custom_button_google"
-            android:paddingStart="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="15dp"
-            android:drawableStart="@drawable/ic_exit_to_app_white_24dp"
-            android:text="Login with Google"
-            android:textAllCaps="false"
-            android:textColor="@color/backgroundRed"
-            />
-        <Button
-            android:id="@+id/btnLoginFacebook"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/custom_button_google"
-            android:drawableLeft="@drawable/ic_exit_to_app_white_24dp"
-            android:paddingStart="10dp"
-            android:text="Login with Facebook"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:layout_marginTop="10dp"
-            android:visibility="visible"
-            />
-
-        <TextView
-            android:id="@+id/txtForgotPassword"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:orientation="horizontal"
             android:layout_marginTop="15dp"
-            android:text="abc"
-            android:textColor="#ffffff"
-            android:textSize="15sp"
+            >
+            <Button
+                android:id="@+id/btnLoginFacebook"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_facebook"
+                android:text="Facebook"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btnLoginGoogle"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_google"
+                android:text="Google"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/white" />
 
-            />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#ffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Hoặc"
+                android:textAllCaps="false"
+                android:textColor="#ffffff" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#ffffff" />
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/btnCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:background="@drawable/custom_button_create_accout"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:text="Tạo tài khoản"
+            android:textSize="17sp"
+            android:textColor="#ffffff" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tvForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="@string/tv_forgot_password"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+
 
     </LinearLayout>
 </RelativeLayout>
