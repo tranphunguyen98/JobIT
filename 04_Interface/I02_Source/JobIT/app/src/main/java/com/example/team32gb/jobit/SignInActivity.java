@@ -1,10 +1,15 @@
 package com.example.team32gb.jobit;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +21,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -31,6 +37,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener, FirebaseAuth.AuthStateListener, GoogleApiClient.OnConnectionFailedListener {
         private Button btnLogin, btnLoginGoogle, btnLoginFacebook;
@@ -51,11 +59,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-//            FacebookSdk.sdkInitialize(this);
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            AppEventsLogger.activateApp(this);
+
             setContentView(R.layout.activity_sign_in);
+
+            Window window = this.getWindow();
+            // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            // finally change the color
+            window.setStatusBarColor(this.getResources().getColor(R.color.bgRedTransparent90));
 
             btnLogin = findViewById(R.id.btnLogin);
             btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
+            btnLoginFacebook = findViewById(R.id.btnLoginFacebook);
 
             edtEmail = findViewById(R.id.edtEmailLogIn);
             edtPassword = findViewById(R.id.edtpasswordLogin);
@@ -66,7 +85,21 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             callbackManager = CallbackManager.Factory.create();
 
             btnLoginGoogle.setOnClickListener(this);
+            btnLoginFacebook.setOnClickListener(this);
+            try {
+                PackageInfo info = getPackageManager().getPackageInfo(
+                        "com.example.team32gb.jobit",
+                        PackageManager.GET_SIGNATURES);
+                for (Signature signature : info.signatures) {
+                    MessageDigest md = MessageDigest.getInstance("SHA");
+                    md.update(signature.toByteArray());
+                    Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                }
+            } catch (PackageManager.NameNotFoundException e) {
 
+            } catch (NoSuchAlgorithmException e) {
+
+            }
             CreateClientGoogle();
         }
 
@@ -92,8 +125,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 case R.id.btnLogin:
                     break;
                 case R.id.btnLoginFacebook:
-//                btnLoginFb.performClick();
-                   // fbLogin();
+                    fbLogin();
                     break;
                 default:
                     break;
@@ -103,7 +135,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         public void fbLogin() {
 
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
-//        LoginManager.getInstance().logInWithPublishPermissions(this, Arrays.asList("publish_actions"));
             LoginManager.getInstance().registerCallback(callbackManager,
                     new FacebookCallback<LoginResult>() {
                         @Override

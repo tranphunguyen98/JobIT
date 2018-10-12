@@ -28,26 +28,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_exit_to_app_white_24dp"
             android:drawablePadding="10dp"
             android:hint="Email"
-            android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff" />
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <EditText
             android:id="@+id/edtpasswordLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
             android:drawablePadding="10dp"
             android:hint="Password"
-            android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff" />
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -105,7 +105,7 @@
             android:paddingStart="10dp"
             android:paddingBottom="10dp"
             android:paddingTop="15dp"
-            android:drawableStart="@drawable/ic_exit_to_app_white_24dp"
+            android:drawableStart="@drawable/leftdrawable_google_24"
             android:text="Login with Google"
             android:textAllCaps="false"
             android:textColor="@color/backgroundRed"
@@ -114,12 +114,12 @@
             android:id="@+id/btnLoginFacebook"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/custom_button_google"
-            android:drawableLeft="@drawable/ic_exit_to_app_white_24dp"
+            android:background="@drawable/custom_button_facebook"
+            android:drawableLeft="@drawable/leftdrawable_facebook_24"
             android:paddingStart="10dp"
             android:text="Login with Facebook"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:visibility="visible"
             />
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:text="abc"
+            android:text="@string/tv_forgot_password"
             android:textColor="#ffffff"
             android:textSize="15sp"
 

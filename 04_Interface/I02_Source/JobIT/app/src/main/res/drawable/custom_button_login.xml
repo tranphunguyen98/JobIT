@@ -3,13 +3,13 @@
     <item android:state_pressed="true">
         <shape>
             <solid android:color="@color/bgButtonPressed"/>
-            <corners android:radius="5dp"/>
+            <corners android:radius="40dp"/>
         </shape>
     </item>
     <item >
         <shape>
             <solid android:color="@color/white"/>
-            <corners android:radius="5dp"/>
+            <corners android:radius="40dp"/>
         </shape>
     </item>
 </selector>
