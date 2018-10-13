@@ -89,6 +89,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             btnLoginFacebook.setOnClickListener(this);
             btnCreateAccount.setOnClickListener(this);
 
+            } catch (NoSuchAlgorithmException e) {
+
+            }
             CreateClientGoogle();
         }
 
