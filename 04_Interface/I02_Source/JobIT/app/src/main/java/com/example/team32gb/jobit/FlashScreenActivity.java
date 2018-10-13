@@ -34,5 +34,6 @@ public class FlashScreenActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        this.finish();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -25,19 +27,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener, FirebaseAuth.AuthStateListener, GoogleApiClient.OnConnectionFailedListener {
     private Button btnLogin, btnLoginGoogle, btnLoginFacebook, btnCreateAccount;
-
     private EditText edtEmail, edtPassword;
+    private TextView tvForgotPassword;
+    private ProgressDialog progressDialog;
+
     private GoogleApiClient apiClient;
     private FirebaseAuth firebaseAuth;
     CallbackManager callbackManager;
@@ -70,18 +76,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnLoginGoogle = findViewById(R.id.btnLoginGoogle);
         btnLoginFacebook = findViewById(R.id.btnLoginFacebook);
         btnCreateAccount = findViewById(R.id.btnCreateAccount);
-
         edtEmail = findViewById(R.id.edtEmailLogIn);
         edtPassword = findViewById(R.id.edtpasswordLogin);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
+
+        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
-//            LoginManager.getInstance().logOut();
+        LoginManager.getInstance().logOut();
         callbackManager = CallbackManager.Factory.create();
 
         btnLoginGoogle.setOnClickListener(this);
         btnLoginFacebook.setOnClickListener(this);
         btnCreateAccount.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
+        tvForgotPassword.setOnClickListener(this);
         CreateClientGoogle();
     }
 
@@ -103,23 +113,63 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             case R.id.btnLogin:
+                LoginWithEmail();
                 break;
             case R.id.btnLoginGoogle:
                 LoginWithGoogle();
                 break;
             case R.id.btnLoginFacebook:
-                fbLogin();
+                LoginWithFacebook();
                 break;
             case R.id.btnCreateAccount:
-                Intent intent = new Intent(this, SignUpActivity.class);
-                startActivity(intent);
+                Intent intentCA = new Intent(this, SignUpActivity.class);
+                startActivity(intentCA);
+                break;
+            case R.id.tvForgotPassword:
+                Intent intentFG = new Intent(this, ForgotPasswordActivity.class);
+                startActivity(intentFG);
                 break;
             default:
                 break;
         }
     }
 
-    public void fbLogin() {
+    public void LoginWithEmail() {
+        if(checkInfoInput()) {
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+            String email = edtEmail.getText().toString().trim();
+            String password = edtPassword.getText().toString().trim();
+            firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(!task.isSuccessful()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(SignInActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean checkInfoInput() {
+        boolean isValid = true;
+        if(edtEmail.getText().toString().trim().length() <= 0) {
+            edtEmail.requestFocus();
+            isValid = false;
+            edtEmail.setError("Hãy nhập email");
+        }
+        if(edtPassword.getText().toString().trim().length() <= 0) {
+            edtPassword.requestFocus();
+            isValid = false;
+            edtPassword.setError("Hãy nhập mật khẩu");
+        }
+        return isValid;
+    }
+    public void LoginWithFacebook() {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -190,7 +240,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-            Toast.makeText(this, "Thanh Cong", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(this, HomePageActivity.class);
 //                startActivity(intent);
         } else {
