@@ -9,13 +9,13 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class FlashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
     private TextView tvVersion;
     private ProgressBar prgLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flash_screen);
+        setContentView(R.layout.activity_splash_screen);
 
         prgLoading = findViewById(R.id.prgLoading);
         tvVersion = findViewById(R.id.tv_version);
@@ -27,7 +27,7 @@ public class FlashScreenActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(FlashScreenActivity.this, SignInActivity.class);
+                    Intent intent = new Intent(SplashScreenActivity.this, SignInActivity.class);
                     startActivity(intent);
                 }
             }, 1000);
