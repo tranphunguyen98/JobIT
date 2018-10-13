@@ -2,24 +2,16 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape>
-<<<<<<< HEAD:04_Interface/I02_Source/JobIT/app/src/main/res/drawable/custom_button_create_accout.xml
             <solid android:color="#FF328C20"/>
             <corners android:radius="5dp"/>
-=======
-            <solid android:color="@color/bgButtonPressed"/>
             <corners android:radius="40dp"/>
->>>>>>> master:04_Interface/I02_Source/JobIT/app/src/main/res/drawable/custom_button_login.xml
         </shape>
     </item>
     <item >
         <shape>
-<<<<<<< HEAD:04_Interface/I02_Source/JobIT/app/src/main/res/drawable/custom_button_create_accout.xml
             <solid android:color="#42b62a"/>
             <corners android:radius="5dp"/>
-=======
-            <solid android:color="@color/white"/>
             <corners android:radius="40dp"/>
->>>>>>> master:04_Interface/I02_Source/JobIT/app/src/main/res/drawable/custom_button_login.xml
         </shape>
     </item>
 </selector>

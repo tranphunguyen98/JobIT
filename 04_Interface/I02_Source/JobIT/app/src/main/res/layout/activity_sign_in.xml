@@ -29,11 +29,7 @@
             android:id="@+id/edtEmailLogIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
             android:layout_marginTop="20dp"
-=======
-            android:layout_marginTop="25dp"
->>>>>>> master
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_exit_to_app_white_24dp"
             android:drawablePadding="10dp"
@@ -50,11 +46,7 @@
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
             android:drawablePadding="10dp"
-<<<<<<< HEAD
             android:hint="Mật khẩu"
-=======
-            android:hint="Password"
->>>>>>> master
             android:inputType="textPassword"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
@@ -106,7 +98,6 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-<<<<<<< HEAD
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="15dp"
@@ -146,31 +137,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#ffffff" />
-=======
-            android:layout_height="50dp"
-            android:background="@drawable/custom_button_google"
-            android:paddingStart="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="15dp"
-            android:drawableStart="@drawable/leftdrawable_google_24"
-            android:text="Login with Google"
-            android:textAllCaps="false"
-            android:textColor="@color/backgroundRed"
-            />
-        <Button
-            android:id="@+id/btnLoginFacebook"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/custom_button_facebook"
-            android:drawableLeft="@drawable/leftdrawable_facebook_24"
-            android:paddingStart="10dp"
-            android:text="Login with Facebook"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            android:visibility="visible"
-            />
->>>>>>> master
 
             <TextView
                 android:layout_width="wrap_content"
@@ -194,21 +160,14 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
-<<<<<<< HEAD
-=======
-            android:text="@string/tv_forgot_password"
+            android:background="@drawable/custom_button_create_accout"
+            android:text="Tạo tài khoản"
             android:textColor="#ffffff"
-            android:textSize="15sp"
->>>>>>> master
-
+            android:layout_gravity="center"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"
-            android:background="@drawable/custom_button_create_accout"
-            android:layout_gravity="center"
-            android:textAllCaps="false"
-            android:text="Tạo tài khoản"
-            android:textSize="17sp"
-            android:textColor="#ffffff" />
+            />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
