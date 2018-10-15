@@ -6,4 +6,18 @@
     <string name="tv_forgot_password"><u>Quên mật khẩu?</u></string>
     <string name="tv_Sign_in"><u>Đăng nhập</u></string>
     <string name="tv_version">Phiên bản </string>
+    <string name="jobit">JobIT</string>
+    <string name="timkiem">Tìm kiếm</string>
+    <string name="motatiemkiem">chức danh, từ khóa hoặc công ty</string>
+    <string name="diadiem">Địa điểm</string>
+    <string name="motadiadiem">tỉnh hoặc thành phố</string>
+    <string name="TimViec">Tìm việc</string>
+    <string name="DangNhap">Đăng nhập</string>
+    <string name="Vieclamcuatoi">Việc làm của tôi</string>
+    <string name="TaoCV">Tạo CV của bạn</string>
+    <string name="taoCV">Tạo CV của bạn</string>
+    <string name="motatxtNhanViec">Nhận email cập nhập mới nhất cho</string>
+    <string name="motatieptxtNhanViec">Tuyên dụng, tìm việc làm android tại Ho Chi Minh City</string>
+    <string name="btnNhanViec">Nhận việc làm mới mỗi ngày</string>
+    <string name="txtNhaTuyenDung">Nhà tuyển dụng: Đăng việc làm</string>
 </resources>
