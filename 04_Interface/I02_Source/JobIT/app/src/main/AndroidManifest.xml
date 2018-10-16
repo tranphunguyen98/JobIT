@@ -40,6 +40,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".CreateMyCVActivity" />
+        <activity android:name=".HomeActivity"/>
     </application>
 
 </manifest>

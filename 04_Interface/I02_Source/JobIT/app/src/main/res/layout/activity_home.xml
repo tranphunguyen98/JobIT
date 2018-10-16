@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="right">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtJobIT"
+                style="@style/StyleJobIT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:text="@string/jobit" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtTimKiem"
+                    style="@style/Style_txtTK_DD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/timkiem" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/motatiemkiem"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtTimKiem"
+                style="@style/Style_edtTK_DD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_edittext_tkiem_ddiem"
+                android:drawableEnd="@drawable/ic_search" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtDiaDiem"
+                    style="@style/Style_txtTK_DD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/diadiem" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/motadiadiem"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtDiaDiem"
+                style="@style/Style_edtTK_DD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_edittext_tkiem_ddiem"
+                android:drawableEnd="@drawable/ic_location" />
+
+            <Button
+                android:id="@+id/btnTimViec"
+                style="@style/Style_btnTimViec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/custom_background_btntimviec"
+                android:text="@string/TimViec" />
+
+            <Button
+                android:id="@+id/btnDangNhap"
+                style="@style/Style_btnCv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableEnd="@drawable/ic_next"
+                android:drawableStart="@drawable/ic_login"
+                android:text="@string/DangNhap" />
+
+            <Button
+                android:id="@+id/btnMyJob"
+                style="@style/Style_btnCv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableEnd="@drawable/ic_next"
+                android:drawableStart="@drawable/ic_myjob"
+                android:text="@string/Vieclamcuatoi" />
+
+            <Button
+                android:id="@+id/btnCV"
+                style="@style/Style_btnCv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableEnd="@drawable/ic_next"
+                android:drawableStart="@drawable/ic_cv"
+                android:text="@string/TaoCV" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
