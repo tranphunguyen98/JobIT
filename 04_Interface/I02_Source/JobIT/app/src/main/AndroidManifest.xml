@@ -40,7 +40,10 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".CreateMyCVActivity" />
-        <activity android:name=".HomeActivity"/>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".ListJobActivity" />
+        <activity android:name=".ListJobViewAdapter" />
+        <activity android:name=".DetailJobActivity"></activity>
     </application>
 
 </manifest>
