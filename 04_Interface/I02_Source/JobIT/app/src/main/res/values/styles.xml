@@ -44,4 +44,11 @@
         <item name="android:layout_marginStart">50dp</item>
         <item name="android:layout_marginEnd">50dp</item>
     </style>
+    <style name="Detailjob_btnSave_btnApply">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textColor">#e32323</item>
+        android:layout_margin="10dp"
+    </style>
 </resources>
