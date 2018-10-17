@@ -1,248 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:orientation="vertical">
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--android:weightSum="9">-->
-        <!--&lt;!&ndash;TAB 1: THÔNG TIN CÁ NHÂN&ndash;&gt;-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llName"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical">-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="9">
+        <!--TAB 1: THÔNG TIN CÁ NHÂN-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/tvName"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Họ và tên" />-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/wrapperName"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <!--<EditText-->
-                <!--android:id="@+id/edtName"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:hint="Họ và tên" />-->
-        <!--</LinearLayout>-->
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên" />
+        </android.support.design.widget.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/llDateOfBirth"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llDateOfBirth"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical">-->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:weightSum="3">
 
-            <!--<TextView-->
-                <!--android:id="@+id/tvDateOfBird"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Ngày tháng năm sinh" />-->
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ngày tháng năm sinh"
+                    android:inputType="date" />
+            </android.support.design.widget.TextInputLayout>
 
-            <!--<LinearLayout-->
-                <!--android:id="@+id/llDateOfBirthEdit"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:orientation="horizontal">-->
+            <Button
+                android:id="@+id/btnSelectDateOfBird"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chọn" />
+        </LinearLayout>
 
-                <!--<EditText-->
-                    <!--android:id="@+id/edtDateOfBird"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="2"-->
-                    <!--android:hint="01/01/1990" />-->
+        <LinearLayout
+            android:id="@+id/llGender"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
 
-                <!--<Button-->
-                    <!--android:id="@+id/btnSelect"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:text="Chọn" />-->
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Giới tính" />
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llGender"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1.5"-->
-            <!--android:orientation="vertical">-->
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-            <!--<TextView-->
-                <!--android:id="@+id/tvGender"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Giới tính" />-->
+                <RadioButton
+                    android:id="@+id/rbMale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Nam" />
 
-            <!--<RadioGroup-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_margin="20dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:orientation="horizontal">-->
+                <RadioButton
+                    android:id="@+id/rbFemale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Nữ" />
+            </RadioGroup>
+        </LinearLayout>
 
-                <!--<RadioButton-->
-                    <!--android:id="@+id/rbMale"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="Nam" />-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/wrapperEmail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-                <!--<RadioButton-->
-                    <!--android:id="@+id/rbFemale"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="Nữ" />-->
-            <!--</RadioGroup>-->
-        <!--</LinearLayout>-->
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llEmail"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical">-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/wrapperPhone"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <!--<TextView-->
-                <!--android:id="@+id/tvEmail"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Email" />-->
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số điện thoại"
+                android:inputType="phone" />
+        </android.support.design.widget.TextInputLayout>
 
-            <!--<EditText-->
-                <!--android:id="@+id/edtEmail"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:hint="name@example.com" />-->
-        <!--</LinearLayout>-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/wrapperAddress"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edtAdress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Địa chỉ" />
+        </android.support.design.widget.TextInputLayout>
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llPhone"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical">-->
+        <LinearLayout
+            android:id="@+id/llMaritalStatus"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
 
-            <!--<TextView-->
-                <!--android:id="@+id/tvPhone"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Số điện thoại" />-->
+            <TextView
+                android:id="@+id/tvMaritalStatus"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Tình trạng hôn nhân" />
 
-            <!--<EditText-->
-                <!--android:id="@+id/edtPhone"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:hint="Số điện thoại" />-->
-        <!--</LinearLayout>-->
+            <RadioGroup
+                android:id="@+id/rbgMaritalStatus"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
+                <RadioButton
+                    android:id="@+id/rbMarried"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Đã kết hôn" />
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llAdress"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical">-->
+                <RadioButton
+                    android:id="@+id/rbSingle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Độc thân" />
+            </RadioGroup>
+        </LinearLayout>
 
-            <!--<TextView-->
-                <!--android:id="@+id/tvAdress"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Địa chỉ" />-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/wrapperHobbies"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <!--<EditText-->
-                <!--android:id="@+id/edtAdress"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:hint="Số nhà, đường, khu/ phường, quận/thị xã, tỉnh" />-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llMaritalStatus"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1.5"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tvMaritalStatus"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Tình trạng hôn nhân" />-->
-
-            <!--<RadioGroup-->
-                <!--android:id="@+id/rbgMaritalStatus"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_margin="20dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<RadioButton-->
-                    <!--android:id="@+id/rbMarried"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="Đã kết hôn" />-->
-
-                <!--<RadioButton-->
-                    <!--android:id="@+id/rbSingle"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="Độc thân" />-->
-            <!--</RadioGroup>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llHobbies"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/Hobbies"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="Sở thích" />-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/edtHobbies"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="2"-->
-                <!--android:hint="Bóng chuyền, bóng đá, ..." />-->
-        <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edtHobbies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sở thích"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 </ScrollView>
