@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,10 +28,10 @@ public class SplashScreenActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(SplashScreenActivity.this, SignInActivity.class);
+                    Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
-            }, 1000);
+            }, 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

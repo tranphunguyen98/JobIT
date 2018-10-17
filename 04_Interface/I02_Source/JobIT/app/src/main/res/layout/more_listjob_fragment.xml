@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<Button
+    android:id="@+id/btnSignIn_Register"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Sign In/Register"
+    style="@style/Style_btnCv"
+    android:gravity="start"
+    android:background="@drawable/custom_button_login_myjob_taocv" />
+    <Button
+        android:id="@+id/btnMyJob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Job"
+        style="@style/Style_btnCv"
+        android:gravity="start"
+        android:background="@drawable/custom_button_login_myjob_taocv" />
+    <Button
+        android:id="@+id/btnApplied"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Applied"
+        style="@style/Style_btnCv"
+        android:gravity="start"
+        android:background="@drawable/custom_button_login_myjob_taocv" />
+</LinearLayout>
