@@ -70,46 +70,42 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llGender"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:orientation="vertical">
+                <!--<EditText-->
+                    <!--android:id="@+id/edtDateOfBird"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="2"-->
+                    <!--android:hint="01/01/1990" />-->
 
-            <TextView
-                android:id="@+id/tvGender"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Giới tính" />
+                <!--<Button-->
+                    <!--android:id="@+id/btnSelect"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="Chọn" />-->
+            <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/llGender"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1.5"-->
+            <!--android:orientation="vertical">-->
 
-                <RadioButton
-                    android:id="@+id/rbMale"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Nam" />
+            <!--<TextView-->
+                <!--android:id="@+id/tvGender"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Giới tính" />-->
 
-                <RadioButton
-                    android:id="@+id/rbFemale"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Nữ" />
-            </RadioGroup>
-        </LinearLayout>
+            <!--<RadioGroup-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_margin="20dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="horizontal">-->
 
         <LinearLayout
             android:id="@+id/llEmail"
@@ -179,47 +175,35 @@
                 android:hint="Số nhà, đường, khu/ phường, quận/thị xã, tỉnh" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llMaritalStatus"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:orientation="vertical">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/llPhone"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical">-->
 
-            <TextView
-                android:id="@+id/tvMaritalStatus"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Tình trạng hôn nhân" />
+            <!--<TextView-->
+                <!--android:id="@+id/tvPhone"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Số điện thoại" />-->
 
-            <RadioGroup
-                android:id="@+id/rbgMaritalStatus"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="20dp"
-                android:layout_weight="2"
-                android:orientation="horizontal">
+            <!--<EditText-->
+                <!--android:id="@+id/edtPhone"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="2"-->
+                <!--android:hint="Số điện thoại" />-->
+        <!--</LinearLayout>-->
 
-                <RadioButton
-                    android:id="@+id/rbMarried"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Đã kết hôn" />
 
-                <RadioButton
-                    android:id="@+id/rbSingle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Độc thân" />
-            </RadioGroup>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/llAdress"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical">-->
 
         <LinearLayout
             android:id="@+id/llHobbies"
