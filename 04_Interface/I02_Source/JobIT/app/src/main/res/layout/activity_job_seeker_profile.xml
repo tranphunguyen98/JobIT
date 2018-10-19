@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".View.JobSeekerProfile.JobSeekerProfileActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundRed">
+
+    </android.support.v7.widget.Toolbar>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAvatarProfile"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_avatar_profile" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/tvNameProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trần Văn A"
+            android:layout_centerHorizontal="true"
+            android:textColor="#000"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/btnEditName"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:layout_alignTop="@+id/tvNameProfile"
+            android:layout_alignBottom="@+id/tvNameProfile"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/tvNameProfile"
+            android:background="#ffffff"
+            android:paddingStart="2dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_edit_profile" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvEmailProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:textColor="#000"
+        android:text="tranphunguyen.fit@gmailc.om"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tvAuthentication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/backgroundRed"
+        android:text="Bạn chưa xác thưc tài khoản"
+        android:textSize="18sp" />
+    <Button
+        android:id="@+id/btnAuthenticateAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmail"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_general_button"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/backgroundRed"
+        android:text="Xác thực tài khoản"
+        android:textAllCaps="false"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:textColor="@color/backgroundRed"
+        android:textSize="17sp" />
+    <Button
+        android:id="@+id/btnMyCV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmail"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/custom_general_button"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/backgroundRed"
+        android:text="CV của tôi"
+        android:textAllCaps="false"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:textColor="@color/backgroundRed"
+        android:textSize="17sp" />
+    <Button
+        android:id="@+id/btnChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmail"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/custom_general_button"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/backgroundRed"
+        android:text="Thay đổi mật khẩu"
+        android:textAllCaps="false"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:textColor="@color/backgroundRed"
+        android:textSize="17sp" />
+    <Button
+        android:id="@+id/btnSignOutProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmail"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/custom_general_button"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/backgroundRed"
+        android:text="Đăng xuất"
+        android:textAllCaps="false"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:textColor="@color/backgroundRed"
+        android:textSize="17sp" />
+
+</LinearLayout>

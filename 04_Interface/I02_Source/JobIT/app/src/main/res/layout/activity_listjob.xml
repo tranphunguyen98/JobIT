@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#e1e1e1"
-    tools:context=".ListJobActivity">
+    tools:context=".View.ListJob.ListJobActivity">
 <android.support.v7.widget.Toolbar
     android:id="@+id/tbListJob"
     android:layout_width="match_parent"
