@@ -14,6 +14,7 @@ import static android.view.View.GONE;
 
 public class CreateCVActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnAttachCV;
+    Button btnSaveCV;
     ImageButton btnEditPersonalInfor;
     ImageButton btnEditCareerSkill;
     ImageButton btnEditProject;
@@ -64,6 +65,7 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_create_cv);
 
         btnAttachCV = findViewById(R.id.btnAttachCV);
+        btnSaveCV = findViewById(R.id.btnSaveCV);
 
         llEditPersonalInfor = findViewById(R.id.llEditPersonalInfor);
         llEditCareerSkill = findViewById(R.id.llEditCareerSkill);
@@ -112,6 +114,7 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         btnEditProject.setOnClickListener(this);
         btnAddProject.setOnClickListener(this);
         btnAttachCV.setOnClickListener(this);
+        btnSaveCV.setOnClickListener(this);
     }
 
     @Override
@@ -145,6 +148,9 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
                 llEditProject2.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnAttachCV:
+                //todo
+                break;
+            case R.id.btnSaveCV:
                 //todo
                 break;
             default:
