@@ -43,7 +43,10 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".ListJobActivity" />
         <activity android:name=".ListJobViewAdapter" />
-        <activity android:name=".DetailJobActivity"></activity>
+        <activity android:name=".DetailJobActivity" />
+        <activity android:name=".HomeRecruitActivity" />
+        <activity android:name=".PostedActivity" />
+        <activity android:name=".ListCandidateAppliedActivity"></activity>
     </application>
 
 </manifest>

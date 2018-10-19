@@ -105,6 +105,8 @@
                 android:background="@drawable/custom_button_login_myjob_taocv"
                 android:drawableEnd="@drawable/ic_next"
                 android:drawableStart="@drawable/ic_login"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:text="@string/DangNhap" />
 
             <Button
@@ -115,6 +117,8 @@
                 android:background="@drawable/custom_button_login_myjob_taocv"
                 android:drawableEnd="@drawable/ic_next"
                 android:drawableStart="@drawable/ic_myjob"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:text="@string/Vieclamcuatoi" />
 
             <Button
@@ -125,6 +129,8 @@
                 android:background="@drawable/custom_button_login_myjob_taocv"
                 android:drawableEnd="@drawable/ic_next"
                 android:drawableStart="@drawable/ic_cv"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
                 android:text="@string/TaoCV" />
         </LinearLayout>
     </ScrollView>
