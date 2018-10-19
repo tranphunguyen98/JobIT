@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class CVEmployeeModel {
     String nameUser;
     String dateOfBird;
-    boolean isMale;
+    Boolean isMale;
     String email;
     String phoneNumber;
     String address;
-    boolean isSingle;
+    Boolean isSingle;
     String hobbies;
 
     String careerObjective;
@@ -40,11 +40,11 @@ public class CVEmployeeModel {
         this.dateOfBird = dateOfBird;
     }
 
-    public boolean isMale() {
+    public Boolean isMale() {
         return isMale;
     }
 
-    public void setMale(boolean male) {
+    public void setMale(Boolean male) {
         isMale = male;
     }
 
@@ -72,11 +72,11 @@ public class CVEmployeeModel {
         this.address = address;
     }
 
-    public boolean isSingle() {
+    public Boolean isSingle() {
         return isSingle;
     }
 
-    public void setSingle(boolean single) {
+    public void setSingle(Boolean single) {
         isSingle = single;
     }
 
