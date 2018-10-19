@@ -1,12 +1,12 @@
 package com.example.team32gb.jobit;
 
-public class ProjectInCV {
+public class ProjectInCVModel {
     private String name;
     private String decription;
     private String role;
     private int numberMember;
 
-    public ProjectInCV(String name, String decription, String role, int numberMember) {
+    public ProjectInCVModel(String name, String decription, String role, int numberMember) {
         this.name = name;
         this.decription = decription;
         this.role = role;
