@@ -4,9 +4,9 @@ public class ProjectInCVModel {
     private String name;
     private String decription;
     private String role;
-    private int numberMember;
+    private long numberMember;
 
-    public ProjectInCVModel(String name, String decription, String role, int numberMember) {
+    public ProjectInCVModel(String name, String decription, String role, long numberMember) {
         this.name = name;
         this.decription = decription;
         this.role = role;
@@ -37,11 +37,11 @@ public class ProjectInCVModel {
         this.role = role;
     }
 
-    public int getNumberMember() {
+    public long getNumberMember() {
         return numberMember;
     }
 
-    public void setNumberMember(int numberMember) {
+    public void setNumberMember(long numberMember) {
         this.numberMember = numberMember;
     }
 }
