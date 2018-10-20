@@ -8,8 +8,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class HomeRecruitActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button btnUpLoad,btnPosted,btnCandidateList,btnFileOfRecruit;
+public class HomeRecruitmentActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button btnUpLoad,btnPost,btnCandidateList,btnFileOfRecruit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +20,12 @@ public class HomeRecruitActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_home_recruit);
 
         btnUpLoad = findViewById(R.id.btnUploadPost);
-        btnPosted = findViewById(R.id.btnPosted);
+        btnPost = findViewById(R.id.btnPost);
         btnCandidateList = findViewById(R.id.btnCandidateList);
         btnFileOfRecruit = findViewById(R.id.btnFileOfRecruit);
 
         btnUpLoad.setOnClickListener(this);
-        btnPosted.setOnClickListener(this);
+        btnPost.setOnClickListener(this);
         btnCandidateList.setOnClickListener(this);
         btnFileOfRecruit.setOnClickListener(this);
 
@@ -36,20 +36,20 @@ public class HomeRecruitActivity extends AppCompatActivity implements View.OnCli
         Intent intent = null;
         switch (v.getId()){
             case R.id.btnUploadPost:
-                // class đăng tin do nguyên làm cái này để vậy thôi nhan
-                 intent = new Intent(this,PostedActivity.class);
+                // class đăng tin do nguyên làm cái này, chèn vô activity vô đây
+                // intent = new Intent(this,JobRecruitmentActivity.class);
               //  startActivity(intent);
                 break;
-            case R.id.btnPosted:
-                 intent = new Intent(this,PostedActivity.class);
+            case R.id.btnPost:
+                 intent = new Intent(this,JobRecruitmentActivity.class);
                // startActivity(intent);
                 break;
             case R.id.btnCandidateList:
-                 intent = new Intent(this,ListCandidateAppliedActivity.class);
+                 intent = new Intent(this,ListCandidateAcvitity.class);
                // startActivity(intent);
                 break;
             case R.id.btnFileOfRecruit:
-                 intent = new Intent(this,PostedActivity.class);
+                 intent = new Intent(this,RecordRecruitmentActivity.class);
                 break;
             default:
                 return;

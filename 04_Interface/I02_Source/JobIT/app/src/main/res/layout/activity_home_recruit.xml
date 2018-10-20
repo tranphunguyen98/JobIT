@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeRecruitActivity"
+    tools:context=".HomeRecruitmentActivity"
     android:background="#d9d4d4">
 <View
     android:id="@+id/view"
@@ -32,13 +32,13 @@
             android:text="Đăng tin tuyển dụng mới"
             android:textAllCaps="false"/>
         <Button
-            android:id="@+id/btnPosted"
+            android:id="@+id/btnPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:text="Các tin đã đăng"
+            android:text="Danh sách các tin tuyển dụng"
             android:textAllCaps="false"/>
         <Button
             android:id="@+id/btnCandidateList"

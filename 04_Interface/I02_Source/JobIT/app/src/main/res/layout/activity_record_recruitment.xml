@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecordRecruitmentActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tbRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.Toolbar>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:gravity="center"
+            android:text="Thông tin công ty"
+            android:textSize="40dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:id="@+id/txtNameCompany"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditName"
+                android:text="Tên công ty"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/edtNameCompany"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:hint="Nhập tên công ty"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSaveName"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditName"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtSizeCompany"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditSize"
+                android:text="Quy mô công ty"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:id="@+id/spSize"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:spinnerMode="dropdown"
+                android:visibility="gone">
+
+            </Spinner>
+
+            <Button
+                android:id="@+id/btnSaveSize"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditSize"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtTypeCompany"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditType"
+                android:text="Loại hình công ty"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:id="@+id/spType"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:spinnerMode="dropdown"
+                android:visibility="gone">
+
+            </Spinner>
+
+            <Button
+                android:id="@+id/btnSaveType"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditType"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtAddressCompany"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditAddress"
+                android:text="Địa chỉ công ty"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/edtAddressCompany"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:hint="Nhập địa chỉ công ty"
+                android:lineSpacingMultiplier="2"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSaveAddress"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditAddress"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtProvince"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditProvince"
+                android:text="Tỉnh/thành"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:id="@+id/spProvince"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:spinnerMode="dropdown"
+                android:visibility="gone">
+
+            </Spinner>
+
+            <Button
+                android:id="@+id/btnSaveProvince"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditProvince"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtIntroduceCompany"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditIntroduce"
+                android:text="Giới thiệu"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/edtIntroduceCompany"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:hint="Mô tả về công ty"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSaveIntroduce"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditIntroduce"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtContact"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditContact"
+                android:text="Người iên hệ"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/edtContact"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:hint="Nhập tên người liên hệ"
+                android:inputType="number"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSaveContact"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditContact"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btnEditPhone"
+                android:text="Điện thoại"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/edtPhone"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:hint="Nhập số điện thoại của người liên hệ"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSavePhone"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="65dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditPhone"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

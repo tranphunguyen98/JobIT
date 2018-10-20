@@ -28,20 +28,19 @@ public class ListCandidateAppliedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_candidate_applied);
 
+        recyclerView = findViewById(R.id.rvListCandidateApplied);
         myToolBar = findViewById(R.id.tbListCandidateApplied);
-        myToolBar.setTitle("Danh sách người đã nộp hồ sơ");
+        myToolBar.setTitle("Danh sách các ứng viên đã nộp hồ sơ ");
         myToolBar.setTitleTextColor(Color.parseColor("#FFFFFFFF"));
         myToolBar.setBackgroundColor(Color.parseColor("#FFD14D59"));
         setSupportActionBar(myToolBar);
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
         init();
-        recyclerView = findViewById(R.id.rvCandidateApplied);
         ViewAdapterApplied adapterApplied = new ViewAdapterApplied(this, lsData);
-        recyclerView.setAdapter(adapterApplied);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapterApplied);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,7 +53,8 @@ public class ListCandidateAppliedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
-    public void init(){
+    public void init()
+    {
         lsData = new ArrayList<>();
         lsData.add(new DataApplied("Nguyễn Văn A","5h trước"));
         lsData.add(new DataApplied("Nguyễn Văn B","1 tháng trước"));
@@ -68,6 +68,5 @@ public class ListCandidateAppliedActivity extends AppCompatActivity {
         lsData.add(new DataApplied("Nguyễn Văn K","9h trước"));
         lsData.add(new DataApplied("Nguyễn Văn L","7h trước"));
         lsData.add(new DataApplied("Nguyễn Văn M","5 ngày trước"));
-
     }
 }

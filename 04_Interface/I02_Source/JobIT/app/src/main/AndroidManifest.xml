@@ -44,8 +44,11 @@
         <activity android:name=".ListJobActivity" />
         <activity android:name=".ListJobViewAdapter" />
         <activity android:name=".DetailJobActivity" />
-        <activity android:name=".HomeRecruitActivity" />
-        <activity android:name=".PostedActivity" />
+        <activity android:name=".HomeRecruitmentActivity" />
+        <activity android:name=".SignUpAccountBusiness" />
+        <activity android:name=".JobRecruitmentActivity" />
+        <activity android:name=".ListCandidateAcvitity" />
+        <activity android:name=".RecordRecruitmentActivity" />
         <activity android:name=".ListCandidateAppliedActivity"></activity>
     </application>
 
