@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.team32gb.jobit">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -33,7 +35,6 @@
         <activity android:name=".View.SignIn.SignInActivity" />
         <activity android:name=".View.SignUp.SignUpActivity" />
         <activity android:name=".View.ForgotPassword.ForgotPasswordActivity" />
-        <activity android:name=".View.CreateCV.CreateMyCVActivity" />
         <activity android:name=".View.HomeJobSeeker.HomeActivity" />
         <activity android:name=".View.ListJob.ListJobActivity" />
         <activity android:name=".View.JobDetail.DetailJobActivity" />
@@ -44,7 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateCVActivity"></activity>
+        <activity android:name=".View.CreateCV.CreateCVActivity"></activity>
         <activity android:name=".View.ChangePassword.ChangePasswordActivity" />
         <activity android:name=".View.JobSeekerProfile.JobSeekerProfileActivity"></activity>
     </application>

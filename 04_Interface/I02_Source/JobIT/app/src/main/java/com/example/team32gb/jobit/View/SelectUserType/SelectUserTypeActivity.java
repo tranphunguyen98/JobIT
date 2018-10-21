@@ -17,7 +17,7 @@ import static com.example.team32gb.jobit.Utility.Config.*;
 
 public class SelectUserTypeActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnJobSeeker, btnEmployer, btnAdmin, btnDismiss;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferencesUserType;
     private int userType = 0;
 
     @Override
@@ -34,8 +34,8 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
         btnEmployer.setOnClickListener(this);
         btnAdmin.setOnClickListener(this);
         btnDismiss.setOnClickListener(this);
-        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        userType = sharedPreferences.getInt(USER_TYPE, 0);
+        sharedPreferencesUserType = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        userType = sharedPreferencesUserType.getInt(USER_TYPE, 0);
 
         switch (userType) {
             case Config.IS_JOB_SEEKER:
@@ -59,7 +59,7 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
         switch (id) {
             case R.id.btnJobSeeker:
             case R.id.btnDismiss:
-                SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                SharedPreferences.Editor editor1 = sharedPreferencesUserType.edit();
                 editor1.putInt(USER_TYPE, Config.IS_JOB_SEEKER);
                 editor1.apply();
                 Intent intent1 = new Intent(this, HomeActivity.class);
@@ -67,7 +67,7 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
                 this.finish();
                 break;
             case R.id.btnEmployer:
-                SharedPreferences.Editor editor2 = sharedPreferences.edit();
+                SharedPreferences.Editor editor2 = sharedPreferencesUserType.edit();
                 editor2.putInt(USER_TYPE, IS_IMPLOYER);
                 editor2.apply();
                 Toast.makeText(this, "Employer", Toast.LENGTH_SHORT).show();
@@ -76,7 +76,7 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
                 this.finish();
                 break;
             case R.id.btnAdmin:
-                SharedPreferences.Editor editor3 = sharedPreferences.edit();
+                SharedPreferences.Editor editor3 = sharedPreferencesUserType.edit();
                 editor3.putInt(USER_TYPE, IS_IMPLOYER);
                 editor3.apply();
                 Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();

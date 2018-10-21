@@ -1,10 +1,12 @@
 package com.example.team32gb.jobit.Model.JobSeekerProfile;
 
 import android.content.ContentResolver;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
 import com.example.team32gb.jobit.Presenter.JobSeekerProfile.JobSeekerInterface;
 import com.example.team32gb.jobit.Utility.Config;
 
@@ -18,6 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.ByteArrayOutputStream;
 
 public class ModelJobSeekerProfile {
     private FirebaseDatabase firebaseDatabase;
@@ -25,14 +32,15 @@ public class ModelJobSeekerProfile {
     private StorageReference storageReferenceImage;
     private DatabaseReference databaseReference;
     private UserModel userModel;
+    GreenRobotEventBus eventBus;
     String TAG = "kiemtraUpload";
 
     public ModelJobSeekerProfile(String uid) {
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReferenceImage = firebaseStorage.getReference().child(Config.REF_FOLDER_AVATAR).child(uid);
         databaseReference = firebaseDatabase.getReference().child(Config.REF_USERS_NODE).child(uid);
+        eventBus = GreenRobotEventBus.getInstance();
         userModel = new UserModel();
     }
 
@@ -44,6 +52,7 @@ public class ModelJobSeekerProfile {
                     userModel = dataSnapshot.getValue(UserModel.class);
                 }
                 jobSeekerInterface.getUserModel(userModel);
+                eventBus.post(userModel);
             }
 
             @Override
@@ -52,19 +61,23 @@ public class ModelJobSeekerProfile {
             }
         });
     }
+    public UserModel getUserModelLocal() {
+
+        return userModel;
+    }
+
+    public StorageReference getStorageReferenceImage() {
+        return storageReferenceImage;
+    }
 
     public void saveNameProfile(String name) {
-        userModel.setName(name);
-        Log.e(TAG, "saveNameProfile: "  + userModel.getName() );
-        databaseReference.setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+        databaseReference.child("name").setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.e(TAG, "thanh cong: "  + userModel.getName() );
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "that bại: "  + userModel.getName() );
             }
         });
     }
@@ -79,12 +92,31 @@ public class ModelJobSeekerProfile {
                     public void onSuccess(Object o) {
                         Log.e("kiemtraUpload",  "onSuccess: " );
                         userModel.setAvatar(storageReferenceImage.getPath());
-                        databaseReference.setValue(userModel);
+                        databaseReference.child("avatar").setValue(storageReferenceImage.getPath());
                     }
                 });
 
             }
         }).start();
+    }
+    public void savePictureProfile(final Bitmap bitmap) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                byte[] data = baos.toByteArray();
+                UploadTask uploadTask = storageReferenceImage.putBytes(data);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        userModel.setAvatar(storageReferenceImage.getPath());
+                        databaseReference.child("avatar").setValue(storageReferenceImage.getPath());
+                    }
+                });
+            }
+        }).start();
+
     }
 
 }

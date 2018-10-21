@@ -2,10 +2,17 @@ package com.example.team32gb.jobit.View.JobSeekerProfile;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -13,13 +20,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.team32gb.jobit.Model.JobSeekerProfile.UserModel;
 import com.example.team32gb.jobit.Presenter.JobSeekerProfile.PresenterInJobSeekerProfile;
 import com.example.team32gb.jobit.Presenter.JobSeekerProfile.PresenterLogicJobSeekerProfile;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
+import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +39,8 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,8 +55,10 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
     private FirebaseUser user;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+    private SharedPreferences sharedPreferences;
     private String uid;
     private PresenterInJobSeekerProfile presenterJobSeekerProfile;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +88,31 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+        sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
 
         user = firebaseAuth.getCurrentUser();
         uid = user.getUid();
-        presenterJobSeekerProfile = new PresenterLogicJobSeekerProfile(this,uid);
+        presenterJobSeekerProfile = new PresenterLogicJobSeekerProfile(this, uid);
+//        presenterJobSeekerProfile.getProfile();
+        presenterJobSeekerProfile.onCreate();
         presenterJobSeekerProfile.getProfile();
+//        if(!sharedPreferences.getBoolean(Config.MAY_GET_LOCAL,false)) {
+//            presenterJobSeekerProfile.getProfile();
+//        } else {
+//            UserModel userModel = new UserModel();
+//            userModel.setName(sharedPreferences.getString("nameUser",""));
+//            userModel.setEmail(sharedPreferences.getString("emailUser",""));
+//            userModel.setAvatar(storageReference.child(Config.REF_FOLDER_AVATAR).child(uid).getPath());
+//
+//            String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" +"/" + uid + ".jpg";
+//            Log.e("kiemtrafile",avatarPath);
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//            Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
+//            Log.e("kiemtrashow","oncreate1");
+//            showProfile(userModel,bitmap);
+//        }
+        Log.e("kiemtrashow","oncreate");
     }
 
     @Override
@@ -87,10 +121,18 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenterJobSeekerProfile.onDestroy();
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.btnMyCV:
+                Intent intentcv = new Intent(JobSeekerProfileActivity.this, CreateCVActivity.class);
+                startActivity(intentcv);
                 break;
             case R.id.btnChangePassword:
                 Intent intent = new Intent(JobSeekerProfileActivity.this, ChangePasswordActivity.class);
@@ -113,14 +155,19 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
                 tvNameProfile.setVisibility(View.VISIBLE);
                 edtNameProfile.setVisibility(View.GONE);
                 btnSaveNameProfile.setVisibility(View.GONE);
-                tvNameProfile.setText(edtNameProfile.getText().toString());
-                presenterJobSeekerProfile.saveNameProfile(edtNameProfile.getText().toString());
+                String name = edtNameProfile.getText().toString();
+                tvNameProfile.setText(name);
+                presenterJobSeekerProfile.saveNameProfile(name);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("nameUser",name);
+                editor.apply();
                 break;
             case R.id.imgAvatarProfile:
                 Intent intent2 = new Intent();
                 intent2.setType("image/*");
                 intent2.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent2,"Select Picture"),SELECT_PICTURE);
+                startActivityForResult(Intent.createChooser(intent2, "Select Picture"), SELECT_PICTURE);
                 break;
             default:
                 break;
@@ -130,30 +177,65 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            if(requestCode == SELECT_PICTURE) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageURI = data.getData();
-                Picasso.get().load(selectedImageURI).into(imgAvatarProfile);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageURI);
+                    int heightBitmapThumbnail = (int) (100*((bitmap.getHeight()*1.f)/bitmap.getWidth()));
+                    Bitmap bitmapThumbnail = ThumbnailUtils.extractThumbnail(bitmap,100,heightBitmapThumbnail);
+
+                    imgAvatarProfile.setImageBitmap(bitmapThumbnail);
+
+                    String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" +"/" + uid + ".jpg";
+                    File file = new File(avatarPath);
+                    FileOutputStream fileOutputStream;
+                    fileOutputStream = new FileOutputStream(file);
+                    bitmapThumbnail.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
+
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+
+                    presenterJobSeekerProfile.saveImageProfile(bitmapThumbnail);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                Picasso.get().load(selectedImageURI).into(imgAvatarProfile);
 
                 //Lấy type của hình ảnh
 //                ContentResolver contentResolver = this.getContentResolver();
 //                MimeTypeMap mime = MimeTypeMap.getSingleton();
 //                String type = mime.getExtensionFromMimeType(contentResolver.getType(selectedImageURI));
-                presenterJobSeekerProfile.saveImageProfile(selectedImageURI,"");
+//                presenterJobSeekerProfile.saveImageProfile(selectedImageURI, "");
             }
         }
     }
 
     @Override
-    public void showProfile(UserModel userModel) {
+    public void showProfile(UserModel userModel, Bitmap bitmap) {
+        Log.e("kiemtrashow","show");
+        if (!userModel.getAvatar().equals("")) {
+            imgAvatarProfile.setImageBitmap(bitmap);
+        }
+        tvEmailProfile.setText(userModel.getEmail());
+        if(!userModel.getName().equals("")) {
+            tvNameProfile.setText(userModel.getName());
+        } else {
+            tvNameProfile.setVisibility(View.GONE);
+            btnEditName.setVisibility(View.GONE);
+            edtNameProfile.requestFocus();
+            edtNameProfile.setVisibility(View.VISIBLE);
+            btnSaveNameProfile.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showProfile(UserModel userModel, Uri uri) {
+        if (!userModel.getAvatar().equals("")) {
+            Picasso.get().load(uri).into(imgAvatarProfile);
+        }
         tvEmailProfile.setText(userModel.getEmail());
         tvNameProfile.setText(userModel.getName());
 
-        storageReference.child(userModel.getAvatar()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(imgAvatarProfile);
-            }
-        });
     }
 }

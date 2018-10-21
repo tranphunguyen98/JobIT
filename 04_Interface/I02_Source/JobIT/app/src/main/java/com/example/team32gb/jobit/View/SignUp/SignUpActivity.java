@@ -2,6 +2,7 @@ package com.example.team32gb.jobit.View.SignUp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -66,17 +68,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     progressDialog.setCancelable(false);
                     progressDialog.show();
 
-                    String email = edtEmail.getText().toString();
-                    String password = edtPassword.getText().toString();
+                    final String email = edtEmail.getText().toString();
+                    final String password = edtPassword.getText().toString();
 
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
                                 progressDialog.dismiss();
                                 Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                SharedPreferences sharedPreferences;
+                                sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(Config.NAME_USER,edtName.getText().toString());
+                                editor.putString(Config.EMAIL_USER,email);
+                                editor.putString(Config.PASSWORD_USER,password);
+                                editor.putBoolean(Config.SIGN_UP_WITH_EMAIL,true );
+                                editor.apply();
                                 Intent intent = new Intent(SignUpActivity.this,HomeActivity.class);
+                                startActivity(intent);
                             } else {
                                 progressDialog.dismiss();
                                 Toast.makeText(SignUpActivity.this, "Đăng ký thất bại, vui lòng đăng ký bằng Email khác", Toast.LENGTH_SHORT).show();

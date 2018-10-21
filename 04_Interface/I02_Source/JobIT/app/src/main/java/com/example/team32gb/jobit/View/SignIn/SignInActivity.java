@@ -1,7 +1,10 @@
 package com.example.team32gb.jobit.View.SignIn;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +31,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.share.Share;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -35,6 +39,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -47,8 +52,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.Arrays;
+
+import static com.example.team32gb.jobit.Utility.Config.MAY_GET_LOCAL;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener, FirebaseAuth.AuthStateListener, GoogleApiClient.OnConnectionFailedListener {
     private Button btnLogin, btnLoginGoogle, btnLoginFacebook, btnCreateAccount;
@@ -60,6 +71,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth firebaseAuth;
     CallbackManager callbackManager;
+    SharedPreferences sharedPreferences;
+
     public static int REQUEST_CODE_LOGIN_GOOGLE = 3;
     public static int REQUEST_CODE_LOGIN_FACEBOOK = 3;
 
@@ -97,6 +110,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child(Config.REF_USERS_NODE);
+        sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         firebaseAuth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
@@ -107,6 +121,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnLogin.setOnClickListener(this);
         tvForgotPassword.setOnClickListener(this);
         CreateClientGoogle();
+
+
+        edtEmail.setText(sharedPreferences.getString(Config.EMAIL_USER, ""));
+        edtPassword.setText(sharedPreferences.getString(Config.PASSWORD_USER, ""));
     }
 
 
@@ -156,7 +174,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             progressDialog.show();
 
             String email = edtEmail.getText().toString().trim();
-            String password = edtPassword.getText().toString().trim();
+            final String password = edtPassword.getText().toString().trim();
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -166,7 +184,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(SignInActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(Config.SIGN_UP_WITH_EMAIL, true);
+                        editor.putString(Config.PASSWORD_USER, password);
+                        editor.apply();
                     }
                 }
             });
@@ -263,21 +284,45 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Log.e("kiemtraData",dataSnapshot + "");
+                    UserModel model;
                     if (dataSnapshot.hasChild(uid)) {
-                        Log.e("kiemtraData","đã có");
-                    } else {
-                        Log.e("kiemtraData","chưa có");
-                        String email = user.getEmail();
-                        UserModel model = new UserModel();
-                        model.setEmail(email);
-                        if(user.getPhotoUrl() != null) {
-                            model.setAvatar(user.getPhotoUrl().toString());
+                        model = dataSnapshot.child(uid).getValue(UserModel.class);
+                        if (model.getAvatar() != "") {
+                            //Tạo folder chứa hình ảnh
+                            File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
+                            if (!folderDownloaded.exists()) {
+                                folderDownloaded.mkdir();
+                            }
+
+                            Log.e("kiemtrafile", uid + ":");
+                            final File fileDownload = new File(folderDownloaded, uid + ".jpg");
+                            Log.e("kiemtrafile", fileDownload.getAbsolutePath());
+                            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(model.getAvatar());
+                            storageReference.getFile(fileDownload).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    Log.e("kiemtradownload", "thanhcong");
+                                }
+                            });
                         }
-                        model.setName(user.getDisplayName());
+                    } else {
+                        model = new UserModel();
+                        model.setEmail(user.getEmail());
+                        if (user.getDisplayName() != null) {
+                            model.setName(user.getDisplayName());
+                        }
                         model.setUid(uid);
                         databaseReference.child(uid).setValue(model);
                     }
+
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(MAY_GET_LOCAL, true);
+                    editor.putString(Config.EMAIL_USER, model.getEmail());
+                    editor.putString(Config.NAME_USER, model.getName());
+                    editor.apply();
+
+
                 }
 
                 @Override
@@ -287,6 +332,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             });
 
             Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+
             startActivity(intent);
         }
     }

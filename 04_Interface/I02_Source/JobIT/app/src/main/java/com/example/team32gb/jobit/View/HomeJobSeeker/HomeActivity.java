@@ -5,18 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
 import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
-import com.example.team32gb.jobit.View.CreateCV.CreateMyCVActivity;
 import com.example.team32gb.jobit.View.JobSeekerProfile.JobSeekerProfileActivity;
-import com.example.team32gb.jobit.View.ListJob.ListJobActivity;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnTimViec;
@@ -110,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intentSI);
                 break;
             case R.id.btnCV:
-                Intent intentCCV = new Intent(this, CreateMyCVActivity.class);
+                Intent intentCCV = new Intent(this, CreateCVActivity.class);
                 startActivity(intentCCV);
                 break;
             case R.id.btnMyJob:
@@ -119,6 +115,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnSignOut:
                 firebaseAuth.signOut();
+                btnAccount.setVisibility(View.GONE);
+                btnSignIn.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnAccount:
                 Intent intentAc = new Intent(this, JobSeekerProfileActivity.class);
