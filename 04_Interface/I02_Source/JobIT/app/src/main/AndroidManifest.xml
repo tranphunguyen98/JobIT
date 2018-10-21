@@ -44,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CreateCVActivity"></activity>
         <activity android:name=".View.ChangePassword.ChangePasswordActivity" />
         <activity android:name=".View.JobSeekerProfile.JobSeekerProfileActivity"></activity>
     </application>

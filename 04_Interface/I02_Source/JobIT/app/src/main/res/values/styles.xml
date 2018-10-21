@@ -51,4 +51,10 @@
         <item name="android:textColor">#e32323</item>
         android:layout_margin="10dp"
     </style>
+    <style name="titleCreateCV">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
 </resources>
