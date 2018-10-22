@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navPosted"
+        android:title="Đã nộp hồ sơ"
+        android:icon="@drawable/ic_cv" />
+    <item
+        android:id="@+id/navWaitingInterview"
+        android:title="Chờ phỏng vấn"
+        android:icon="@drawable/ic_accept" />
+    <item
+        android:id="@+id/navInviteJob"
+        android:icon="@drawable/ic_apply"
+        android:title="Mời làm" />
+</menu>

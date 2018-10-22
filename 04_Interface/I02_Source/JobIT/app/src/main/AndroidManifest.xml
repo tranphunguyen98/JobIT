@@ -45,6 +45,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".CreateMyCVActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".ListJobActivity" />
+        <activity android:name=".ListJobViewAdapter" />
+        <activity android:name=".DetailJobActivity" />
+        <activity android:name=".HomeRecruitmentActivity" />
+        <activity android:name=".SignUpAccountBusiness" />
+        <activity android:name=".JobRecruitmentActivity" />
+        <activity android:name=".ListCandidateAcvitity" />
+        <activity android:name=".RecordRecruitmentActivity" />
+        <activity android:name=".ListCandidateAppliedActivity"></activity>
         <activity android:name=".View.CreateCV.CreateCVActivity"></activity>
         <activity android:name=".View.ChangePassword.ChangePasswordActivity" />
         <activity android:name=".View.JobSeekerProfile.JobSeekerProfileActivity"></activity>

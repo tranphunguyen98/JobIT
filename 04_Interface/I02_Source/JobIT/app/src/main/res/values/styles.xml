@@ -10,7 +10,6 @@
     <style name="StyleJobIT">
         <item name="android:textSize">40sp</item>
         <item name="android:textColor">#de1b1b</item>
-        <!--<item name="android:fontFamily">@font/keepontruckin</item>-->
     </style>
     <style name="Style_txtTK_DD">
         <item name="android:textStyle">bold</item>
