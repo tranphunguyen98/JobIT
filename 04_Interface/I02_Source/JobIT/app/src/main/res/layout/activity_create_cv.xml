@@ -48,12 +48,12 @@
 
                     <TextView
                         android:id="@+id/txtShowPersonalInfor"
+                        style="@style/titleCreateCV"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Thông tin cá nhân"
-                        style="@style/titleCreateCV" />
+                        android:text="Thông tin cá nhân" />
 
                     <ImageButton
                         android:id="@+id/btnEditPersonalInfor"
@@ -152,6 +152,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:checked="true"
                                 android:text="Nữ" />
                         </RadioGroup>
                     </LinearLayout>
@@ -225,6 +226,7 @@
                                 android:layout_gravity="center"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:checked="true"
                                 android:text="Đã kết hôn" />
 
                             <RadioButton

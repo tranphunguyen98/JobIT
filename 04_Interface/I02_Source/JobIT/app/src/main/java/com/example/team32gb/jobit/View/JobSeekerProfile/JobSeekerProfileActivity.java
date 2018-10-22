@@ -95,7 +95,7 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
         presenterJobSeekerProfile = new PresenterLogicJobSeekerProfile(this, uid);
 //        presenterJobSeekerProfile.getProfile();
         presenterJobSeekerProfile.onCreate();
-        presenterJobSeekerProfile.getProfile();
+//        presenterJobSeekerProfile.getProfile();
 //        if(!sharedPreferences.getBoolean(Config.MAY_GET_LOCAL,false)) {
 //            presenterJobSeekerProfile.getProfile();
 //        } else {

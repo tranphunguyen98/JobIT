@@ -1,30 +1,32 @@
 package com.example.team32gb.jobit.View.CreateCV;
 
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.team32gb.jobit.Model.CreateCV.CVEmployeeModel;
 import com.example.team32gb.jobit.Model.CreateCV.ProjectInCVModel;
 import com.example.team32gb.jobit.Presenter.CreateCV.PresenterInCreateCV;
 import com.example.team32gb.jobit.Presenter.CreateCV.PresenterLogicCreateCV;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static android.view.View.GONE;
 
 public class CreateCVActivity extends AppCompatActivity implements View.OnClickListener, ViewCreateCV {
+    private static final String TAG = "kiemtraactivity";
     Button btnAttachCV;
     Button btnSaveCV;
     ImageButton btnEditPersonalInfor;
@@ -41,7 +43,7 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
 
     //Other vars
     //TAB 1
-    private TextInputEditText edtName;
+    private TextInputEditText edtNameUser;
     private TextInputEditText edtDateOfBird;
     private TextInputEditText edtEmail;
     private TextInputEditText edtPhone;
@@ -61,21 +63,21 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
     TextInputEditText edtSkill;
     TextInputEditText edtLanguage;
     //TAB3
-    TextInputEditText edtNameProject;
-    TextInputEditText edtDescription;
-    TextInputEditText edtRole;
-    TextInputEditText edtNumberMember;
+    TextInputEditText edtNameProject1;
+    TextInputEditText edtDescription1;
+    TextInputEditText edtRole1;
+    TextInputEditText edtNumberMember1;
 
     TextInputEditText edtNameProject2;
     TextInputEditText edtDescription2;
     TextInputEditText edtRole2;
     TextInputEditText edtNumberMember2;
-    private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private PresenterInCreateCV presenterInCreateCV;
 
     private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +98,7 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         btnAddProject = findViewById(R.id.btnAddProjectInCV);
         btnRemoveProject2 = findViewById(R.id.btnRemoveProject2);
 
-        edtName = findViewById(R.id.edtNameEmployee);
+        edtNameUser = findViewById(R.id.edtNameEmployee);
         edtDateOfBird = findViewById(R.id.edtDateOfBird);
         edtEmail = findViewById(R.id.edtEmail);
         edtPhone = findViewById(R.id.edtPhone);
@@ -117,10 +119,10 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         edtLanguage = findViewById(R.id.edtLanguage);
 
 
-        edtNameProject = findViewById(R.id.edtNameProject);
-        edtDescription = findViewById(R.id.edtDescription);
-        edtRole = findViewById(R.id.edtRole);
-        edtNumberMember = findViewById(R.id.edtNumberMember);
+        edtNameProject1 = findViewById(R.id.edtNameProject);
+        edtDescription1 = findViewById(R.id.edtDescription);
+        edtRole1 = findViewById(R.id.edtRole);
+        edtNumberMember1 = findViewById(R.id.edtNumberMember);
 
         edtNameProject2 = findViewById(R.id.edtNameProject2);
         edtDescription2 = findViewById(R.id.edtDescription2);
@@ -135,20 +137,22 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         btnAttachCV.setOnClickListener(this);
         btnSaveCV.setOnClickListener(this);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+        uid = sharedPreferences.getString(Config.UID_USER,"");
+        edtNameUser.setText(sharedPreferences.getString(Config.NAME_USER,""));
+        edtEmail.setText(sharedPreferences.getString(Config.EMAIL_USER,""));
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         presenterInCreateCV = new PresenterLogicCreateCV(this);
-        uid = firebaseAuth.getUid();
-        CVEmployeeModel  cvEmployeeModel = new CVEmployeeModel();
-        ProjectInCVModel projectInCVModel1 = new ProjectInCVModel();
-        ProjectInCVModel projectInCVModel2 = new ProjectInCVModel();
-        List<ProjectInCVModel> projectInCVModels = new ArrayList<>();
-        projectInCVModels.add(projectInCVModel1);
-        projectInCVModels.add(projectInCVModel2);
-        cvEmployeeModel.setProjects(projectInCVModels);
+        presenterInCreateCV.onCreate();
+        presenterInCreateCV.getCVFromUid(uid);
+    }
 
-        presenterInCreateCV.saveCV(uid,cvEmployeeModel,projectInCVModels);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenterInCreateCV.onDestroy();
     }
 
     @Override
@@ -188,7 +192,7 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
                 //todo
                 break;
             case R.id.btnSaveCV:
-                //todo
+                saveCV();
                 break;
             default:
                 break;
@@ -197,8 +201,66 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    @Override
-    public void showCV() {
+    public void saveCV() {
+        CVEmployeeModel cvEmployeeModel = new CVEmployeeModel();
+        cvEmployeeModel.setAddress(edtAddress.getText().toString());
+        cvEmployeeModel.setCareerObjective(edtCareerObject.getText().toString());
+        cvEmployeeModel.setDateOfBird(edtDateOfBird.getText().toString());
+        cvEmployeeModel.setEduQuali(edtEduQuali.getText().toString());
+        cvEmployeeModel.setEmail(edtEmail.getText().toString());
+        cvEmployeeModel.setHobbies(edtHobbies.getText().toString());
+        cvEmployeeModel.setIsMale(rbMale.isChecked());
+        cvEmployeeModel.setIsSingle(rbSingle.isChecked());
+        cvEmployeeModel.setLanguage(edtLanguage.getText().toString());
+        cvEmployeeModel.setNameUser(edtNameUser.getText().toString());
+        cvEmployeeModel.setPhoneNumber(edtPhone.getText().toString());
+        cvEmployeeModel.setSkill(edtSkill.getText().toString());
+        cvEmployeeModel.setWorkExperience(edtWorkExperience.getText().toString());
 
+        ProjectInCVModel projectInCVModel1 = new ProjectInCVModel();
+        ProjectInCVModel projectInCVModel2 = new ProjectInCVModel();
+
+        projectInCVModel1.setDecription(edtDescription1.getText().toString());
+        projectInCVModel1.setName(edtNameProject1.getText().toString());
+        projectInCVModel1.setNumberMember(Long.parseLong(edtNumberMember1.getText().toString()));
+        projectInCVModel1.setRole(edtRole1.getText().toString());
+
+        projectInCVModel2.setDecription(edtDescription2.getText().toString());
+        projectInCVModel2.setName(edtNameProject2.getText().toString());
+        projectInCVModel2.setNumberMember(Long.parseLong(edtNumberMember2.getText().toString()));
+        projectInCVModel2.setRole(edtRole2.getText().toString());
+
+        cvEmployeeModel.getProjects().add(projectInCVModel1);
+        cvEmployeeModel.getProjects().add(projectInCVModel2);
+
+        presenterInCreateCV.saveCV(uid, cvEmployeeModel, cvEmployeeModel.getProjects());
+        Toast.makeText(this, "Lưu thành công", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showCV(CVEmployeeModel cvEmployeeModel) {
+        edtNameUser.setText(cvEmployeeModel.getNameUser());
+        edtWorkExperience.setText(cvEmployeeModel.getWorkExperience());
+        edtSkill.setText(cvEmployeeModel.getSkill());
+        edtPhone.setText(cvEmployeeModel.getPhoneNumber());
+        edtLanguage.setText(cvEmployeeModel.getLanguage());
+        edtHobbies.setText(cvEmployeeModel.getHobbies());
+        edtEmail.setText(cvEmployeeModel.getEmail());
+        edtEduQuali.setText(cvEmployeeModel.getEduQuali());
+        edtDateOfBird.setText(cvEmployeeModel.getDateOfBird());
+        edtAddress.setText(cvEmployeeModel.getAddress());
+        edtCareerObject.setText(cvEmployeeModel.getCareerObjective());
+        rbMale.setChecked(cvEmployeeModel.getIsMale());
+        rbSingle.setChecked(cvEmployeeModel.getIsSingle());
+
+        edtDescription1.setText(cvEmployeeModel.getProjects().get(0).getDecription());
+        edtNameProject1.setText(cvEmployeeModel.getProjects().get(0).getName());
+        edtNumberMember1.setText(cvEmployeeModel.getProjects().get(0).getNumberMember().toString());
+        edtRole1.setText(cvEmployeeModel.getProjects().get(0).getRole());
+
+        edtDescription2.setText(cvEmployeeModel.getProjects().get(1).getDecription());
+        edtNameProject2.setText(cvEmployeeModel.getProjects().get(1).getName());
+        edtNumberMember2.setText(cvEmployeeModel.getProjects().get(1).getNumberMember().toString());
+        edtRole2.setText(cvEmployeeModel.getProjects().get(1).getRole());
     }
 }

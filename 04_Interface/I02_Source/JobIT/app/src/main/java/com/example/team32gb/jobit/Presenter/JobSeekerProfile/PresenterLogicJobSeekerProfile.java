@@ -93,7 +93,6 @@ public class PresenterLogicJobSeekerProfile implements PresenterInJobSeekerProfi
     @Override
     @Subscribe
     public void showProfile(final UserModel userModel) {
-        Log.e("kiemtraEventBus",userModel.getEmail());
         long ONE_MEGABYTE = 1024 * 1024;
                 modelJobSeekerProfile.getStorageReferenceImage().getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override

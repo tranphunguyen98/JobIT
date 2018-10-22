@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit.Model.CreateCV;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CVEmployeeModel {
@@ -18,8 +19,6 @@ public class CVEmployeeModel {
     String skill;
     String language;
 
-
-
     List<ProjectInCVModel> projects;
     public CVEmployeeModel() {
         nameUser = "";
@@ -36,6 +35,7 @@ public class CVEmployeeModel {
         workExperience = "";
         skill = "";
         language = "";
+        projects = new ArrayList<>();
     }
 
     public List<ProjectInCVModel> getProjects() {

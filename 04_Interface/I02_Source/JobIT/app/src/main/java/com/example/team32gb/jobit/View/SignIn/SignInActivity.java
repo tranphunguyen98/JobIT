@@ -285,6 +285,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     UserModel model;
+                    //Nếu tài khoản đã tồn tại trên sever
                     if (dataSnapshot.hasChild(uid)) {
                         model = dataSnapshot.child(uid).getValue(UserModel.class);
                         if (model.getAvatar() != "") {
@@ -293,17 +294,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             if (!folderDownloaded.exists()) {
                                 folderDownloaded.mkdir();
                             }
-
-                            Log.e("kiemtrafile", uid + ":");
                             final File fileDownload = new File(folderDownloaded, uid + ".jpg");
-                            Log.e("kiemtrafile", fileDownload.getAbsolutePath());
                             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(model.getAvatar());
-                            storageReference.getFile(fileDownload).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                    Log.e("kiemtradownload", "thanhcong");
-                                }
-                            });
+                            storageReference.getFile(fileDownload);
                         }
                     } else {
                         model = new UserModel();
@@ -320,6 +313,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     editor.putBoolean(MAY_GET_LOCAL, true);
                     editor.putString(Config.EMAIL_USER, model.getEmail());
                     editor.putString(Config.NAME_USER, model.getName());
+                    editor.putString(Config.UID_USER, model.getUid());
                     editor.apply();
 
 
