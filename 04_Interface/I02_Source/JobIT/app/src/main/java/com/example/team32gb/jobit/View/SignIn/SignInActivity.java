@@ -4,12 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,12 +17,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
 import com.example.team32gb.jobit.Model.JobSeekerProfile.UserModel;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.ForgotPassword.ForgotPasswordActivity;
-import com.example.team32gb.jobit.View.HomeJobSeeker.HomeActivity;
+import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.SignUp.SignUpActivity;
+import com.example.team32gb.jobit.View.SignUpAccountBusiness.SignUpAccountBusiness;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -31,7 +33,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.share.Share;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -39,7 +40,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -52,7 +52,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -61,13 +60,13 @@ import java.util.Arrays;
 
 import static com.example.team32gb.jobit.Utility.Config.MAY_GET_LOCAL;
 
-public class SignInActivity extends AppCompatActivity implements View.OnClickListener, FirebaseAuth.AuthStateListener, GoogleApiClient.OnConnectionFailedListener {
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, FirebaseAuth.AuthStateListener {
     private Button btnLogin, btnLoginGoogle, btnLoginFacebook, btnCreateAccount;
     private EditText edtEmail, edtPassword;
     private TextView tvForgotPassword;
     private ProgressDialog progressDialog;
     private GoogleApiClient apiClient;
-    private DatabaseReference databaseReference;
+    private DatabaseReference nodeRoot;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth firebaseAuth;
     CallbackManager callbackManager;
@@ -109,7 +108,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog = new ProgressDialog(this);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child(Config.REF_USERS_NODE);
+        nodeRoot = firebaseDatabase.getReference();
         sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -137,7 +136,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onStop() {
         super.onStop();
-        firebaseAuth.removeAuthStateListener(this);
     }
 
     @Override
@@ -183,7 +181,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         Toast.makeText(SignInActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(SignInActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean(Config.SIGN_UP_WITH_EMAIL, true);
                         editor.putString(Config.PASSWORD_USER, password);
@@ -281,54 +278,124 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             final String uid = user.getUid();
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    UserModel model;
-                    //Nếu tài khoản đã tồn tại trên sever
-                    if (dataSnapshot.hasChild(uid)) {
-                        model = dataSnapshot.child(uid).getValue(UserModel.class);
-                        if (model.getAvatar() != "") {
-                            //Tạo folder chứa hình ảnh
-                            File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
-                            if (!folderDownloaded.exists()) {
-                                folderDownloaded.mkdir();
+            switch (sharedPreferences.getInt(Config.USER_TYPE, 0)) {
+                case Config.IS_JOB_SEEKER:
+                    final DatabaseReference dfJobSeeker = nodeRoot.child(Config.REF_JOBSEEKERS_NODE);
+                    dfJobSeeker.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            UserModel model;
+                            //Nếu tồn tại tài khoản
+                            if (dataSnapshot.hasChild(uid)) {
+                                model = dataSnapshot.child(uid).getValue(UserModel.class);
+                                saveImageAvatarToExternalMemory(model);
+                            } else {
+                                model = getInfoFromFirebaseUser(user);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean(Config.IS_LOGGED,true);
+                                editor.apply();
+                                dfJobSeeker.child(uid).setValue(model);
                             }
-                            final File fileDownload = new File(folderDownloaded, uid + ".jpg");
-                            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(model.getAvatar());
-                            storageReference.getFile(fileDownload);
+                            saveInfoToShareReference(model);
+                            Util.gotoActivity(SignInActivity.this, HomeJobSeekerActivity.class);
                         }
-                    } else {
-                        model = new UserModel();
-                        model.setEmail(user.getEmail());
-                        if (user.getDisplayName() != null) {
-                            model.setName(user.getDisplayName());
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
-                        model.setUid(uid);
-                        databaseReference.child(uid).setValue(model);
-                    }
+                    });
+                    break;
+                case Config.IS_RECRUITER:
+                    nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            DataSnapshot dsRecruiter = dataSnapshot.child(Config.REF_RECRUITERS_NODE);
+                            DataSnapshot dsCompany = dataSnapshot.child(Config.REF_INFO_COMPANY);
+                            UserModel model;
+                            //Nếu tồn tại tài khoản
+                            if (dsRecruiter.hasChild(uid)) {
+                                model = dsRecruiter.child(uid).getValue(UserModel.class);
+                                saveImageAvatarToExternalMemory(model);
+                                if(dsCompany.hasChild(uid)) {
+                                    Util.gotoActivity(SignInActivity.this,HomeRecruitmentActivity.class);
+                                } else {
+                                    Util.gotoActivity(SignInActivity.this,SignUpAccountBusiness.class);
+                                }
+                            } else {
+                                model = getInfoFromFirebaseUser(user);
+                                nodeRoot.child(Config.REF_RECRUITERS_NODE).child(uid).setValue(model);
+                                saveInfoToShareReference(model);
+                                Util.gotoActivity(SignInActivity.this,SignUpAccountBusiness.class);
+                            }
 
+                        }
 
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean(MAY_GET_LOCAL, true);
-                    editor.putString(Config.EMAIL_USER, model.getEmail());
-                    editor.putString(Config.NAME_USER, model.getName());
-                    editor.putString(Config.UID_USER, model.getUid());
-                    editor.apply();
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                    break;
+                case Config.IS_ADMIN:
+                    DatabaseReference dfAdmin = nodeRoot.child(Config.REF_ADMINS_NODE);
+                    dfAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
+                        UserModel model;
 
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            //Nếu tồn tại tài khoản
+                            if (dataSnapshot.hasChild(uid)) {
+                                model = dataSnapshot.child(uid).getValue(UserModel.class);
+                                saveImageAvatarToExternalMemory(model);
+                            } else {
+                                model = getInfoFromFirebaseUser(user);
+                            }
+                            saveInfoToShareReference(model);
+                            Util.gotoActivity(SignInActivity.this, HomeJobSeekerActivity.class);
+                        }
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-
-            startActivity(intent);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
         }
+    }
+
+    public UserModel getInfoFromFirebaseUser(FirebaseUser user) {
+        UserModel model = new UserModel();
+        if (user.getDisplayName() != null) {
+            model.setName(user.getDisplayName());
+        }
+        if (user.getEmail() != null) {
+            model.setEmail(user.getEmail());
+        }
+        model.setUid(user.getUid());
+        return model;
+    }
+
+    public void saveImageAvatarToExternalMemory(UserModel model) {
+        if (model.getAvatar() != "") {
+            File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
+            if (!folderDownloaded.exists()) {
+                folderDownloaded.mkdir();
+            }
+            final File fileDownload = new File(folderDownloaded, model.getUid() + ".jpg");
+            StorageReference storageReference;
+            storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR).child(model.getUid());
+            storageReference.getFile(fileDownload);
+        }
+    }
+
+    public void saveInfoToShareReference(UserModel model) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(MAY_GET_LOCAL, true);
+        editor.putString(Config.EMAIL_USER, model.getEmail());
+        editor.putString(Config.NAME_USER, model.getName());
+        editor.putString(Config.UID_USER, model.getUid());
+        editor.apply();
     }
 
     @Override

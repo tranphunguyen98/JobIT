@@ -1,6 +1,5 @@
 package com.example.team32gb.jobit.Model.JobSeekerProfile;
 
-import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -22,8 +21,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.ByteArrayOutputStream;
 
 public class ModelJobSeekerProfile {
@@ -39,7 +36,7 @@ public class ModelJobSeekerProfile {
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReferenceImage = firebaseStorage.getReference().child(Config.REF_FOLDER_AVATAR).child(uid);
-        databaseReference = firebaseDatabase.getReference().child(Config.REF_USERS_NODE).child(uid);
+        databaseReference = firebaseDatabase.getReference().child(Config.REF_JOBSEEKERS_NODE).child(uid);
         eventBus = GreenRobotEventBus.getInstance();
         userModel = new UserModel();
     }

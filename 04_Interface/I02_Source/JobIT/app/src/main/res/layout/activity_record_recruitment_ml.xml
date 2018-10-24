@@ -52,6 +52,29 @@
                 android:hint="Nhập tên công ty"
                 android:visibility="gone" />
 
+            <Button
+                android:id="@+id/btnSaveName"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="65dp"
+                android:drawableStart="@drawable/ic_save"
+                android:text="Lưu"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btnEditName"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_edit"
+                android:text="Sửa"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <RelativeLayout

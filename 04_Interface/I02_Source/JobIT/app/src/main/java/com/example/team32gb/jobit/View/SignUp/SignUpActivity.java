@@ -3,9 +3,9 @@ package com.example.team32gb.jobit.View.SignUp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
-import com.example.team32gb.jobit.View.HomeJobSeeker.HomeActivity;
+import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 editor.putString(Config.PASSWORD_USER,password);
                                 editor.putBoolean(Config.SIGN_UP_WITH_EMAIL,true );
                                 editor.apply();
-                                Intent intent = new Intent(SignUpActivity.this,HomeActivity.class);
+                                Intent intent = new Intent(SignUpActivity.this,HomeJobSeekerActivity.class);
                                 startActivity(intent);
                             } else {
                                 progressDialog.dismiss();

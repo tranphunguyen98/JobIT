@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.HomeJobSeeker.HomeActivity">
+    tools:context=".View.HomeJobSeeker.HomeJobSeekerActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -145,6 +145,17 @@
                 android:text="@string/TaoCV" />
 
             <Button
+                android:id="@+id/btnChangeUserType"
+                style="@style/Style_btnCv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableStart="@drawable/ic_cv"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="Chuyển đổi chức năng" />
+
+            <Button
                 android:id="@+id/btnSignOut"
                 style="@style/Style_btnCv"
                 android:layout_width="match_parent"
@@ -153,7 +164,7 @@
                 android:drawableStart="@drawable/ic_cv"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="@string/TaoCV" />
+                android:text="Đăng xuất" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

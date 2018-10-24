@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeRecruitmentActivity"
-    android:background="#d9d4d4">
-<View
-    android:id="@+id/view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:background="#fff"
-    android:minHeight="800dp"
-    />
+    android:background="#d9d4d4"
+    tools:context=".View.HomeRecruitmentActivity.HomeRecruitmentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,37 +17,50 @@
             android:id="@+id/btnUploadPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="30dp"
             android:text="Đăng tin tuyển dụng mới"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
+
         <Button
             android:id="@+id/btnPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
             android:text="Danh sách các tin tuyển dụng"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
+
         <Button
             android:id="@+id/btnCandidateList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
             android:text="Danh sách ứng viên"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
+
         <Button
             android:id="@+id/btnFileOfRecruit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
             android:text="Hồ sơ của nhà tuyển dụng"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnSignOutRecruit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:text="Đăng xuất"
             android:textAllCaps="false" />
     </LinearLayout>
 

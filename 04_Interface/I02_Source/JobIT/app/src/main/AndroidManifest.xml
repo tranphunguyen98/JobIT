@@ -35,7 +35,7 @@
         <activity android:name=".View.SignIn.SignInActivity" />
         <activity android:name=".View.SignUp.SignUpActivity" />
         <activity android:name=".View.ForgotPassword.ForgotPasswordActivity" />
-        <activity android:name=".View.HomeJobSeeker.HomeActivity" />
+        <activity android:name=".View.HomeJobSeeker.HomeJobSeekerActivity" />
         <activity android:name=".View.ListJob.ListJobActivity" />
         <activity android:name=".View.JobDetail.DetailJobActivity" />
         <activity android:name=".View.SelectUserType.SelectUserTypeActivity">
@@ -53,8 +53,8 @@
         <activity android:name=".ListJobActivity" />
         <activity android:name=".ListJobViewAdapter" />
         <activity android:name=".DetailJobActivity" />
-        <activity android:name=".HomeRecruitmentActivity" />
-        <activity android:name=".SignUpAccountBusiness" />
+        <activity android:name=".View.HomeRecruitmentActivity.HomeRecruitmentActivity" />
+        <activity android:name=".View.SignUpAccountBusiness.SignUpAccountBusiness" />
         <activity android:name=".JobRecruitmentActivity" />
         <activity android:name=".ListCandidateAcvitity" />
         <activity android:name=".RecordRecruitmentActivity" />

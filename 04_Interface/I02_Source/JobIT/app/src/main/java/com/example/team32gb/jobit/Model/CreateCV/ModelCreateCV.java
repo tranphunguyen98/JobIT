@@ -48,11 +48,6 @@ public class ModelCreateCV {
     }
     public void saveCV(String uid, CVEmployeeModel cvEmployeeModel, List<ProjectInCVModel> projectInCVModels) {
         dfCVsNode.child(uid).setValue(cvEmployeeModel);
-//        DatabaseReference dfProject1 = dfCV.child("projects").child("project1");
-//        dfProject1.setValue(projects.get(0));
-//        DatabaseReference dfProject2 = dfCV.child("projects").child("project2");
-//        dfProject2.setValue(projects.get(1));
-
     }
 
 }

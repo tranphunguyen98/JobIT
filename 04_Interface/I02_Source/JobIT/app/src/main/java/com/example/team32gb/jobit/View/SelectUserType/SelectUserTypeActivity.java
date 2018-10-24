@@ -3,17 +3,23 @@ package com.example.team32gb.jobit.View.SelectUserType;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
-import com.example.team32gb.jobit.View.HomeJobSeeker.HomeActivity;
+import com.example.team32gb.jobit.Utility.Util;
+import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
+import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
+import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 
-import static com.example.team32gb.jobit.Utility.Config.*;
+import static com.example.team32gb.jobit.Utility.Config.IS_LOGGED;
+import static com.example.team32gb.jobit.Utility.Config.IS_RECRUITER;
+import static com.example.team32gb.jobit.Utility.Config.SHARED_PREFERENCES_NAME;
+import static com.example.team32gb.jobit.Utility.Config.USER_TYPE;
 
 public class SelectUserTypeActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnJobSeeker, btnEmployer, btnAdmin, btnDismiss;
@@ -39,7 +45,7 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
 
         switch (userType) {
             case Config.IS_JOB_SEEKER:
-                Intent intent = new Intent(this,HomeActivity.class);
+                Intent intent = new Intent(this,HomeJobSeekerActivity.class);
                 startActivity(intent);
                 this.finish();
                 break;
@@ -56,31 +62,30 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        SharedPreferences.Editor editor = sharedPreferencesUserType.edit();
         switch (id) {
             case R.id.btnJobSeeker:
             case R.id.btnDismiss:
-                SharedPreferences.Editor editor1 = sharedPreferencesUserType.edit();
-                editor1.putInt(USER_TYPE, Config.IS_JOB_SEEKER);
-                editor1.apply();
-                Intent intent1 = new Intent(this, HomeActivity.class);
-                startActivity(intent1);
+                editor.putInt(USER_TYPE, Config.IS_JOB_SEEKER);
+                editor.apply();
+                Util.gotoActivity(SelectUserTypeActivity.this,HomeJobSeekerActivity.class);
                 this.finish();
                 break;
             case R.id.btnEmployer:
-                SharedPreferences.Editor editor2 = sharedPreferencesUserType.edit();
-                editor2.putInt(USER_TYPE, IS_IMPLOYER);
-                editor2.apply();
-                Toast.makeText(this, "Employer", Toast.LENGTH_SHORT).show();
-//                Intent intent2 = new Intent(this, HomeActivity.class);
-//                startActivity(intent2);
+                editor.putInt(USER_TYPE, IS_RECRUITER);
+                editor.apply();
+                if(sharedPreferencesUserType.getBoolean(IS_LOGGED,false)) {
+                    Util.gotoActivity(SelectUserTypeActivity.this, HomeRecruitmentActivity.class);
+                } else {
+                    Util.gotoActivity(SelectUserTypeActivity.this,SignInActivity.class);
+                }
                 this.finish();
                 break;
             case R.id.btnAdmin:
-                SharedPreferences.Editor editor3 = sharedPreferencesUserType.edit();
-                editor3.putInt(USER_TYPE, IS_IMPLOYER);
-                editor3.apply();
+                editor.putInt(USER_TYPE, IS_RECRUITER);
+                editor.apply();
                 Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-//                Intent intent3 = new Intent(this, HomeActivity.class);
+//                Intent intent3 = new Intent(this, HomeJobSeekerActivity.class);
 //                startActivity(intent3);
                 this.finish();
                 break;

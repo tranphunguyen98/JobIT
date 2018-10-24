@@ -1,10 +1,8 @@
 package com.example.team32gb.jobit.View.JobSeekerProfile;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
@@ -12,14 +10,11 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,8 +25,7 @@ import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
 import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
-import com.example.team32gb.jobit.View.HomeJobSeeker.HomeActivity;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -140,7 +134,7 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
                 break;
             case R.id.btnSignOutProfile:
                 firebaseAuth.signOut();
-                Intent intent1 = new Intent(JobSeekerProfileActivity.this, HomeActivity.class);
+                Intent intent1 = new Intent(JobSeekerProfileActivity.this, HomeJobSeekerActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.btnEditName:

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.team32gb.jobit.Model.ObjectClass.DataJob;
+
 import java.util.List;
 
 public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.MyViewHolder> {
@@ -18,10 +20,12 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
     Context context;
     List<DataJob> mdata;
 
+
     public ViewAdapterPosted(Context context, List<DataJob> mdata) {
         this.context = context;
         this.mdata = mdata;
     }
+
 
     @NonNull
     @Override

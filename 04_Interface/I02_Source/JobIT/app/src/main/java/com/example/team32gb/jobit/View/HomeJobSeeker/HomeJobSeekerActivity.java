@@ -1,27 +1,33 @@
 package com.example.team32gb.jobit.View.HomeJobSeeker;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
-import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
-import com.example.team32gb.jobit.View.JobSeekerProfile.JobSeekerProfileActivity;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.Utility.Util;
+import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
+import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
+import com.example.team32gb.jobit.View.JobSeekerProfile.JobSeekerProfileActivity;
+import com.example.team32gb.jobit.View.SelectUserType.SelectUserTypeActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnTimViec;
     private Button btnSignIn;
     private Button btnCreateCV;
     private Button btnMyJob;
     private Button btnAccount;
     private Button btnSignOut;
+    private Button btnChangeUserType;
     FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -36,8 +42,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnMyJob = findViewById(R.id.btnMyJob);
         btnAccount = findViewById(R.id.btnAccount);
         btnSignOut = findViewById(R.id.btnSignOut);
-        firebaseAuth = FirebaseAuth.getInstance();
+        btnChangeUserType = findViewById(R.id.btnChangeUserType);
 
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
         btnTimViec.setOnClickListener(this);
@@ -46,20 +53,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btnMyJob.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
         btnAccount.setOnClickListener(this);
+        btnChangeUserType.setOnClickListener(this);
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e("kiemtra","onStart");
+        Log.e("kiemtra", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("kiemtra","onResume");
-        if(firebaseAuth.getCurrentUser() != null) {
+        Log.e("kiemtra", "onResume");
+        if (firebaseAuth.getCurrentUser() != null) {
             btnSignIn.setVisibility(View.GONE);
             btnAccount.setVisibility(View.VISIBLE);
         } else {
@@ -72,28 +80,28 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("kiemtra","onPause");
+        Log.e("kiemtra", "onPause");
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("kiemtra","onStop");
+        Log.e("kiemtra", "onStop");
 
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.e("kiemtra","Restart");
+        Log.e("kiemtra", "Restart");
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("kiemtra","Destroy");
+        Log.e("kiemtra", "Destroy");
 
     }
 
@@ -121,6 +129,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnAccount:
                 Intent intentAc = new Intent(this, JobSeekerProfileActivity.class);
                 startActivity(intentAc);
+                break;
+            case R.id.btnChangeUserType:
+                //Intent intentCh = new Intent(this, .class);
+//                startActivity(intentCh);
+                SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(Config.USER_TYPE,0);
+                editor.apply();
+                Util.gotoActivity(this,SelectUserTypeActivity.class);
                 break;
             default:
                 break;
