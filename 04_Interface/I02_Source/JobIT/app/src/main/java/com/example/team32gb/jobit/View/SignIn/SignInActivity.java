@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -52,6 +53,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -278,6 +281,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             final String uid = user.getUid();
+            Log.e("kiemtraToken", "abc");
+           FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                @Override
+                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                    if(task.isSuccessful()){
+                        String token = task.getResult().getToken();
+                        Log.e("kiemtraToken", token);
+                        DatabaseReference dfFCM_token = nodeRoot.child(Config.REF_FCM_TOKEN).child(uid).child("token");
+                        dfFCM_token.setValue(token);
+                    }else {
+                        Log.e("kiemtraToken", "fail");
+                    }
+                }
+            });
+
+
             switch (sharedPreferences.getInt(Config.USER_TYPE, 0)) {
                 case Config.IS_JOB_SEEKER:
                     final DatabaseReference dfJobSeeker = nodeRoot.child(Config.REF_JOBSEEKERS_NODE);

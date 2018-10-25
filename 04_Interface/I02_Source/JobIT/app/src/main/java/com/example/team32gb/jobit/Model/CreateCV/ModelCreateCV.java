@@ -47,6 +47,7 @@ public class ModelCreateCV {
     public void getCurrentUserCV(){
     }
     public void saveCV(String uid, CVEmployeeModel cvEmployeeModel, List<ProjectInCVModel> projectInCVModels) {
+        Log.e("kiemtra", uid + ":" + cvEmployeeModel.nameUser + "");
         dfCVsNode.child(uid).setValue(cvEmployeeModel);
     }
 

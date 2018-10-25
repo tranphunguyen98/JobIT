@@ -9,6 +9,9 @@ public class Config {
     public static final String REF_RECRUITERS_NODE = "recruiters";
     public static final String REF_ADMINS_NODE = "admins";
     public static final String REF_INFO_COMPANY = "companys";
+    public static final String REF_FCM_TOKEN = "fcm_tokens";
+    public static final String REF_AWAITING_APPROVAL_RECRUITERS = "awaiting_approval_recruiters";
+    public static final String REF_AWAITING_APPROVAL = "awaiting_approval_recruiters";
 
     public static final String SHARED_PREFERENCES_NAME = "team32gb";
     public static final String USER_TYPE = "USER_TYPE";
