@@ -35,7 +35,7 @@ public class MyJobActivity extends AppCompatActivity implements View.OnClickList
                 //TODO
                 break;
             case R.id.btnAppliedJob:
-                Util.gotoActivity(this,ListJobActivity.class);
+                Util.jumpActivity(this,ListJobActivity.class);
                 //TODO
                 break;
             case R.id.btnInterviewJob:

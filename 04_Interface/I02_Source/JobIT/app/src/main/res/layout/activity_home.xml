@@ -90,7 +90,7 @@
                 android:drawableEnd="@drawable/ic_location" />
 
             <Button
-                android:id="@+id/btnTimViec"
+                android:id="@+id/btnSearch"
                 style="@style/Style_btnTimViec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

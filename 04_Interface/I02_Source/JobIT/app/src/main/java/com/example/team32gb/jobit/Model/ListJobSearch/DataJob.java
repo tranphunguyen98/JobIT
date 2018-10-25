@@ -1,40 +1,40 @@
-package com.example.team32gb.jobit.Model.ObjectClass;
+package com.example.team32gb.jobit.Model.ListJobSearch;
 
 public class DataJob {
-    private String NameJob;
-    private String NameCompany;
-    private String Time;
+    private String nameJob;
+    private String nameCompany;
+    private String time;
 
     public DataJob() {
     }
 
     public DataJob(String nameJob, String nameCompany, String time) {
-        NameJob = nameJob;
-        NameCompany = nameCompany;
-        Time = time;
+        this.nameJob = nameJob;
+        this.nameCompany = nameCompany;
+        this.time = time;
     }
 
     public String getNameJob() {
-        return NameJob;
+        return nameJob;
     }
 
     public void setNameJob(String nameJob) {
-        NameJob = nameJob;
+        this.nameJob = nameJob;
     }
 
     public String getNameCompany() {
-        return NameCompany;
+        return nameCompany;
     }
 
     public void setNameCompany(String nameCompany) {
-        NameCompany = nameCompany;
+        this.nameCompany = nameCompany;
     }
 
     public String getTime() {
-        return Time;
+        return time;
     }
 
     public void setTime(String time) {
-        Time = time;
+        this.time = time;
     }
 }

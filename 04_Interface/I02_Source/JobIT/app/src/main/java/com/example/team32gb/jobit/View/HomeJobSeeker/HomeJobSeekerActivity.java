@@ -3,30 +3,24 @@ package com.example.team32gb.jobit.View.HomeJobSeeker;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
-import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
 import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
 import com.example.team32gb.jobit.View.JobSeekerProfile.JobSeekerProfileActivity;
+import com.example.team32gb.jobit.View.ListJob.ListJobActivity;
+import com.example.team32gb.jobit.View.ListJobSearch.ListJobSearchActivity;
 import com.example.team32gb.jobit.View.MyJob.MyJobActivity;
 import com.example.team32gb.jobit.View.SelectUserType.SelectUserTypeActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button btnSearch;
     private Button btnTimViec;
     private Button btnSignIn;
     private Button btnCreateCV;
@@ -44,9 +38,10 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        btnSearch = findViewById(R.id.btnSearch);
         btnSignIn = findViewById(R.id.btnDangNhap);
         btnCreateCV = findViewById(R.id.btnCV);
-        btnTimViec = findViewById(R.id.btnTimViec);
+        btnTimViec = findViewById(R.id.btnSearch);
         btnMyJob = findViewById(R.id.btnMyJob);
         btnAccount = findViewById(R.id.btnAccount);
         btnSignOut = findViewById(R.id.btnSignOut);
@@ -54,7 +49,7 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
+        btnSearch.setOnClickListener(this);
         btnTimViec.setOnClickListener(this);
         btnSignIn.setOnClickListener(this);
         btnCreateCV.setOnClickListener(this);
@@ -110,6 +105,9 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.btnSearch:
+                Util.jumpActivity(this,ListJobSearchActivity.class);
+                break;
             case R.id.btnDangNhap:
                 Intent intentSI = new Intent(this, SignInActivity.class);
                 startActivity(intentSI);
@@ -119,7 +117,7 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
                 startActivity(intentCCV);
                 break;
             case R.id.btnMyJob:
-                Util.gotoActivity(this,MyJobActivity.class);
+                Util.jumpActivity(this,MyJobActivity.class);
                 break;
             case R.id.btnSignOut:
                 firebaseAuth.signOut();
@@ -137,7 +135,7 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt(Config.USER_TYPE,0);
                 editor.apply();
-                Util.gotoActivity(this,SelectUserTypeActivity.class);
+                Util.jumpActivity(this,SelectUserTypeActivity.class);
                 break;
             default:
                 break;
