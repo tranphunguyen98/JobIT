@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".View.HomeJobSeeker.HomeJobSeekerActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_gravity="right">
 
         <LinearLayout
@@ -88,7 +90,7 @@
                 android:drawableEnd="@drawable/ic_location" />
 
             <Button
-                android:id="@+id/btnTimViec"
+                android:id="@+id/btnSearch"
                 style="@style/Style_btnTimViec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,11 +105,22 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_button_login_myjob_taocv"
-                android:drawableEnd="@drawable/ic_next"
                 android:drawableStart="@drawable/ic_login"
+                android:drawableEnd="@drawable/ic_next"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="@string/DangNhap" />
+
+            <Button
+                android:id="@+id/btnAccount"
+                style="@style/Style_btnCv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableStart="@drawable/ic_login"
+                android:drawableEnd="@drawable/ic_next"
+                android:text="user name" />
 
             <Button
                 android:id="@+id/btnMyJob"
@@ -115,8 +128,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_button_login_myjob_taocv"
-                android:drawableEnd="@drawable/ic_next"
                 android:drawableStart="@drawable/ic_myjob"
+                android:drawableEnd="@drawable/ic_next"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="@string/Vieclamcuatoi" />
@@ -127,11 +140,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableStart="@drawable/ic_cv"
                 android:drawableEnd="@drawable/ic_next"
+                android:text="@string/TaoCV" />
+
+            <Button
+                android:id="@+id/btnChangeUserType"
+                style="@style/Style_btnCv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_login_myjob_taocv"
                 android:drawableStart="@drawable/ic_cv"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="@string/TaoCV" />
+                android:text="Chuyển đổi chức năng" />
+
+            <Button
+                android:id="@+id/btnSignOut"
+                style="@style/Style_btnCv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableStart="@drawable/ic_cv"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="Đăng xuất" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

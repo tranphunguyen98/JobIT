@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.team32gb.jobit">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,27 +32,38 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".View.SelectUserType.SelectUserTypeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".CreateMyCVActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".ListJobActivity" />
-        <activity android:name=".ListJobViewAdapter" />
-        <activity android:name=".DetailJobActivity" />
-        <activity android:name=".HomeRecruitmentActivity" />
-        <activity android:name=".SignUpAccountBusiness" />
+        <activity android:name=".View.SplashScreen.SplashScreenActivity" />
+        <activity android:name=".View.SignIn.SignInActivity" />
+        <activity android:name=".View.SignUp.SignUpActivity" />
+        <activity android:name=".View.ForgotPassword.ForgotPasswordActivity" />
+        <activity android:name=".View.HomeJobSeeker.HomeJobSeekerActivity" />
+        <activity android:name=".View.ListJob.ListJobActivity" />
+        <activity android:name=".View.JobDetail.DetailJobActivity" />
+        <activity android:name=".View.HomeRecruitmentActivity.HomeRecruitmentActivity" />
+        <activity android:name=".View.SignUpAccountBusiness.SignUpAccountBusiness" />
         <activity android:name=".JobRecruitmentActivity" />
         <activity android:name=".ListCandidateAcvitity" />
+        <activity android:name=".View.MyJob.MyJobActivity" />
         <activity android:name=".RecordRecruitmentActivity" />
-        <activity android:name=".ListCandidateAppliedActivity"></activity>
+        <activity android:name=".ListCandidateAppliedActivity" />
+        <activity android:name=".View.CreateCV.CreateCVActivity" />
+        <activity android:name=".View.ChangePassword.ChangePasswordActivity" />
+        <activity android:name=".View.JobSeekerProfile.JobSeekerProfileActivity" />
+
+        <service android:name=".Lib.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".View.ListJobSearch.ListJobSearchActivity"></activity>
     </application>
 
 </manifest>

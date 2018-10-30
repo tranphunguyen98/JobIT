@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".View.MyJob.MyJobActivity">
 
     <TextView
         android:id="@+id/btnMyJob"
@@ -21,38 +23,31 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnNextSept"
+            android:id="@+id/btnHistoryJob"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Tìm kiếm gần đây" />
 
         <Button
-            android:id="@+id/btnSaved"
+            android:id="@+id/btnSavedJob"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Đã lưu" />
 
         <Button
-            android:id="@+id/btnApplied"
+            android:id="@+id/btnAppliedJob"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Đã apply" />
 
         <Button
-            android:id="@+id/btnInterview"
+            android:id="@+id/btnInterviewJob"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Đang phỏng vấn" />
-
-        <Button
-            android:id="@+id/btnMyCV"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="CV của tôi" />
     </LinearLayout>
 </LinearLayout>

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".DetailJobActivity">
+    tools:context=".View.JobDetail.DetailJobActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tbDetailListJob"
