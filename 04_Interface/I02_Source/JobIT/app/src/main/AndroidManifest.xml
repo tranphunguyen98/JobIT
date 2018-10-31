@@ -63,7 +63,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".View.ListJobSearch.ListJobSearchActivity"></activity>
+        <activity android:name=".View.ListJobSearch.ListJobSearchActivity" />
+        <activity android:name=".Test.TestDuyet"></activity>
     </application>
 
 </manifest>

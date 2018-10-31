@@ -40,7 +40,7 @@ public class ListJobSearchActivity extends AppCompatActivity implements ViewList
         setContentView(R.layout.activity_list_job_search);
         myToolBar = findViewById(R.id.tbListJobSearch);
         recyclerView = this.findViewById(R.id.rvListJobSearch);
-        //initData();
+//        i/nitData();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -88,7 +88,7 @@ public class ListJobSearchActivity extends AppCompatActivity implements ViewList
         lsData.add(new DataJob("Thực tập 9","ABC","3h"));
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference().child("tinTuyenDungs").child("tiDpKsiogPXaPmLpof4rd740PtQ2");
+        DatabaseReference databaseReference = firebaseDatabase.getReference().child("tinTuyenDungs").child("jTdHn8sjWxSwkvIJKZHZvHsb2sa2");
         String key1 = databaseReference.push().getKey();
         DatabaseReference df1 = databaseReference.child(key1);
         df1.setValue(lsData.get(0));

@@ -10,15 +10,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.team32gb.jobit.Model.SignUpAccountBusiness.InfoCompanyModel;
 import com.example.team32gb.jobit.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class DetailJobActivity extends AppCompatActivity {
+public class DetailJobActivity extends AppCompatActivity implements View.OnClickListener {
     private Toolbar myToolBar;
     private ActionBar actionBar;
     private TextView txtDetail;
@@ -33,6 +38,9 @@ public class DetailJobActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detailjob);
 
         myToolBar = findViewById(R.id.tbDetailListJob);
+        btnApply = findViewById(R.id.btnApply);
+
+        btnApply.setOnClickListener(this);
         myToolBar.setTitle("Chi tiết");
         myToolBar.setBackgroundColor(Color.parseColor("#FFD14D59"));
         setSupportActionBar(myToolBar);
@@ -63,5 +71,16 @@ public class DetailJobActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+        DatabaseReference dfUngVien = databaseReference.child("choDuyets").child(idCompany).child(idJob).child("idUngVien");
+        DatabaseReference dfDaApply = databaseReference.child("Applieds").child(FirebaseAuth.getInstance().getUid()).child(idCompany).child("idJob");
+        dfDaApply.setValue(idJob);
+        dfUngVien.setValue(FirebaseAuth.getInstance().getUid());
+        Toast.makeText(this, "apply thanh cong", Toast.LENGTH_SHORT).show();
     }
 }
