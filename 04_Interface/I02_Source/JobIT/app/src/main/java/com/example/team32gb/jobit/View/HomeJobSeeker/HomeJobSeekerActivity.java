@@ -3,10 +3,12 @@ package com.example.team32gb.jobit.View.HomeJobSeeker;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
@@ -14,9 +16,15 @@ import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
 import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
 import com.example.team32gb.jobit.View.JobSeekerProfile.JobSeekerProfileActivity;
+import com.example.team32gb.jobit.View.MyJob.MyJobActivity;
 import com.example.team32gb.jobit.View.SelectUserType.SelectUserTypeActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnTimViec;
@@ -60,13 +68,11 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e("kiemtra", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("kiemtra", "onResume");
         if (firebaseAuth.getCurrentUser() != null) {
             btnSignIn.setVisibility(View.GONE);
             btnAccount.setVisibility(View.VISIBLE);
@@ -80,29 +86,24 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("kiemtra", "onPause");
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("kiemtra", "onStop");
 
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.e("kiemtra", "Restart");
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("kiemtra", "Destroy");
-
     }
 
     @Override
@@ -118,8 +119,7 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
                 startActivity(intentCCV);
                 break;
             case R.id.btnMyJob:
-                Intent intentMJ = new Intent(this, ChangePasswordActivity.class);
-                startActivity(intentMJ);
+                Util.gotoActivity(this,MyJobActivity.class);
                 break;
             case R.id.btnSignOut:
                 firebaseAuth.signOut();

@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Util;
+import com.example.team32gb.jobit.View.ListJob.ListJobActivity;
 
 public class MyJobActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnSavedJob;
@@ -33,6 +35,7 @@ public class MyJobActivity extends AppCompatActivity implements View.OnClickList
                 //TODO
                 break;
             case R.id.btnAppliedJob:
+                Util.gotoActivity(this,ListJobActivity.class);
                 //TODO
                 break;
             case R.id.btnInterviewJob:
