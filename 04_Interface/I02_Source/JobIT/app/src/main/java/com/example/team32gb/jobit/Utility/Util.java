@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 public class Util {
-    public static void gotoActivity(Context context,Class mclass ) {
+    public static void jumpActivity(Context context, Class mclass ) {
         Intent intent = new Intent(context,mclass);
         context.startActivity(intent);
     }

@@ -316,7 +316,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 dfJobSeeker.child(uid).setValue(model);
                             }
                             saveInfoToShareReference(model);
-                            Util.gotoActivity(SignInActivity.this, HomeJobSeekerActivity.class);
+                            Util.jumpActivity(SignInActivity.this, HomeJobSeekerActivity.class);
                         }
 
                         @Override
@@ -336,15 +336,15 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 model = dsRecruiter.child(uid).getValue(UserModel.class);
                                 saveImageAvatarToExternalMemory(model);
                                 if(dsCompany.hasChild(uid)) {
-                                    Util.gotoActivity(SignInActivity.this,HomeRecruitmentActivity.class);
+                                    Util.jumpActivity(SignInActivity.this,HomeRecruitmentActivity.class);
                                 } else {
-                                    Util.gotoActivity(SignInActivity.this,SignUpAccountBusiness.class);
+                                    Util.jumpActivity(SignInActivity.this,SignUpAccountBusiness.class);
                                 }
                             } else {
                                 model = getInfoFromFirebaseUser(user);
                                 nodeRoot.child(Config.REF_RECRUITERS_NODE).child(uid).setValue(model);
                                 saveInfoToShareReference(model);
-                                Util.gotoActivity(SignInActivity.this,SignUpAccountBusiness.class);
+                                Util.jumpActivity(SignInActivity.this,SignUpAccountBusiness.class);
                             }
 
                         }
@@ -369,7 +369,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 model = getInfoFromFirebaseUser(user);
                             }
                             saveInfoToShareReference(model);
-                            Util.gotoActivity(SignInActivity.this, HomeJobSeekerActivity.class);
+                            Util.jumpActivity(SignInActivity.this, HomeJobSeekerActivity.class);
                         }
 
                         @Override

@@ -40,8 +40,8 @@ public class ListJobActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.vpListJob);
         adapterListJob = new ViewPagerAdapterListJob(getSupportFragmentManager());
 
-        adapterListJob.AddFragment(new FragmentAllJob(),"Tất cả");
-        adapterListJob.AddFragment(new FragmentNewJob(),"Việc mới");
+//        adapterListJob.AddFragment(new FragmentAllJob(),"Tất cả");
+//        adapterListJob.AddFragment(new FragmentNewJob(),"Việc mới");
         adapterListJob.AddFragment(new FragmentTaoCV(),"Tạo CV");
         adapterListJob.AddFragment(new FragmentMore(),"More");
         viewPager.setAdapter(adapterListJob);

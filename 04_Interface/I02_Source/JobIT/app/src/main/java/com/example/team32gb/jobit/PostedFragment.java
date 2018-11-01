@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.team32gb.jobit.Model.ObjectClass.DataJob;
+import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
 
 import java.util.ArrayList;
 import java.util.List;

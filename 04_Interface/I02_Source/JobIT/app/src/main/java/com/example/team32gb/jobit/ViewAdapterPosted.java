@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.team32gb.jobit.Model.ObjectClass.DataJob;
+import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
 
 import java.util.List;
 

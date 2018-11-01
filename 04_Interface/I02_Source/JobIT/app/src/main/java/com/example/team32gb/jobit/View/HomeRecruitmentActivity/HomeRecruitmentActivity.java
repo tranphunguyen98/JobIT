@@ -51,20 +51,20 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
               //  startActivity(intent);
                 break;
             case R.id.btnPost:
-                 Util.gotoActivity(this,JobSeekerProfileActivity.class);
+                 Util.jumpActivity(this,JobSeekerProfileActivity.class);
                // startActivity(intent);
                 break;
             case R.id.btnCandidateList:
-                 Util.gotoActivity(this,ListCandidateAcvitity.class);
+                 Util.jumpActivity(this,ListCandidateAcvitity.class);
                // startActivity(intent);
                 break;
             case R.id.btnFileOfRecruit:
-                 Util.gotoActivity(this,RecordRecruitmentActivity.class);
+                 Util.jumpActivity(this,RecordRecruitmentActivity.class);
                 break;
             case R.id.btnSignOutRecruit:
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.signOut();
-                Util.gotoActivity(HomeRecruitmentActivity.this,SignInActivity.class);
+                Util.jumpActivity(HomeRecruitmentActivity.this,SignInActivity.class);
                 break;
             default:
                 return;

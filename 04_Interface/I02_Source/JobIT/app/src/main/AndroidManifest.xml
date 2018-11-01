@@ -50,18 +50,21 @@
         <activity android:name=".View.SignUpAccountBusiness.SignUpAccountBusiness" />
         <activity android:name=".JobRecruitmentActivity" />
         <activity android:name=".ListCandidateAcvitity" />
-        <activity android:name=".View.MyJob.MyJobActivity"/>
+        <activity android:name=".View.MyJob.MyJobActivity" />
         <activity android:name=".RecordRecruitmentActivity" />
-        <activity android:name=".ListCandidateAppliedActivity"></activity>
-        <activity android:name=".View.CreateCV.CreateCVActivity"></activity>
+        <activity android:name=".ListCandidateAppliedActivity" />
+        <activity android:name=".View.CreateCV.CreateCVActivity" />
         <activity android:name=".View.ChangePassword.ChangePasswordActivity" />
-        <activity android:name=".View.JobSeekerProfile.JobSeekerProfileActivity"></activity>
+        <activity android:name=".View.JobSeekerProfile.JobSeekerProfileActivity" />
 
         <service android:name=".Lib.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".View.ListJobSearch.ListJobSearchActivity" />
+        <activity android:name=".Test.TestDuyet"></activity>
     </application>
 
 </manifest>

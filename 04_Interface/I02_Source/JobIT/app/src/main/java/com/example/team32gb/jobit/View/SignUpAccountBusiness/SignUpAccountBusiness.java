@@ -73,7 +73,7 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
         String uid = firebaseAuth.getUid();
 
         presenter.saveInfoCompany(uid,companyModel);
-        Util.gotoActivity(this,HomeRecruitmentActivity.class);
+        Util.jumpActivity(this,HomeRecruitmentActivity.class);
     }
 
     @Override
