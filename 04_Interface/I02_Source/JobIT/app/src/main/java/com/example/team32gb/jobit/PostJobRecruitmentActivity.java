@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,8 +24,6 @@ import java.util.ArrayList;
 public class PostJobRecruitmentActivity extends AppCompatActivity {
   private Toolbar myToolBar;
     private ActionBar actionBar;
-    private FrameLayout mainFrag;
-    private BottomNavigationView mainNav;
 
     private EditText edtJobTitle;
     private Spinner spnJobType;
@@ -45,8 +41,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_recruitment);
 
-        mainFrag = findViewById(R.id.mainFrag);
-        mainNav = findViewById(R.id.mainNav);
 
         myToolBar = findViewById(R.id.tbJobRecruitment);
         myToolBar.setTitle("Danh sách việc làm ");
@@ -67,29 +61,9 @@ public class PostJobRecruitmentActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        setFragment(new PostedFragment());
 
-        mainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.navPosted:
-                        setFragment(new PostedFragment());
-                        return true;
-                    case R.id.navWaiting:
-                        setFragment(new WaitingAcceptFragment());
-                        return true;
-                    case R.id.navExpire:
-                        setFragment(new ExpireFragment());
-                        return true;
-                    case R.id.navUploadPost:
-                        setFragment(new UpLoadPostFragment());
-                        return true;
-                        default:
-                            return false;
-                }
-            }
-        });
+
+
         //xử lys spinner loại công việc
         final ArrayList<String> Type = new ArrayList<String>();
         Type.add("bán thời gian");
@@ -170,9 +144,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
-    public void setFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrag,fragment);
-        fragmentTransaction.commit();
-    }
+
+
 }
