@@ -51,7 +51,7 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
         txtDetail = findViewById(R.id.txtJobDetail);
         btnSave = findViewById(R.id.btnSaveJob);
         btnApply = findViewById(R.id.btnApply);
-//txtDetail
+        
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         idJob = bundle.getString("idJob");
