@@ -13,6 +13,7 @@ import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.RecordRecruitmentActivity;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.JobSeekerProfile.JobSeekerProfileActivity;
+import com.example.team32gb.jobit.View.PostJob.PostJobRecruitmentActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -46,6 +47,7 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
         Intent intent = null;
         switch (v.getId()){
             case R.id.btnUploadPost:
+                Util.jumpActivity(this,PostJobRecruitmentActivity.class);
                 // class đăng tin do nguyên làm cái này, chèn vô activity vô đây
                 // intent = new Intent(this,JobRecruitmentActivity.class);
               //  startActivity(intent);
