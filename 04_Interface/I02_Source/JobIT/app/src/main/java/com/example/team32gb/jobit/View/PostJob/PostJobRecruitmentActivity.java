@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.team32gb.jobit.Model.PostJob.DataPostJob;
 import com.example.team32gb.jobit.Presenter.PostJob.PresenterInPostJob;
@@ -27,7 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class PostJobRecruitmentActivity extends AppCompatActivity implements ViewPostJob,AdapterView.OnItemSelectedListener {
     private Toolbar myToolBar;
@@ -40,9 +42,11 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
     private EditText edtCompanyTitle;
     private Spinner spnEach;
     private Spinner spnNumHires;
-    private EditText edtJobDecription;
+    private EditText edtJobDescription;
     private EditText edtQualification;
     private Button btnPost;
+
+    boolean valid = false;
 
     final ArrayList<String> Type = new ArrayList<String>();
     final ArrayList<String>  Each = new ArrayList<String>();
@@ -71,7 +75,7 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         edtMaxSalary=findViewById(R.id.edtMaxSalary);
         spnEach=findViewById(R.id.spnEach);
         spnNumHires=findViewById(R.id.spnNumHires);
-        edtJobDecription=findViewById(R.id.edtJobDescription);
+        edtJobDescription =findViewById(R.id.edtJobDescription);
         edtQualification=findViewById(R.id.edtQualification);
         btnPost=findViewById(R.id.btnPost);
 
@@ -116,34 +120,193 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         spnNumHires.setOnItemSelectedListener(this);
 
 
-        //  presenter = new PresenterPostJob(this);
-        //Xử lý Button Đăng
-        //Test button k được nên phải comment lại
-        // boolean valid=false;
-//        if(edtJobTitle.getText().toString().length()<=0){
-//            edtJobTitle.setError("Chưa nhập tên công việc");
-//        }
-//        if(Integer.parseInt(edtMinSalary.getText().toString())<1000000){
-//            edtMinSalary.setError("Lương không hợp lệ");
-//           // valid=true;
-//        }
-//        if(Integer.parseInt(edtMaxSalary.getText().toString())<1000000){
-//            edtMaxSalary.setError("Lương không hợp lệ");
-//            //valid=true;
-//        }
-//        if(Integer.parseInt(edtMinSalary.getText().toString())>=Integer.parseInt(edtMaxSalary.getText().toString())){
-//            edtMaxSalary.setError("Lương phải lớn hơn");
-//           // valid=true;
-//        }
-//        if(edtJobDecription.getText().toString().length()<=0) {
-//            edtJobDecription.setError("Chưa nhập mô tả công việc");
-//            //valid = true;
-//        }
+        edtCompanyTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(edtCompanyTitle.getText().toString().length() <= 0)
+                {
+                    valid = false;
+                    edtCompanyTitle.setError("Chưa nhập tên công ty");
+                }
+                else
+                    valid = true;
+            }
+        });
+        edtJobTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(edtJobTitle.getText().toString().length() <= 0)
+                {
+                    valid = false;
+                    edtJobTitle.setError("Chưa nhập tên công việc");
+                }
+                else
+                    valid = true;
+            }
+        });
+
+        edtMinSalary.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    if (edtMinSalary.getText().toString().length() <= 0) {
+
+                        valid=false;
+                        edtMinSalary.setError("Lương không hợp lệ");
+                        Log.e("KT","1");
+
+                    }
+                    else if(Integer.parseInt(edtMinSalary.getText().toString()) < 10000){
+                        valid=false;
+                        edtMinSalary.setError("Lương phải lớn hơn 10000 VND");
+                    }
+                    else
+                        valid = true;
+            }
+        });
+
+        edtMaxSalary.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtMaxSalary.getText().toString().length() <= 0) {
+
+                    valid=false;
+                    edtMaxSalary.setError("Lương không hợp lệ");
+                    Log.e("KT","1");
+
+                }
+                else  if(Integer.parseInt(edtMaxSalary.getText().toString()) < 10000){
+                    valid=false;
+                    edtMaxSalary.setError("Lương lớn hơn 10000 VND");
+                }
+            }
+        });
+
+        edtJobDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(edtJobDescription.getText().toString().length() <= 0)
+                {
+                    valid = false;
+                    edtJobDescription.setError("Chưa nhập mô tả công việc");
+                }
+                else
+                    valid = true;
+            }
+        });
+
 
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Save();
+                if(edtCompanyTitle.getText().toString().length() <= 0)
+                {
+                    valid = false;
+                    edtCompanyTitle.setError("Chưa nhập tên công việc");
+                }
+                if(edtJobTitle.getText().toString().length() <= 0)
+                {
+                    valid = false;
+                    edtJobTitle.setError("Chưa nhập tên công việc");
+                }
+                if (edtMinSalary.getText().toString().length() <= 0) {
+
+                    valid=false;
+                    edtMinSalary.setError("Lương không hợp lệ");
+                }
+                else  if(Integer.parseInt(edtMinSalary.getText().toString()) < 10000){
+                    valid=false;
+                    edtMinSalary.setError("Lương phải lớn hơn 10000 VND");
+                }
+                if (edtMaxSalary.getText().toString().length() <= 0) {
+
+                    valid=false;
+                    edtMaxSalary.setError("Lương không hợp lệ");
+                }
+                else  if(Integer.parseInt(edtMaxSalary.getText().toString()) < 10000){
+                    valid=false;
+                    edtMaxSalary.setError("Lương phải lớn hơn 10000 VND");
+                }
+                if (edtMinSalary.getText().toString().length() > 0 && edtMaxSalary.getText().toString().length() > 0){
+                    if (Integer.parseInt(edtMinSalary.getText().toString()) >= Integer.parseInt(edtMaxSalary.getText().toString())) {
+                        edtMaxSalary.setError("Lương phải lớn hơn");
+                        valid = false;
+                    }
+                    else
+                        valid = true;
+                }
+                if (edtJobDescription.getText().toString().length() <= 0) {
+                    edtJobDescription.setError("Chưa nhập mô tả công việc");
+                    valid = false;
+                }
+                if(valid)
+                {
+                    Save();
+                    Toast.makeText(getApplication(), "Đăng kí thành công",Toast.LENGTH_LONG).show();
+                    edtCompanyTitle.setText("");
+                    edtCompanyTitle.setError(null);
+                    edtJobTitle.setText("");
+                    edtJobTitle.setError(null);
+                    edtMinSalary.setText("");
+                    edtMinSalary.setError(null);
+                    edtMaxSalary.setText("");
+                    edtMaxSalary.setError(null);
+                    edtJobDescription.setText("");
+                    edtJobDescription.setError(null);
+                    edtQualification.setText("");
+                }
+                else
+                    Toast.makeText(getApplication(), "Đăng kí không thành thành công",Toast.LENGTH_LONG).show();
+
             }
         });
     }
@@ -169,7 +332,7 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         dataPostJob.setMinSalary(edtMinSalary.getText().toString());
         dataPostJob.setEach(Each.get(spnEach.getSelectedItemPosition()));
         dataPostJob.setNumberEmployer(NumHires.get(spnNumHires.getSelectedItemPosition()));
-        dataPostJob.setDescription(edtJobDecription.getText().toString());
+        dataPostJob.setDescription(edtJobDescription.getText().toString());
         dataPostJob.setQualification(edtQualification.getText().toString());
 
         Calendar c = Calendar.getInstance();
@@ -191,11 +354,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    @Override
-    public void SavePost(String Uid, DataPostJob dataPostJob) {
 
     }
 }
