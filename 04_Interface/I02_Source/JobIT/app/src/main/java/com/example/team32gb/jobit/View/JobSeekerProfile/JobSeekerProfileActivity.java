@@ -1,8 +1,10 @@
 package com.example.team32gb.jobit.View.JobSeekerProfile;
 
+import android.arch.lifecycle.CompositeGeneratedAdaptersObserver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
@@ -89,23 +91,25 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
         presenterJobSeekerProfile = new PresenterLogicJobSeekerProfile(this, uid);
 //        presenterJobSeekerProfile.getProfile();
         presenterJobSeekerProfile.onCreate();
-//        presenterJobSeekerProfile.getProfile();
-//        if(!sharedPreferences.getBoolean(Config.MAY_GET_LOCAL,false)) {
-//            presenterJobSeekerProfile.getProfile();
-//        } else {
-//            UserModel userModel = new UserModel();
-//            userModel.setName(sharedPreferences.getString("nameUser",""));
-//            userModel.setEmail(sharedPreferences.getString("emailUser",""));
-//            userModel.setAvatar(storageReference.child(Config.REF_FOLDER_AVATAR).child(uid).getPath());
-//
-//            String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" +"/" + uid + ".jpg";
-//            Log.e("kiemtrafile",avatarPath);
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//            Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
-//            Log.e("kiemtrashow","oncreate1");
-//            showProfile(userModel,bitmap);
-//        }
+       // presenterJobSeekerProfile.getProfile();
+        if(!sharedPreferences.getBoolean(Config.MAY_GET_LOCAL,false)) {
+            Log.e("kiemtraSave", "save1");
+            presenterJobSeekerProfile.getProfile();
+        } else {
+            Log.e("kiemtraSave", "save1");
+            UserModel userModel = new UserModel();
+            userModel.setName(sharedPreferences.getString(Config.NAME_USER,""));
+            userModel.setEmail(sharedPreferences.getString(Config.EMAIL_USER,""));
+            userModel.setAvatar(storageReference.child(Config.REF_FOLDER_AVATAR).child(uid).getPath());
+
+            String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" +"/" + uid + ".jpg";
+            Log.e("kiemtrafile",avatarPath);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
+            Log.e("kiemtrashow","oncreate1");
+            showProfile(userModel,bitmap);
+        }
         Log.e("kiemtrashow","oncreate");
     }
 
@@ -152,9 +156,9 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
                 String name = edtNameProfile.getText().toString();
                 tvNameProfile.setText(name);
                 presenterJobSeekerProfile.saveNameProfile(name);
-
+                Log.e("kiemtraSave",name);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("nameUser",name);
+                editor.putString(Config.NAME_USER,name);
                 editor.apply();
                 break;
             case R.id.imgAvatarProfile:
@@ -180,11 +184,18 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
                     Bitmap bitmapThumbnail = ThumbnailUtils.extractThumbnail(bitmap,100,heightBitmapThumbnail);
 
                     imgAvatarProfile.setImageBitmap(bitmapThumbnail);
-
+                    Log.e("kiemtraImage","1");
+                    File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
+                    if (!folderDownloaded.exists()) {
+                        folderDownloaded.mkdir();
+                    }
                     String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" +"/" + uid + ".jpg";
+                    Log.e("kiemtraImage",avatarPath);
                     File file = new File(avatarPath);
                     FileOutputStream fileOutputStream;
                     fileOutputStream = new FileOutputStream(file);
+                    imgAvatarProfile.setImageBitmap(bitmapThumbnail);
+                    Log.e("kiemtraImage",avatarPath);
                     bitmapThumbnail.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
 
                     fileOutputStream.flush();

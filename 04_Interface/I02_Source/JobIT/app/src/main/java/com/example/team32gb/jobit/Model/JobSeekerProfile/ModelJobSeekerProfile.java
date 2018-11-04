@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit.Model.JobSeekerProfile;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;

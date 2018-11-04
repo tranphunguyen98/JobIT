@@ -312,6 +312,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 model = getInfoFromFirebaseUser(user);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putBoolean(Config.IS_LOGGED,true);
+                                editor.putString(Config.NAME_USER,model.getName());
+                                editor.putString(Config.EMAIL_USER,model.getEmail());
                                 editor.apply();
                                 dfJobSeeker.child(uid).setValue(model);
                             }

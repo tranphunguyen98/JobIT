@@ -23,6 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DetailJobActivity extends AppCompatActivity implements View.OnClickListener {
     private Toolbar myToolBar;
     private ActionBar actionBar;
@@ -77,9 +80,15 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+        String currentDate = sdf.format(new Date());
+
         DatabaseReference dfUngVien = databaseReference.child("choDuyets").child(idCompany).child(idJob).child("idUngVien");
-        DatabaseReference dfDaApply = databaseReference.child("Applieds").child(FirebaseAuth.getInstance().getUid()).child(idCompany).child("idJob");
-        dfDaApply.setValue(idJob);
+        DatabaseReference dfTimeApplied = databaseReference.child("choDuyets").child(idCompany).child(idJob).child("timeAppiled");
+        dfTimeApplied.setValue(currentDate);
+
+        DatabaseReference dfDaApply = databaseReference.child("Applieds").child(FirebaseAuth.getInstance().getUid()).child(idCompany).child(idJob).child("timeAppiled");
+        dfDaApply.setValue(currentDate);
         dfUngVien.setValue(FirebaseAuth.getInstance().getUid());
         Toast.makeText(this, "apply thanh cong", Toast.LENGTH_SHORT).show();
     }

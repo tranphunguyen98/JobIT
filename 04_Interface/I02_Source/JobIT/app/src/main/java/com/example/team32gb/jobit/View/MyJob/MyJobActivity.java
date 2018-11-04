@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Util;
+import com.example.team32gb.jobit.View.Applied.AppliedActivity;
 import com.example.team32gb.jobit.View.ListJob.ListJobActivity;
 
 public class MyJobActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,7 +36,7 @@ public class MyJobActivity extends AppCompatActivity implements View.OnClickList
                 //TODO
                 break;
             case R.id.btnAppliedJob:
-                Util.jumpActivity(this,ListJobActivity.class);
+                Util.jumpActivity(this,AppliedActivity.class);
                 //TODO
                 break;
             case R.id.btnInterviewJob:

@@ -41,7 +41,7 @@ public class PresenterLogicListJobSearch implements PresenterInListJobSearch {
     @Override
     @Subscribe
     public void showListJob(List<ItemJob> itemJobs) {
-        Log.e("kiemtrasnap",itemJobs.get(0).getNameJob());
+//        Log.e("kiemtrasnap",itemJobs.get(0).getNameJob());
         view.showListJob(itemJobs);
     }
 
