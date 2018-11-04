@@ -182,8 +182,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
                         valid=false;
                         edtMinSalary.setError("Lương không hợp lệ");
-                        Log.e("KT","1");
-
                     }
                     else if(Integer.parseInt(edtMinSalary.getText().toString()) < 10000){
                         valid=false;
@@ -211,7 +209,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
                     valid=false;
                     edtMaxSalary.setError("Lương không hợp lệ");
-                    Log.e("KT","1");
 
                 }
                 else  if(Integer.parseInt(edtMaxSalary.getText().toString()) < 10000){
