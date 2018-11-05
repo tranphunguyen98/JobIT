@@ -222,13 +222,21 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
 
         projectInCVModel1.setDecription(edtDescription1.getText().toString());
         projectInCVModel1.setName(edtNameProject1.getText().toString());
-        projectInCVModel1.setNumberMember(Long.parseLong(edtNumberMember1.getText().toString()));
+
         projectInCVModel1.setRole(edtRole1.getText().toString());
+        String strNumberMember1 = edtNumberMember1.getText().toString();
+        if( strNumberMember1 != "") {
+            projectInCVModel1.setNumberMember(Long.parseLong(strNumberMember1));
+        } else projectInCVModel1.setNumberMember(0l);
 
         projectInCVModel2.setDecription(edtDescription2.getText().toString());
         projectInCVModel2.setName(edtNameProject2.getText().toString());
         projectInCVModel2.setNumberMember(Long.parseLong(edtNumberMember2.getText().toString()));
         projectInCVModel2.setRole(edtRole2.getText().toString());
+        String strNumberMember2 = edtNumberMember2.getText().toString();
+        if( strNumberMember2 != "") {
+            projectInCVModel2.setNumberMember(Long.parseLong(strNumberMember2));
+        } else projectInCVModel1.setNumberMember(0l);
 
         cvEmployeeModel.getProjects().add(projectInCVModel1);
         cvEmployeeModel.getProjects().add(projectInCVModel2);

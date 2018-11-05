@@ -295,18 +295,20 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 }
             });
-
-
+            //Log.e("kiemtraToken",sharedPreferences.getInt(Config.USER_TYPE, 0) +"" );
             switch (sharedPreferences.getInt(Config.USER_TYPE, 0)) {
                 case Config.IS_JOB_SEEKER:
+                    Log.e("kiemtrataikhoan",user.getEmail());
                     final DatabaseReference dfJobSeeker = nodeRoot.child(Config.REF_JOBSEEKERS_NODE);
                     dfJobSeeker.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.e("kiemtrataikhoan","kt");
                             UserModel model;
                             //Nếu tồn tại tài khoản
                             if (dataSnapshot.hasChild(uid)) {
                                 model = dataSnapshot.child(uid).getValue(UserModel.class);
+                                Log.e("kiemtrataikhoan",model.getEmail());
                                 saveImageAvatarToExternalMemory(model);
                             } else {
                                 model = getInfoFromFirebaseUser(user);
@@ -315,6 +317,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 editor.putString(Config.NAME_USER,model.getName());
                                 editor.putString(Config.EMAIL_USER,model.getEmail());
                                 editor.apply();
+                                Log.e("kiemtrataikhoan",model.getEmail());
                                 dfJobSeeker.child(uid).setValue(model);
                             }
                             saveInfoToShareReference(model);
@@ -323,6 +326,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("kiemtrataikhoan",databaseError.getDetails());
                         }
                     });
                     break;

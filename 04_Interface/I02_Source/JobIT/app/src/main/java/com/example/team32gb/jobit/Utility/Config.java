@@ -13,6 +13,7 @@ public class Config {
     public static final String REF_AWAITING_APPROVAL_RECRUITERS = "awaiting_approval_recruiters";
     public static final String REF_AWAITING_APPROVAL = "awaiting_approval_recruiters";
 
+    //Dữ liệu offline
     public static final String SHARED_PREFERENCES_NAME = "team32gb";
     public static final String USER_TYPE = "USER_TYPE";
     public static final String MAY_GET_LOCAL = "MAY_GET_LOCAL";

@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText edtName, edtEmail, edtPassword, edtConfirmPassword;
@@ -62,6 +64,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             case R.id.btnSignUp:
+                SharedPreferences sharedPreferences = getSharedPreferences(Config.USER_TYPE, MODE_PRIVATE);
+                int userType = sharedPreferences.getInt(Config.USER_TYPE, 0);
+                switch (userType) {
+                    case Config.IS_JOB_SEEKER:
+                        break;
+                }
                 if (checkInfoInput()) {
                     progressDialog.setMessage("Đang xử lý...");
                     progressDialog.setIndeterminate(true);
@@ -78,14 +86,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 progressDialog.dismiss();
                                 Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                 SharedPreferences sharedPreferences;
-                                sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+                                sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(Config.NAME_USER,edtName.getText().toString());
-                                editor.putString(Config.EMAIL_USER,email);
-                                editor.putString(Config.PASSWORD_USER,password);
-                                editor.putBoolean(Config.SIGN_UP_WITH_EMAIL,true );
+                                editor.putString(Config.NAME_USER, edtName.getText().toString());
+                                editor.putString(Config.EMAIL_USER, email);
+                                editor.putString(Config.PASSWORD_USER, password);
+                                editor.putBoolean(Config.SIGN_UP_WITH_EMAIL, true);
                                 editor.apply();
-                                Intent intent = new Intent(SignUpActivity.this,HomeJobSeekerActivity.class);
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                                databaseReference.child("abc").setValue("111");
+                                Intent intent = new Intent(SignUpActivity.this, HomeJobSeekerActivity.class);
                                 startActivity(intent);
                             } else {
                                 progressDialog.dismiss();

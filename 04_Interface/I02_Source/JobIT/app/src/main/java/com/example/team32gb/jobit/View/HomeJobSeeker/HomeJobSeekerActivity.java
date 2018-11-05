@@ -120,6 +120,8 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
                 Util.jumpActivity(this,MyJobActivity.class);
                 break;
             case R.id.btnSignOut:
+                SharedPreferences spSignOut =getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+                Util.resetDataLocal(spSignOut);
                 firebaseAuth.signOut();
                 btnAccount.setVisibility(View.GONE);
                 btnSignIn.setVisibility(View.VISIBLE);
