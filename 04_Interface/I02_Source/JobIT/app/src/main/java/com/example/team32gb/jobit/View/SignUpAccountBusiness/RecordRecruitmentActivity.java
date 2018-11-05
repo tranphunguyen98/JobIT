@@ -2,6 +2,7 @@ package com.example.team32gb.jobit.View.SignUpAccountBusiness;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import com.example.team32gb.jobit.Presenter.SignUpAccountBusiness.PresenterLogic
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -175,6 +178,12 @@ public class RecordRecruitmentActivity extends AppCompatActivity implements View
             txtPhone.setVisibility(View.GONE);
             edtPhone.setVisibility(View.VISIBLE);
 
+            edtNameCompany.setText(txtNameCompany.getText().toString());
+            edtAddress.setText(txtAddress.getText().toString());
+            edtIntroduce.setText(txtIntroduce.getText().toString());
+            edtContact.setText(txtContact.getText().toString());
+            edtPhone.setText(txtPhone.getText().toString());
+
             edtNameCompany.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -289,6 +298,8 @@ public class RecordRecruitmentActivity extends AppCompatActivity implements View
         }
         if (id == R.id.btnSave){
 
+
+
             if(edtNameCompany.getText().toString().length() <= 0)
             {
                 valid = false;
@@ -316,7 +327,7 @@ public class RecordRecruitmentActivity extends AppCompatActivity implements View
             }
 
             if(valid){
-                Toast.makeText(getApplication(), "Sửa hồ sơ thành công",Toast.LENGTH_LONG).show();
+
                 btnSave.setVisibility(View.GONE);
                 btnEdit.setVisibility(View.VISIBLE);
 
@@ -372,7 +383,17 @@ public class RecordRecruitmentActivity extends AppCompatActivity implements View
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
                 DatabaseReference dfData = databaseReference.child(Config.REF_INFO_COMPANY).child(FirebaseAuth.getInstance().getUid());
-                dfData.setValue(infoCompanyModel);
+                dfData.setValue(infoCompanyModel).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplication(), "Sửa thông tin không thành thành công",Toast.LENGTH_LONG).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplication(), "Sửa thông tin thành công",Toast.LENGTH_LONG).show();
+                    }
+                });
 
                 Intent intent = new Intent(this, HomeRecruitmentActivity.class);
                 finish();

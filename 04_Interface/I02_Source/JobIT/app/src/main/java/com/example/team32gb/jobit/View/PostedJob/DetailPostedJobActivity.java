@@ -3,6 +3,7 @@ package com.example.team32gb.jobit.View.PostedJob;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,12 +20,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.team32gb.jobit.JobRecruitmentActivity;
 import com.example.team32gb.jobit.Model.PostJob.DataPostJob;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -245,7 +249,17 @@ public class DetailPostedJobActivity extends AppCompatActivity implements Adapte
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             DatabaseReference databaseReference = firebaseDatabase.getReference();
             DatabaseReference dfData = databaseReference.child("tinTuyenDungs").child(idCompany).child(idJob);
-            dfData.setValue(data);
+            dfData.setValue(data).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplication(), "Sửa thông tin không thành công",Toast.LENGTH_LONG).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(getApplication(), "Sửa thông tin thành công",Toast.LENGTH_LONG).show();
+                }
+            });
 
             Config.CHECK_FRAV = 0;
             Intent intent = new Intent(this, JobRecruitmentActivity.class);
