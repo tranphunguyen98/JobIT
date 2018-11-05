@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.team32gb.jobit.JobRecruitmentActivity;
 import com.example.team32gb.jobit.ListCandidateAcvitity;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.RecordRecruitmentActivity;
@@ -53,7 +54,7 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
               //  startActivity(intent);
                 break;
             case R.id.btnPost:
-                 Util.jumpActivity(this,JobSeekerProfileActivity.class);
+                 Util.jumpActivity(this,JobRecruitmentActivity.class);
                // startActivity(intent);
                 break;
             case R.id.btnCandidateList:

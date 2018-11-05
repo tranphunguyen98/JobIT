@@ -1,6 +1,5 @@
 package com.example.team32gb.jobit;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +15,8 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+
+import com.example.team32gb.jobit.View.PostedJob.PostedFragment;
 
 public class JobRecruitmentActivity extends AppCompatActivity {
   private Toolbar myToolBar;
@@ -43,27 +44,27 @@ public class JobRecruitmentActivity extends AppCompatActivity {
 
         setFragment(new PostedFragment());
 
-        mainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.navPosted:
-                        setFragment(new PostedFragment());
-                        return true;
-                    case R.id.navWaiting:
-                        setFragment(new WaitingAcceptFragment());
-                        return true;
-                    case R.id.navExpire:
-                        setFragment(new ExpireFragment());
-                        return true;
-                    case R.id.navUploadPost:
-                        setFragment(new UpLoadPostFragment());
-                        return true;
-                        default:
-                            return false;
-                }
-            }
-        });
+//        mainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                switch (menuItem.getItemId()){
+//                    case R.id.navPosted:
+//                        setFragment(new PostedFragment());
+//                        return true;
+//                    case R.id.navWaiting:
+//                        setFragment(new WaitingAcceptFragment());
+//                        return true;
+//                    case R.id.navExpire:
+//                        setFragment(new ExpireFragment());
+//                        return true;
+//                    case R.id.navUploadPost:
+//                        setFragment(new UpLoadPostFragment());
+//                        return true;
+//                        default:
+//                            return false;
+//                }
+//            }
+//        });
 
     }
     @Override
