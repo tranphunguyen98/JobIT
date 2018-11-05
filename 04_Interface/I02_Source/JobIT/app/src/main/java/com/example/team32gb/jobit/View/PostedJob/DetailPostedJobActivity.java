@@ -190,6 +190,7 @@ public class DetailPostedJobActivity extends AppCompatActivity implements Adapte
 
         }
         if (id == R.id.btnSave){
+
             btnEdit.setVisibility(View.VISIBLE);
             btnSave.setVisibility(View.GONE);
             txtNameCompany.setText(edtNameCompany.getText().toString());
@@ -248,6 +249,7 @@ public class DetailPostedJobActivity extends AppCompatActivity implements Adapte
 
             Config.CHECK_FRAV = 0;
             Intent intent = new Intent(this, JobRecruitmentActivity.class);
+            finish();
             startActivity(intent);
 
         }
