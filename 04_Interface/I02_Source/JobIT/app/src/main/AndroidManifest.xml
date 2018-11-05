@@ -71,6 +71,7 @@
         <activity android:name=".View.PostJob.PostJobRecruitmentActivity"></activity>
         <activity android:name=".View.PostedJob.DetailPostedJobActivity"></activity>
         <activity android:name=".View.Applied.AppliedActivity"></activity>
+        <activity android:name=".View.EmployerAppliedPosted.EmployerAppliedPostedActivity"/>
     </application>
 
 </manifest>

@@ -18,6 +18,7 @@ import com.example.team32gb.jobit.ListCandidateAppliedActivity;
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.View.EmployerAppliedPosted.EmployerAppliedPostedActivity;
 import com.example.team32gb.jobit.View.JobDetail.DetailJobActivity;
 import com.example.team32gb.jobit.View.ListJobSearch.ItemClickListener;
 
@@ -75,6 +76,13 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
                 context.getApplicationContext().startActivity(intent);
             }
         });
+        myViewHolder.btnApplied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context.getApplicationContext(), EmployerAppliedPostedActivity.class);
+                context.getApplicationContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -88,6 +96,7 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
         private TextView txtNameCompany;
         private TextView txtTime;
         private Button btnDelete;
+        private Button btnApplied;
 
         private ItemClickListener itemClickListener;
 
@@ -103,7 +112,7 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
             txtNameCompany = itemView.findViewById(R.id.txtNameCompany);
             txtTime = itemView.findViewById(R.id.txtTime);
             btnDelete = itemView.findViewById(R.id.btnDelete);
-
+            btnApplied = itemView.findViewById(R.id.btnApplied);
         }
         @Override
         public void onClick(View v) {

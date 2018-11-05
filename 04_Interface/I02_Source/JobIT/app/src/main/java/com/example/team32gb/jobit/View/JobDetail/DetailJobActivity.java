@@ -87,7 +87,7 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
         DatabaseReference dfTimeApplied = databaseReference.child("choDuyets").child(idCompany).child(idJob).child("timeAppiled");
         dfTimeApplied.setValue(currentDate);
 
-        DatabaseReference dfDaApply = databaseReference.child("Applieds").child(FirebaseAuth.getInstance().getUid()).child(idCompany).child(idJob).child("timeAppiled");
+        DatabaseReference dfDaApply = databaseReference.child("Applieds").child(idCompany).child(idJob).child("timeAppiled");
         dfDaApply.setValue(currentDate);
         dfUngVien.setValue(FirebaseAuth.getInstance().getUid());
         Toast.makeText(this, "apply thanh cong", Toast.LENGTH_SHORT).show();
