@@ -32,4 +32,6 @@ public class Config {
     public static final int IS_RECRUITER = 2;
     public static final int IS_ADMIN = 3;
 
+
+    public static int CHECK_FRAV = 0;
 }

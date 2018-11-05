@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.PostedJob.PostedFragment;
 
 public class JobRecruitmentActivity extends AppCompatActivity {
@@ -44,27 +46,41 @@ public class JobRecruitmentActivity extends AppCompatActivity {
 
         setFragment(new PostedFragment());
 
-//        mainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                switch (menuItem.getItemId()){
-//                    case R.id.navPosted:
-//                        setFragment(new PostedFragment());
-//                        return true;
-//                    case R.id.navWaiting:
-//                        setFragment(new WaitingAcceptFragment());
-//                        return true;
-//                    case R.id.navExpire:
-//                        setFragment(new ExpireFragment());
-//                        return true;
-//                    case R.id.navUploadPost:
-//                        setFragment(new UpLoadPostFragment());
-//                        return true;
-//                        default:
-//                            return false;
-//                }
-//            }
-//        });
+        switch (Config.CHECK_FRAV){
+            case 0:
+                setFragment(new PostedFragment());
+                break;
+            case 1:
+                setFragment(new WaitingAcceptFragment());
+                break;
+            case 2:
+                setFragment(new ExpireFragment());
+                break;
+            case 3:
+                setFragment(new UpLoadPostFragment());
+                break;
+        }
+        mainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.navPosted:
+                        setFragment(new PostedFragment());
+                        return true;
+                    case R.id.navWaiting:
+                        setFragment(new WaitingAcceptFragment());
+                        return true;
+                    case R.id.navExpire:
+                        setFragment(new ExpireFragment());
+                        return true;
+                    case R.id.navUploadPost:
+                        setFragment(new UpLoadPostFragment());
+                        return true;
+                        default:
+                            return false;
+                }
+            }
+        });
 
     }
     @Override

@@ -22,7 +22,6 @@
     <string name="txtNhaTuyenDung">Nhà tuyển dụng: Đăng việc làm</string>
     <string name="Test">Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh.Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh.Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh.Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh. Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh. Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh. Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh.Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh.Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh.Công ty ABC tuyển dụng nhân viên làm việc ngày 8 tiếng tiền lương thỏa thuân, không yêu cầu kinh nghiệm làm việc tại hồ chí minh. </string>
     <string-array name="DanhSachLoaiHinhCongTy">
-        <item>Chọn loại hình công ty</item>
         <item>Công ty 100% vốn nước ngoài</item>
         <item>Công ty cá nhân</item>
         <item>Công ty đa quốc gia</item>
@@ -30,14 +29,12 @@
         <item>Công ty cổ phần</item>
     </string-array>
     <string-array name="QuyMoCongTy">
-        <item>Chọn quy mô công ty</item>
         <item>Dưới 10 thành viên</item>
         <item>Từ 10 - 49 thành viên</item>
         <item>Từ 50 đến 99 thành viên</item>
         <item>Từ 100 thành viên trở lên</item>
     </string-array>
     <string-array name="TinhThanh">
-        <item>Chọn tỉnh/thành</item>
         <item>Hồ Chí Minh</item>
         <item>Khánh Hòa</item>
         <item>Hà Nội</item>
