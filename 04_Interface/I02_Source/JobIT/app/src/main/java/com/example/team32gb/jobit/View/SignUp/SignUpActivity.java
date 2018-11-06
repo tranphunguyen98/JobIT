@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -15,10 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team32gb.jobit.Model.JobSeekerProfile.UserModel;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
+import com.facebook.share.Share;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -64,45 +68,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             case R.id.btnSignUp:
-                SharedPreferences sharedPreferences = getSharedPreferences(Config.USER_TYPE, MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
                 int userType = sharedPreferences.getInt(Config.USER_TYPE, 0);
+                Log.e("kiemtrasignup",userType+"");
                 switch (userType) {
                     case Config.IS_JOB_SEEKER:
+                        signUp(Config.REF_JOBSEEKERS_NODE);
                         break;
-                }
-                if (checkInfoInput()) {
-                    progressDialog.setMessage("Đang xử lý...");
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-
-                    final String email = edtEmail.getText().toString();
-                    final String password = edtPassword.getText().toString();
-
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                progressDialog.dismiss();
-                                Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                                SharedPreferences sharedPreferences;
-                                sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(Config.NAME_USER, edtName.getText().toString());
-                                editor.putString(Config.EMAIL_USER, email);
-                                editor.putString(Config.PASSWORD_USER, password);
-                                editor.putBoolean(Config.SIGN_UP_WITH_EMAIL, true);
-                                editor.apply();
-                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                                databaseReference.child("abc").setValue("111");
-                                Intent intent = new Intent(SignUpActivity.this, HomeJobSeekerActivity.class);
-                                startActivity(intent);
-                            } else {
-                                progressDialog.dismiss();
-                                Toast.makeText(SignUpActivity.this, "Đăng ký thất bại, vui lòng đăng ký bằng Email khác", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    case Config.IS_RECRUITER:
+                        signUp(Config.REF_RECRUITERS_NODE);
+                        break;
+                    case Config.IS_ADMIN:
+                        signUp(Config.REF_ADMINS_NODE);
+                        break;
+                    default:
+                        break;
                 }
                 break;
             case R.id.tvJumpSignIn:
@@ -152,5 +132,63 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edtConfirmPassword.setError("2 mật khẩu không trùng nhau");
         }
         return isvalid;
+    }
+
+    private void saveInfoToLocal() {
+        //Lưu thông tin vào bộ nhớ máy
+        SharedPreferences sharedPreferences;
+        sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Config.NAME_USER, edtName.getText().toString());
+        editor.putString(Config.EMAIL_USER, edtEmail.getText().toString());
+        editor.putString(Config.PASSWORD_USER, edtPassword.getText().toString());
+        editor.putBoolean(Config.SIGN_UP_WITH_EMAIL, true);
+        editor.apply();
+    }
+
+    private void saveInfotToServer(String refUserType, String uid) {
+        //Lưu thông tin lên server
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(refUserType).child(uid);
+        UserModel userModel = new UserModel();
+        userModel.setEmail(edtEmail.getText().toString());
+        userModel.setName(edtName.getText().toString());
+        databaseReference.setValue(userModel);
+    }
+
+    private void handlingProgressBar() {
+        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    private void signUp(final String refUserType) {
+        if (checkInfoInput()) {
+            handlingProgressBar();
+            Log.e("kiemtrasignup",refUserType);
+
+            final String email = edtEmail.getText().toString();
+            final String password = edtPassword.getText().toString();
+
+            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(SignUpActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+
+                        saveInfoToLocal();
+
+                        String uid = task.getResult().getUser().getUid();
+                        saveInfotToServer(refUserType, uid);
+
+                        Util.jumpActivity(SignUpActivity.this, HomeJobSeekerActivity.class);
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(SignUpActivity.this, "Đăng ký thất bại, vui lòng đăng ký bằng Email khác", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 }

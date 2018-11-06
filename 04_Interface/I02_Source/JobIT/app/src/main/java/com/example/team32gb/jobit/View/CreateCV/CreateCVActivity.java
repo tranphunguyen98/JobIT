@@ -138,7 +138,7 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         btnSaveCV.setOnClickListener(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
-        uid = sharedPreferences.getString(Config.UID_USER,"");
+        uid = FirebaseAuth.getInstance().getUid();
         edtNameUser.setText(sharedPreferences.getString(Config.NAME_USER,""));
         edtEmail.setText(sharedPreferences.getString(Config.EMAIL_USER,""));
 
@@ -225,18 +225,17 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
 
         projectInCVModel1.setRole(edtRole1.getText().toString());
         String strNumberMember1 = edtNumberMember1.getText().toString();
-        if( strNumberMember1 != "") {
+        if( strNumberMember1 != null && !strNumberMember1.isEmpty()) {
             projectInCVModel1.setNumberMember(Long.parseLong(strNumberMember1));
         } else projectInCVModel1.setNumberMember(0l);
 
         projectInCVModel2.setDecription(edtDescription2.getText().toString());
         projectInCVModel2.setName(edtNameProject2.getText().toString());
-        projectInCVModel2.setNumberMember(Long.parseLong(edtNumberMember2.getText().toString()));
         projectInCVModel2.setRole(edtRole2.getText().toString());
         String strNumberMember2 = edtNumberMember2.getText().toString();
-        if( strNumberMember2 != "") {
+        if( strNumberMember2 != null && !strNumberMember2.isEmpty()) {
             projectInCVModel2.setNumberMember(Long.parseLong(strNumberMember2));
-        } else projectInCVModel1.setNumberMember(0l);
+        } else projectInCVModel2.setNumberMember(0l);
 
         cvEmployeeModel.getProjects().add(projectInCVModel1);
         cvEmployeeModel.getProjects().add(projectInCVModel2);

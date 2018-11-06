@@ -136,7 +136,9 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
                 SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt(Config.USER_TYPE,0);
+                editor.putBoolean(Config.IS_LOGGED,false);
                 editor.apply();
+                firebaseAuth.signOut();
                 Util.jumpActivity(this,SelectUserTypeActivity.class);
                 break;
             default:

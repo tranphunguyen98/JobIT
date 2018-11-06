@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -184,10 +185,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         Toast.makeText(SignInActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                     } else {
                         progressDialog.dismiss();
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean(Config.SIGN_UP_WITH_EMAIL, true);
-                        editor.putString(Config.PASSWORD_USER, password);
-                        editor.apply();
+
                     }
                 }
             });
@@ -277,117 +275,105 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
 
     @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+    public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String uid = user.getUid();
+                    int userType = sharedPreferences.getInt(Config.USER_TYPE, 0);
+                    Log.e("kiemtraavatar", userType + "");
+                    DataSnapshot dsJobseeker = dataSnapshot.child(Config.REF_JOBSEEKERS_NODE);
+                    DataSnapshot dsRecruiter = dataSnapshot.child(Config.REF_RECRUITERS_NODE);
+                    DataSnapshot dsAdmin = dataSnapshot.child(Config.REF_ADMINS_NODE);
+
+                    UserModel model;
+
+                    switch (userType) {
+                        case Config.IS_JOB_SEEKER:
+                            //Nếu đã tồn tại tài khoản nhưng không phải là người tìm việc
+                            if (dsRecruiter.hasChild(uid) || dsAdmin.hasChild(uid)) {
+                                firebaseAuth.signOut();
+                                Toast.makeText(SignInActivity.this, "Tài khoản của bạn đã đăng ký cho nhà tuyển dụng hoặc admin\n vui lòng đăng ký tài khoản khác", Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                            //Nếu tồn tại tài khoản là người tìm việc
+                            if (dsJobseeker.hasChild(uid)) {
+                                //Lấy thông tin user từ FirebaseDatabase
+                                model = dsJobseeker.child(uid).getValue(UserModel.class);
+                                //Lưu hình ảnh avatar vào bộ nhớ máy
+                                saveImageAvatarToExternalMemory(model,uid);
+                            } else {
+                                //Lấy thông tin user từ FirebaseAuth
+                                model = getInfoFromFirebaseUser(user);
+                                //Lưu thông tin lên firebase
+                                nodeRoot.child(Config.REF_JOBSEEKERS_NODE).child(uid).setValue(model);
+                            }
+                            saveInfoToLocal(model);
+                            Util.jumpActivity(SignInActivity.this, HomeJobSeekerActivity.class);
+                            break;
+                        case Config.IS_RECRUITER:
+                            Log.e("kiemtrasignin",uid);
+                            //Nếu đã tồn tại tài khoản nhưng không phải là nhà tuyển dụng
+                            if (dsJobseeker.hasChild(uid) || dsAdmin.hasChild(uid)) {
+                                firebaseAuth.signOut();
+                                Toast.makeText(SignInActivity.this, "Tài khoản của bạn đã đăng ký cho người tìm việc hoặc admin\n vui lòng đăng nhập tài khoản khác", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                            DataSnapshot dsCompany = dataSnapshot.child(Config.REF_INFO_COMPANY);
+                            //Nếu tồn tại tài khoản
+                            if (dsRecruiter.hasChild(uid)) {
+                                //Lấy thông tin user từ firebaseDatabase
+                                model = dsRecruiter.child(uid).getValue(UserModel.class);
+                                //Lưu thông tin vào bộ nhớ máy
+                                saveInfoToLocal(model);
+                                //Lưu hình ảnh avatar vào bộ nhớ máy
+                                saveImageAvatarToExternalMemory(model,uid);
+                                if (dsCompany.hasChild(uid)) {
+                                    Util.jumpActivity(SignInActivity.this, HomeRecruitmentActivity.class);
+                                } else {
+                                    Util.jumpActivity(SignInActivity.this, SignUpAccountBusiness.class);
+                                }
+                            } else {
+                                //Lấy thông tin user từ FirebaseAuth
+                                model = getInfoFromFirebaseUser(user);
+                                //Lưu thông tin vào bộ nhớ máy
+                                saveInfoToLocal(model);
+                                //Lưu thông tin user lên FirebaseDatabase
+                                nodeRoot.child(Config.REF_RECRUITERS_NODE).child(uid).setValue(model);
+                                Util.jumpActivity(SignInActivity.this, SignUpAccountBusiness.class);
+                            }
+                            break;
+                        default:
+                            break;
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
             final String uid = user.getUid();
-            Log.e("kiemtraToken", "abc");
-           FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                 @Override
                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         String token = task.getResult().getToken();
-                        Log.e("kiemtraToken", token);
                         DatabaseReference dfFCM_token = nodeRoot.child(Config.REF_FCM_TOKEN).child(uid).child("token");
                         dfFCM_token.setValue(token);
-                    }else {
-                        Log.e("kiemtraToken", "fail");
                     }
                 }
             });
-            //Log.e("kiemtraToken",sharedPreferences.getInt(Config.USER_TYPE, 0) +"" );
-            switch (sharedPreferences.getInt(Config.USER_TYPE, 0)) {
-                case Config.IS_JOB_SEEKER:
-                    Log.e("kiemtrataikhoan",user.getEmail());
-                    final DatabaseReference dfJobSeeker = nodeRoot.child(Config.REF_JOBSEEKERS_NODE);
-                    dfJobSeeker.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Log.e("kiemtrataikhoan","kt");
-                            UserModel model;
-                            //Nếu tồn tại tài khoản
-                            if (dataSnapshot.hasChild(uid)) {
-                                model = dataSnapshot.child(uid).getValue(UserModel.class);
-                                Log.e("kiemtrataikhoan",model.getEmail());
-                                saveImageAvatarToExternalMemory(model);
-                            } else {
-                                model = getInfoFromFirebaseUser(user);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean(Config.IS_LOGGED,true);
-                                editor.putString(Config.NAME_USER,model.getName());
-                                editor.putString(Config.EMAIL_USER,model.getEmail());
-                                editor.apply();
-                                Log.e("kiemtrataikhoan",model.getEmail());
-                                dfJobSeeker.child(uid).setValue(model);
-                            }
-                            saveInfoToShareReference(model);
-                            Util.jumpActivity(SignInActivity.this, HomeJobSeekerActivity.class);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.e("kiemtrataikhoan",databaseError.getDetails());
-                        }
-                    });
-                    break;
-                case Config.IS_RECRUITER:
-                    nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            DataSnapshot dsRecruiter = dataSnapshot.child(Config.REF_RECRUITERS_NODE);
-                            DataSnapshot dsCompany = dataSnapshot.child(Config.REF_INFO_COMPANY);
-                            UserModel model;
-                            //Nếu tồn tại tài khoản
-                            if (dsRecruiter.hasChild(uid)) {
-                                model = dsRecruiter.child(uid).getValue(UserModel.class);
-                                saveImageAvatarToExternalMemory(model);
-                                if(dsCompany.hasChild(uid)) {
-                                    Util.jumpActivity(SignInActivity.this,HomeRecruitmentActivity.class);
-                                } else {
-                                    Util.jumpActivity(SignInActivity.this,SignUpAccountBusiness.class);
-                                }
-                            } else {
-                                model = getInfoFromFirebaseUser(user);
-                                nodeRoot.child(Config.REF_RECRUITERS_NODE).child(uid).setValue(model);
-                                saveInfoToShareReference(model);
-                                Util.jumpActivity(SignInActivity.this,SignUpAccountBusiness.class);
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
-                    break;
-                case Config.IS_ADMIN:
-                    DatabaseReference dfAdmin = nodeRoot.child(Config.REF_ADMINS_NODE);
-                    dfAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
-                        UserModel model;
-
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            //Nếu tồn tại tài khoản
-                            if (dataSnapshot.hasChild(uid)) {
-                                model = dataSnapshot.child(uid).getValue(UserModel.class);
-                                saveImageAvatarToExternalMemory(model);
-                            } else {
-                                model = getInfoFromFirebaseUser(user);
-                            }
-                            saveInfoToShareReference(model);
-                            Util.jumpActivity(SignInActivity.this, HomeJobSeekerActivity.class);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
-                    break;
-                default:
-                    break;
-            }
         }
     }
+
 
     public UserModel getInfoFromFirebaseUser(FirebaseUser user) {
         UserModel model = new UserModel();
@@ -401,20 +387,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         return model;
     }
 
-    public void saveImageAvatarToExternalMemory(UserModel model) {
-        if (model.getAvatar() != "") {
+    public void saveImageAvatarToExternalMemory(UserModel model,String uid) {
+
+        if (model.getAvatar() != null && (!model.getAvatar().isEmpty())){
+            Log.e("kiemtraimage",model.getName());
             File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
             if (!folderDownloaded.exists()) {
                 folderDownloaded.mkdir();
             }
             final File fileDownload = new File(folderDownloaded, model.getUid() + ".jpg");
             StorageReference storageReference;
-            storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR).child(model.getUid());
+            storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR).child(uid);
             storageReference.getFile(fileDownload);
         }
     }
 
-    public void saveInfoToShareReference(UserModel model) {
+    public void saveInfoToLocal(UserModel model) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(MAY_GET_LOCAL, true);
         editor.putString(Config.EMAIL_USER, model.getEmail());

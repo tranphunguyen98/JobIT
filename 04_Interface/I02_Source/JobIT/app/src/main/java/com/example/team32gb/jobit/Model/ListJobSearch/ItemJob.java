@@ -8,7 +8,7 @@ public class ItemJob extends DataJob{
     public ItemJob(DataJob dataJob) {
         this.setNameCompany(dataJob.getNameCompany());
         this.setNameJob(dataJob.getNameJob());
-        this.setTime(dataJob.getNameCompany());
+        this.setTime(dataJob.getTime());
 
     }
     public String getIdJob() {
