@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.team32gb.jobit.Utility.FragmentCallBack;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InviteJobFragment extends Fragment {
+public class InviteJobFragment extends Fragment implements FragmentCallBack {
 
     View v;
     private RecyclerView recyclerView;
@@ -55,5 +57,10 @@ public class InviteJobFragment extends Fragment {
         lsData.add(new DataApplied("Nguyễn Văn K","9h trước"));
         lsData.add(new DataApplied("Nguyễn Văn L","7h trước"));
         lsData.add(new DataApplied("Nguyễn Văn M","5 ngày trước"));
+    }
+
+    @Override
+    public void showList(String idCompany, String idJob) {
+
     }
 }

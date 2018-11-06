@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
+import com.example.team32gb.jobit.View.PostJob.PostJobRecruitmentActivity;
 
 
 /**
@@ -34,7 +35,7 @@ public class UpLoadPostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Thay cái activity vào chỗ này nữa nhan, tui để HomeRecruitmentActivity để test thôi
-                Intent intent = new Intent(getContext().getApplicationContext(),HomeRecruitmentActivity.class);
+                Intent intent = new Intent(getContext().getApplicationContext(),PostJobRecruitmentActivity.class);
                 startActivity(intent);
             }
         });

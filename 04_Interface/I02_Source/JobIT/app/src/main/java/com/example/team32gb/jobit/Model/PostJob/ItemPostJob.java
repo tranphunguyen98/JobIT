@@ -1,11 +1,12 @@
 package com.example.team32gb.jobit.Model.PostJob;
 
+import android.os.Parcelable;
+
 public class ItemPostJob extends DataPostJob {
     String idJob;
     String idCompany;
 
     public ItemPostJob(DataPostJob dataPostJob) {
-        this.setNameCompany(dataPostJob.getNameCompany());
         this.setNameJob(dataPostJob.getNameJob());
         this.setTypeJob(dataPostJob.getTypeJob());
         this.setMaxSalary(dataPostJob.getMaxSalary());

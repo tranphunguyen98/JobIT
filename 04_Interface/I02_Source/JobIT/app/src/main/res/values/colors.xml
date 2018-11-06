@@ -4,9 +4,11 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="backgroundRed">#cd2027</color>
+
     <color name="bgRedTransparent90">#e0cd2027</color>
     <color name="bgBlackTransparent40">#66000000</color>
     <color name="bgWhiteTransparent40">#66ffffff</color>
+    <color name="gray">#8f8f8f</color>
     <color name="bgButtonPressed">#dfdfdf</color>
     <color name="white">#ffffff</color>
     <color name="bgButtonSignInPressed">#c1bfbf</color>

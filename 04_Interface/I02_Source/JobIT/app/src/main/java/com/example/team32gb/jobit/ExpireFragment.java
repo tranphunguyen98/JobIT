@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
+import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
+import com.example.team32gb.jobit.View.PostedJob.ViewAdapterPosted;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class ExpireFragment extends Fragment {
 
     View v;
     private RecyclerView recyclerView;
-    private List<DataJob> lsData;
+    private List<ItemPostJob> lsData;
     public ExpireFragment() {
         // Required empty public constructor
     }
@@ -47,25 +49,6 @@ public class ExpireFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lsData = new ArrayList<>();
-        lsData.add(new DataJob("Thực tập sjdfhjahsdjf","ABC","3h"));
-        lsData.add(new DataJob("Thực tập dsfsdfsd 1","ABCD","5h"));
-        lsData.add(new DataJob("Thực tập adfasdfa 2","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 3","AgfgBC","3h"));
-        lsData.add(new DataJob("Thực tập 4","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 5","ABffgfgC","3h"));
-        lsData.add(new DataJob("Thực tậadfasdfs p 6","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 7","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 8","ABssdC","3h"));
-        lsData.add(new DataJob("Thực tậpsadfsadfsd 9","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 10","AdgfBC","3h"));
-        lsData.add(new DataJob("Thực tậsadfsdfp 11","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 12","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 13","ABC","3h"));
-        lsData.add(new DataJob("Thực tậsadfsdfp 14","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 15","ABC","3h"));
-        lsData.add(new DataJob("Thực tsdfsdập 16","ABrrete","3h"));
-        lsData.add(new DataJob("Thực tập 17","ABC","3h"));
-        lsData.add(new DataJob("Thực tsdfsập 18","ABC","3h"));
-        lsData.add(new DataJob("Thực tập 19","ABC","3h"));
+
     }
 }

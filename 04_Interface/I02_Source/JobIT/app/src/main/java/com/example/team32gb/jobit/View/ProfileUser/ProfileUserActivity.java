@@ -1,6 +1,5 @@
-package com.example.team32gb.jobit.View.JobSeekerProfile;
+package com.example.team32gb.jobit.View.ProfileUser;
 
-import android.arch.lifecycle.CompositeGeneratedAdaptersObserver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -25,9 +24,11 @@ import com.example.team32gb.jobit.Presenter.JobSeekerProfile.PresenterInJobSeeke
 import com.example.team32gb.jobit.Presenter.JobSeekerProfile.PresenterLogicJobSeekerProfile;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.ChangePassword.ChangePasswordActivity;
 import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
+import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,7 +41,7 @@ import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class JobSeekerProfileActivity extends AppCompatActivity implements View.OnClickListener, ViewJobSeekerProfile {
+public class ProfileUserActivity extends AppCompatActivity implements View.OnClickListener, ViewProfileUser {
     private static final int SELECT_PICTURE = 10;
     private Button btnAuthenticateAccount, btnMyCV, btnChangePassword, btnSignOut;
     private EditText edtNameProfile;
@@ -55,6 +56,7 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
     private String uid;
     private PresenterInJobSeekerProfile presenterJobSeekerProfile;
     private ProgressBar progressBar;
+    private int typeUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,33 +86,43 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
-        sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 
         user = firebaseAuth.getCurrentUser();
         uid = user.getUid();
         presenterJobSeekerProfile = new PresenterLogicJobSeekerProfile(this, uid);
 //        presenterJobSeekerProfile.getProfile();
         presenterJobSeekerProfile.onCreate();
-       // presenterJobSeekerProfile.getProfile();
-        if(!sharedPreferences.getBoolean(Config.MAY_GET_LOCAL,false)) {
-            Log.e("kiemtraSave", "save1");
-            presenterJobSeekerProfile.getProfile();
+        // presenterJobSeekerProfile.getProfile();
+
+        typeUser = sharedPreferences.getInt(Config.USER_TYPE, 0);
+        if (typeUser == Config.IS_RECRUITER) {
+            btnMyCV.setVisibility(View.GONE);
+        }
+        if (!sharedPreferences.getBoolean(Config.MAY_GET_LOCAL, false)) {
+            switch (typeUser) {
+                case Config.IS_JOB_SEEKER:
+                    presenterJobSeekerProfile.getProfile(Config.REF_JOBSEEKERS_NODE,uid);
+                    break;
+                case Config.IS_RECRUITER:
+                    presenterJobSeekerProfile.getProfile(Config.REF_RECRUITERS_NODE,uid);
+                    break;
+                default:
+                    break;
+            }
+
         } else {
-            Log.e("kiemtraSave", "save1");
             UserModel userModel = new UserModel();
-            userModel.setName(sharedPreferences.getString(Config.NAME_USER,""));
-            userModel.setEmail(sharedPreferences.getString(Config.EMAIL_USER,""));
+            userModel.setName(sharedPreferences.getString(Config.NAME_USER, ""));
+            userModel.setEmail(sharedPreferences.getString(Config.EMAIL_USER, ""));
             userModel.setAvatar(storageReference.child(Config.REF_FOLDER_AVATAR).child(uid).getPath());
 
-            String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" +"/" + uid + ".jpg";
-            Log.e("kiemtrafile",avatarPath);
+            String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + uid + ".jpg";
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
-            Log.e("kiemtrashow","oncreate1");
-            showProfile(userModel,bitmap);
+            showProfile(userModel, bitmap);
         }
-        Log.e("kiemtrashow","oncreate");
     }
 
     @Override
@@ -129,17 +141,28 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
         int id = v.getId();
         switch (id) {
             case R.id.btnMyCV:
-                Intent intentcv = new Intent(JobSeekerProfileActivity.this, CreateCVActivity.class);
+                Intent intentcv = new Intent(ProfileUserActivity.this, CreateCVActivity.class);
                 startActivity(intentcv);
                 break;
             case R.id.btnChangePassword:
-                Intent intent = new Intent(JobSeekerProfileActivity.this, ChangePasswordActivity.class);
+                Intent intent = new Intent(ProfileUserActivity.this, ChangePasswordActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btnSignOutProfile:
                 firebaseAuth.signOut();
-                Intent intent1 = new Intent(JobSeekerProfileActivity.this, HomeJobSeekerActivity.class);
-                startActivity(intent1);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(Config.IS_LOGGED, false);
+                editor.apply();
+                switch (typeUser) {
+                    case Config.IS_JOB_SEEKER:
+                        Util.jumpActivity(this, HomeJobSeekerActivity.class);
+                        break;
+                    case Config.IS_RECRUITER:
+                        Util.jumpActivity(this, SignInActivity.class);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case R.id.btnEditName:
                 btnEditName.setVisibility(View.GONE);
@@ -155,11 +178,20 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
                 btnSaveNameProfile.setVisibility(View.GONE);
                 String name = edtNameProfile.getText().toString();
                 tvNameProfile.setText(name);
-                presenterJobSeekerProfile.saveNameProfile(name);
-                Log.e("kiemtraSave",name);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(Config.NAME_USER,name);
-                editor.apply();
+                switch (typeUser) {
+                    case Config.IS_JOB_SEEKER:
+                        presenterJobSeekerProfile.saveNameProfile(Config.REF_JOBSEEKERS_NODE,uid,name);
+                        break;
+                    case Config.IS_RECRUITER:
+                        presenterJobSeekerProfile.saveNameProfile(Config.REF_RECRUITERS_NODE,uid,name);
+                        break;
+                    default:
+                        break;
+                }
+                Log.e("kiemtraSave", name);
+                SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                editor1.putString(Config.NAME_USER, name);
+                editor1.apply();
                 break;
             case R.id.imgAvatarProfile:
                 Intent intent2 = new Intent();
@@ -180,28 +212,37 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
                 Uri selectedImageURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageURI);
-                    int heightBitmapThumbnail = (int) (100*((bitmap.getHeight()*1.f)/bitmap.getWidth()));
-                    Bitmap bitmapThumbnail = ThumbnailUtils.extractThumbnail(bitmap,100,heightBitmapThumbnail);
+                    int heightBitmapThumbnail = (int) (100 * ((bitmap.getHeight() * 1.f) / bitmap.getWidth()));
+                    Bitmap bitmapThumbnail = ThumbnailUtils.extractThumbnail(bitmap, 100, heightBitmapThumbnail);
 
                     imgAvatarProfile.setImageBitmap(bitmapThumbnail);
-                    Log.e("kiemtraImage","1");
+                    Log.e("kiemtraImage", "1");
                     File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
                     if (!folderDownloaded.exists()) {
                         folderDownloaded.mkdir();
                     }
-                    String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" +"/" + uid + ".jpg";
-                    Log.e("kiemtraImage",avatarPath);
+                    String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + uid + ".jpg";
+                    Log.e("kiemtraImage", avatarPath);
                     File file = new File(avatarPath);
                     FileOutputStream fileOutputStream;
                     fileOutputStream = new FileOutputStream(file);
                     imgAvatarProfile.setImageBitmap(bitmapThumbnail);
-                    Log.e("kiemtraImage",avatarPath);
-                    bitmapThumbnail.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
+                    Log.e("kiemtraImage", avatarPath);
+                    bitmapThumbnail.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
 
                     fileOutputStream.flush();
                     fileOutputStream.close();
 
-                    presenterJobSeekerProfile.saveImageProfile(bitmapThumbnail);
+                    switch (typeUser) {
+                        case Config.IS_JOB_SEEKER:
+                            presenterJobSeekerProfile.saveImageProfile(Config.REF_JOBSEEKERS_NODE,uid,bitmapThumbnail);
+                            break;
+                        case Config.IS_RECRUITER:
+                            presenterJobSeekerProfile.saveImageProfile(Config.REF_RECRUITERS_NODE,uid,bitmapThumbnail);
+                            break;
+                        default:
+                            break;
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -218,12 +259,12 @@ public class JobSeekerProfileActivity extends AppCompatActivity implements View.
 
     @Override
     public void showProfile(UserModel userModel, Bitmap bitmap) {
-        Log.e("kiemtrashow","show");
+        Log.e("kiemtrashow", "show");
         if (!userModel.getAvatar().equals("")) {
             imgAvatarProfile.setImageBitmap(bitmap);
         }
         tvEmailProfile.setText(userModel.getEmail());
-        if(!userModel.getName().equals("")) {
+        if (!userModel.getName().equals("")) {
             tvNameProfile.setText(userModel.getName());
         } else {
             tvNameProfile.setVisibility(View.GONE);

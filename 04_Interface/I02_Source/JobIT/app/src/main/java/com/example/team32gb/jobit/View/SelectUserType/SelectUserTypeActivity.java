@@ -45,9 +45,18 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
 
         switch (userType) {
             case Config.IS_JOB_SEEKER:
-                Intent intent = new Intent(this,HomeJobSeekerActivity.class);
-                startActivity(intent);
+                Util.jumpActivity(this, HomeJobSeekerActivity.class);
                 this.finish();
+                break;
+            case Config.IS_RECRUITER:
+                if (sharedPreferencesUserType.getBoolean(IS_LOGGED, false)) {
+                    Util.jumpActivity(SelectUserTypeActivity.this, HomeRecruitmentActivity.class);
+                } else {
+                    Util.jumpActivity(SelectUserTypeActivity.this, SignInActivity.class);
+                }
+                this.finish();
+                break;
+            case Config.IS_ADMIN:
                 break;
             default:
                 break;
@@ -68,16 +77,16 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
             case R.id.btnDismiss:
                 editor.putInt(USER_TYPE, Config.IS_JOB_SEEKER);
                 editor.apply();
-                Util.jumpActivity(SelectUserTypeActivity.this,HomeJobSeekerActivity.class);
+                Util.jumpActivity(SelectUserTypeActivity.this, HomeJobSeekerActivity.class);
                 this.finish();
                 break;
             case R.id.btnEmployer:
                 editor.putInt(USER_TYPE, IS_RECRUITER);
                 editor.apply();
-                if(sharedPreferencesUserType.getBoolean(IS_LOGGED,false)) {
+                if (sharedPreferencesUserType.getBoolean(IS_LOGGED, false)) {
                     Util.jumpActivity(SelectUserTypeActivity.this, HomeRecruitmentActivity.class);
                 } else {
-                    Util.jumpActivity(SelectUserTypeActivity.this,SignInActivity.class);
+                    Util.jumpActivity(SelectUserTypeActivity.this, SignInActivity.class);
                 }
                 this.finish();
                 break;

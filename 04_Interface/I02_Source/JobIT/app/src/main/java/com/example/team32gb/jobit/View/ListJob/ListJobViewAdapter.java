@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.team32gb.jobit.Model.ListJobSearch.ItemJob;
+import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.JobDetail.DetailJobActivity;
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
 import com.example.team32gb.jobit.R;
@@ -45,7 +46,7 @@ public class ListJobViewAdapter extends RecyclerView.Adapter<ListJobViewAdapter.
         Log.e("kiemtraid", "onBindViewHolder" + i);
         myViewHolder.txtNameJob.setText(mdata.get(i).getNameJob());
         myViewHolder.txtNameCompany.setText(mdata.get(i).getNameCompany());
-        myViewHolder.txtTime.setText((mdata.get(i).getTime()));
+        Util.setSubTime(mdata.get(i).getTime(),myViewHolder.txtTime);
         myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View v, int position) {

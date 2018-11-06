@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit.View.PostJob;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -30,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class PostJobRecruitmentActivity extends AppCompatActivity implements ViewPostJob,AdapterView.OnItemSelectedListener {
     private Toolbar myToolBar;
@@ -39,7 +41,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
     private Spinner spnJobType;
     private EditText edtMinSalary;
     private EditText edtMaxSalary;
-    private EditText edtCompanyTitle;
     private Spinner spnEach;
     private Spinner spnNumHires;
     private EditText edtJobDescription;
@@ -54,7 +55,10 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
 
     private PresenterInPostJob presenter;
-    private DataPostJob dataPostJob;
+    private DataPostJob dataPostJob,dataPostJobEdit;
+
+    private boolean isEdit;
+    private String idJobEdit = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -68,7 +72,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         myToolBar.setBackgroundColor(Color.parseColor("#FFD14D59"));
         setSupportActionBar(myToolBar);
 
-        edtCompanyTitle=findViewById(R.id.edtCompanyTittle);
         edtJobTitle=findViewById(R.id.edtJobTittle);
         spnJobType=findViewById(R.id.spnJobType);
         edtMinSalary=findViewById(R.id.edtMinSalary);
@@ -79,32 +82,47 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         edtQualification=findViewById(R.id.edtQualification);
         btnPost=findViewById(R.id.btnPost);
 
+        Intent intent = getIntent();
+        dataPostJobEdit = intent.getParcelableExtra("detail");
+        idJobEdit = intent.getStringExtra("idJob");
+
+//        if(idJobEdit != null) {
+//            Log.e("kiemtraid",idJobEdit + dataPostJobEdit);
+//
+//        } else {
+//            Log.e("kiemtraid","fail");
+//
+//        }
+
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //xử lys spinner loại công việc
-        Type.add("bán thời gian");
-        Type.add("toàn thời gian");
-        Type.add("hợp đồng");
-        Type.add("thực tập");
-        Type.add("tạm thời");
+        Type.add("Bán thời gian");
+        Type.add("Toàn thời gian");
+        Type.add("Hợp đồng");
+        Type.add("Thực tập");
+        Type.add("Tạm thời");
 
         ArrayAdapter<String> adapterType=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,Type);
         adapterType.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
         spnJobType.setAdapter(adapterType);
+
         spnJobType.setOnItemSelectedListener(this);
 
         //Xử lý Spinner "Mỗi"
-        Each.add("giờ");
-        Each.add("ngày");
-        Each.add("tuần");
-        Each.add("tháng");
-        Each.add("năm");
+        Each.add("Tháng");
+        Each.add("Giờ");
+        Each.add("Ngày");
+        Each.add("Tuần");
+        Each.add("Năm");
 
 
         ArrayAdapter<String> adapterEach=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,Each);
         adapterEach.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnEach.setAdapter(adapterEach);
+
         spnEach.setOnItemSelectedListener(this);
 
         //Xử lý Spinner số lượng người cần tuyển
@@ -114,34 +132,30 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         NumHires.add("Hơn 10 người");
         NumHires.add("Nhu cầu liên tục");
 
-        ArrayAdapter<String> adapterNumHires= new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,NumHires);
+        ArrayAdapter<String> adapterNumHires= new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,NumHires);
         adapterNumHires.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnNumHires.setAdapter(adapterNumHires);
+
         spnNumHires.setOnItemSelectedListener(this);
 
+        if(dataPostJobEdit != null) {
+            isEdit = true;
+            edtJobTitle.setText(dataPostJobEdit.getNameJob());
+            edtMinSalary.setText(dataPostJobEdit.getMinSalary());
+            edtMaxSalary.setText(dataPostJobEdit.getMaxSalary());
+            edtJobDescription.setText(dataPostJobEdit.getDescription());
+            edtQualification.setText(dataPostJobEdit.getQualification());
 
-        edtCompanyTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            spnJobType.setSelection(getPositionFromString(dataPostJobEdit.getTypeJob(),Type));
+            adapterType.notifyDataSetChanged();
 
-            }
+            spnEach.setSelection(getPositionFromString(dataPostJobEdit.getEach(),Each));
+            adapterEach.notifyDataSetChanged();
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            spnNumHires.setSelection(getPositionFromString(dataPostJobEdit.getNumberEmployer(),NumHires));
+            adapterNumHires.notifyDataSetChanged();
+        }
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(edtCompanyTitle.getText().toString().length() <= 0)
-                {
-                    valid = false;
-                    edtCompanyTitle.setError("Chưa nhập tên công ty");
-                }
-                else
-                    valid = true;
-            }
-        });
         edtJobTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -245,11 +259,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edtCompanyTitle.getText().toString().length() <= 0)
-                {
-                    valid = false;
-                    edtCompanyTitle.setError("Chưa nhập tên công việc");
-                }
                 if(edtJobTitle.getText().toString().length() <= 0)
                 {
                     valid = false;
@@ -289,8 +298,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
                 {
                     Save();
                     Toast.makeText(getApplication(), "Đăng kí thành công",Toast.LENGTH_LONG).show();
-                    edtCompanyTitle.setText("");
-                    edtCompanyTitle.setError(null);
                     edtJobTitle.setText("");
                     edtJobTitle.setError(null);
                     edtMinSalary.setText("");
@@ -322,7 +329,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
     public void Save() {
         dataPostJob = new DataPostJob();
 
-        dataPostJob.setNameCompany(edtCompanyTitle.getText().toString());
         dataPostJob.setNameJob(edtJobTitle.getText().toString());
         dataPostJob.setTypeJob(Type.get(spnJobType.getSelectedItemPosition()));
         dataPostJob.setMaxSalary(edtMaxSalary.getText().toString());
@@ -332,13 +338,25 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
         dataPostJob.setDescription(edtJobDescription.getText().toString());
         dataPostJob.setQualification(edtQualification.getText().toString());
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm dd/MM/yy");
-        String date = df.format(c.getTime());
-        dataPostJob.setTime(date);
+        if(!isEdit) {
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+            String date = df.format(c.getTime());
+            dataPostJob.setTime(date);
+        } else {
+            dataPostJob.setTime(dataPostJobEdit.getTime());
+        }
+
+
         presenter = new PresenterPostJob(this);
+        String uid = FirebaseAuth.getInstance().getUid();
         Log.e("kt",FirebaseAuth.getInstance().getUid() + "");
-        presenter.SavePost(FirebaseAuth.getInstance().getUid(),dataPostJob);
+        if(isEdit) {
+            presenter.SavePostEdit(idJobEdit,uid,dataPostJob);
+        } else {
+            presenter.SavePost(uid,dataPostJob);
+        }
+
         Log.e("kt","ad");
 
 
@@ -353,4 +371,14 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-}
+
+    private int getPositionFromString(String string, ArrayList<String> ls) {
+        for (int i = 0; i < ls.size();i++) {
+            if(ls.get(i).equals(string)) {
+                Log.e("kiemtrasp",string + ":" + ls.get(i));
+                return i;
+            }
+        }
+        return 0;
+    }
+ }

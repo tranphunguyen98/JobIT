@@ -26,6 +26,7 @@ import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.ForgotPassword.ForgotPasswordActivity;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
+import com.example.team32gb.jobit.View.SelectUserType.SelectUserTypeActivity;
 import com.example.team32gb.jobit.View.SignUp.SignUpActivity;
 import com.example.team32gb.jobit.View.SignUpAccountBusiness.SignUpAccountBusiness;
 import com.facebook.CallbackManager;
@@ -67,7 +68,7 @@ import static com.example.team32gb.jobit.Utility.Config.MAY_GET_LOCAL;
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, FirebaseAuth.AuthStateListener {
     private Button btnLogin, btnLoginGoogle, btnLoginFacebook, btnCreateAccount;
     private EditText edtEmail, edtPassword;
-    private TextView tvForgotPassword;
+    private TextView tvForgotPassword, tvChangeUserType;
     private ProgressDialog progressDialog;
     private GoogleApiClient apiClient;
     private DatabaseReference nodeRoot;
@@ -107,7 +108,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnCreateAccount = findViewById(R.id.btnCreateAccount);
         edtEmail = findViewById(R.id.edtEmailLogIn);
         edtPassword = findViewById(R.id.edtpasswordLogin);
+
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
+        tvChangeUserType = findViewById(R.id.tvChangeUserType);
 
         progressDialog = new ProgressDialog(this);
 
@@ -123,6 +126,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnCreateAccount.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         tvForgotPassword.setOnClickListener(this);
+        tvChangeUserType.setOnClickListener(this);
         CreateClientGoogle();
 
 
@@ -162,6 +166,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.tvForgotPassword:
                 Intent intentFG = new Intent(this, ForgotPasswordActivity.class);
                 startActivity(intentFG);
+                break;
+            case R.id.tvChangeUserType:
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(Config.USER_TYPE, 0);
+                editor.apply();
+                Util.jumpActivity(this, SelectUserTypeActivity.class);
                 break;
             default:
                 break;
@@ -278,6 +288,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            final SharedPreferences.Editor edit = sharedPreferences.edit();
             nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -294,7 +305,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         case Config.IS_JOB_SEEKER:
                             //Nếu đã tồn tại tài khoản nhưng không phải là người tìm việc
                             if (dsRecruiter.hasChild(uid) || dsAdmin.hasChild(uid)) {
-                                firebaseAuth.signOut();
+                                Util.signOut(firebaseAuth,SignInActivity.this);
                                 Toast.makeText(SignInActivity.this, "Tài khoản của bạn đã đăng ký cho nhà tuyển dụng hoặc admin\n vui lòng đăng ký tài khoản khác", Toast.LENGTH_LONG).show();
                                 break;
                             }
@@ -303,7 +314,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 //Lấy thông tin user từ FirebaseDatabase
                                 model = dsJobseeker.child(uid).getValue(UserModel.class);
                                 //Lưu hình ảnh avatar vào bộ nhớ máy
-                                saveImageAvatarToExternalMemory(model,uid);
+                                saveImageAvatarToExternalMemory(model, uid);
                             } else {
                                 //Lấy thông tin user từ FirebaseAuth
                                 model = getInfoFromFirebaseUser(user);
@@ -311,13 +322,17 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 nodeRoot.child(Config.REF_JOBSEEKERS_NODE).child(uid).setValue(model);
                             }
                             saveInfoToLocal(model);
+                            saveFCMTokenToServer(uid);
+                            edit.putBoolean(Config.IS_LOGGED, true);
+                            edit.apply();
+                            SignInActivity.this.finish();
                             Util.jumpActivity(SignInActivity.this, HomeJobSeekerActivity.class);
                             break;
                         case Config.IS_RECRUITER:
-                            Log.e("kiemtrasignin",uid);
+                            Log.e("kiemtrasignin", uid);
                             //Nếu đã tồn tại tài khoản nhưng không phải là nhà tuyển dụng
                             if (dsJobseeker.hasChild(uid) || dsAdmin.hasChild(uid)) {
-                                firebaseAuth.signOut();
+                                Util.signOut(firebaseAuth,SignInActivity.this);
                                 Toast.makeText(SignInActivity.this, "Tài khoản của bạn đã đăng ký cho người tìm việc hoặc admin\n vui lòng đăng nhập tài khoản khác", Toast.LENGTH_SHORT).show();
                                 break;
                             }
@@ -328,11 +343,16 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 model = dsRecruiter.child(uid).getValue(UserModel.class);
                                 //Lưu thông tin vào bộ nhớ máy
                                 saveInfoToLocal(model);
+                                saveFCMTokenToServer(uid);
                                 //Lưu hình ảnh avatar vào bộ nhớ máy
-                                saveImageAvatarToExternalMemory(model,uid);
+                                saveImageAvatarToExternalMemory(model, uid);
+                                edit.putBoolean(Config.IS_LOGGED, true);
+                                edit.apply();
                                 if (dsCompany.hasChild(uid)) {
+                                    SignInActivity.this.finish();
                                     Util.jumpActivity(SignInActivity.this, HomeRecruitmentActivity.class);
                                 } else {
+                                    SignInActivity.this.finish();
                                     Util.jumpActivity(SignInActivity.this, SignUpAccountBusiness.class);
                                 }
                             } else {
@@ -342,13 +362,15 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 saveInfoToLocal(model);
                                 //Lưu thông tin user lên FirebaseDatabase
                                 nodeRoot.child(Config.REF_RECRUITERS_NODE).child(uid).setValue(model);
+                                saveFCMTokenToServer(uid);
+                                edit.putBoolean(Config.IS_LOGGED, true);
+                                edit.apply();
+                                SignInActivity.this.finish();
                                 Util.jumpActivity(SignInActivity.this, SignUpAccountBusiness.class);
                             }
                             break;
                         default:
                             break;
-
-
                     }
 
 
@@ -360,17 +382,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
 
-            final String uid = user.getUid();
-            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                @Override
-                public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                    if (task.isSuccessful()) {
-                        String token = task.getResult().getToken();
-                        DatabaseReference dfFCM_token = nodeRoot.child(Config.REF_FCM_TOKEN).child(uid).child("token");
-                        dfFCM_token.setValue(token);
-                    }
-                }
-            });
+            edit.putBoolean(Config.IS_LOGGED, true);
+            edit.apply();
         }
     }
 
@@ -387,10 +400,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         return model;
     }
 
-    public void saveImageAvatarToExternalMemory(UserModel model,String uid) {
+    public void saveImageAvatarToExternalMemory(UserModel model, String uid) {
 
-        if (model.getAvatar() != null && (!model.getAvatar().isEmpty())){
-            Log.e("kiemtraimage",model.getName());
+        if (model.getAvatar() != null && (!model.getAvatar().isEmpty())) {
+            Log.e("kiemtraimage", model.getName());
             File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
             if (!folderDownloaded.exists()) {
                 folderDownloaded.mkdir();
@@ -408,6 +421,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         editor.putString(Config.EMAIL_USER, model.getEmail());
         editor.putString(Config.NAME_USER, model.getName());
         editor.putString(Config.UID_USER, model.getUid());
+        editor.putString(Config.PASSWORD_USER, edtPassword.getText().toString());
         editor.apply();
     }
 
@@ -419,5 +433,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    private void saveFCMTokenToServer(final String uid) {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (task.isSuccessful()) {
+                    String token = task.getResult().getToken();
+                    DatabaseReference dfFCM_token = nodeRoot.child(Config.REF_FCM_TOKEN).child(uid).child("token");
+                    dfFCM_token.setValue(token);
+                }
+            }
+        });
     }
 }

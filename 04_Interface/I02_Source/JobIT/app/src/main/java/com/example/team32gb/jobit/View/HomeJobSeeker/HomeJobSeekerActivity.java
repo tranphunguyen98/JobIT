@@ -11,8 +11,7 @@ import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
-import com.example.team32gb.jobit.View.JobSeekerProfile.JobSeekerProfileActivity;
-import com.example.team32gb.jobit.View.ListJob.ListJobActivity;
+import com.example.team32gb.jobit.View.ProfileUser.ProfileUserActivity;
 import com.example.team32gb.jobit.View.ListJobSearch.ListJobSearchActivity;
 import com.example.team32gb.jobit.View.MyJob.MyJobActivity;
 import com.example.team32gb.jobit.View.SelectUserType.SelectUserTypeActivity;
@@ -28,6 +27,7 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
     private Button btnAccount;
     private Button btnSignOut;
     private Button btnChangeUserType;
+    private SharedPreferences sharedPreferences;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -48,6 +48,10 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
         btnChangeUserType = findViewById(R.id.btnChangeUserType);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        if(sharedPreferences.getBoolean(Config.IS_LOGGED,false)) {
+            btnAccount.setText(sharedPreferences.getString(Config.EMAIL_USER,"User name"));
+        }
 
         btnSearch.setOnClickListener(this);
         btnTimViec.setOnClickListener(this);
@@ -106,40 +110,44 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
         int id = v.getId();
         switch (id) {
             case R.id.btnSearch:
-                Util.jumpActivity(this,ListJobSearchActivity.class);
+                Util.jumpActivity(this, ListJobSearchActivity.class);
                 break;
             case R.id.btnDangNhap:
                 Intent intentSI = new Intent(this, SignInActivity.class);
                 startActivity(intentSI);
                 break;
             case R.id.btnCV:
-                Intent intentCCV = new Intent(this, CreateCVActivity.class);
-                startActivity(intentCCV);
+                if(sharedPreferences.getBoolean(Config.IS_LOGGED, false)) {
+                    Util.jumpActivity(this,CreateCVActivity.class);
+                } else {
+                    Util.jumpActivity(this,SignInActivity.class);
+                }
+
                 break;
             case R.id.btnMyJob:
-                Util.jumpActivity(this,MyJobActivity.class);
+                Util.jumpActivity(this, MyJobActivity.class);
                 break;
             case R.id.btnSignOut:
-                SharedPreferences spSignOut =getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
-                Util.resetDataLocal(spSignOut);
+                SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                editor1.putBoolean(Config.IS_LOGGED, false);
+                editor1.apply();
                 firebaseAuth.signOut();
                 btnAccount.setVisibility(View.GONE);
                 btnSignIn.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnAccount:
-                Intent intentAc = new Intent(this, JobSeekerProfileActivity.class);
+                Intent intentAc = new Intent(this, ProfileUserActivity.class);
                 startActivity(intentAc);
                 break;
             case R.id.btnChangeUserType:
-                //Intent intentCh = new Intent(this, .class);
-//                startActivity(intentCh);
-                SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(Config.USER_TYPE,0);
-                editor.putBoolean(Config.IS_LOGGED,false);
+                editor.putInt(Config.USER_TYPE, 0);
+                editor.putBoolean(Config.IS_LOGGED, false);
                 editor.apply();
                 firebaseAuth.signOut();
-                Util.jumpActivity(this,SelectUserTypeActivity.class);
+                Util.jumpActivity(this, SelectUserTypeActivity.class);
+                this.finish();
                 break;
             default:
                 break;

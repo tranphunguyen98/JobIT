@@ -12,11 +12,11 @@ public interface PresenterInJobSeekerProfile {
     void onCreate();
     void onDestroy();
 
-    public void saveNameProfile(String name);
+    public void saveNameProfile(String refUser, String uid,String name);
     public void saveImageProfile(Uri uri,String type);
-    public void saveImageProfile(Bitmap bitmap);
+    public void saveImageProfile(String refUser, String uid,Bitmap bitmap);
     public void showProfile(final UserModel userModel);
 
-    public void getProfile();
+    public void getProfile(String refUser, String uid);
     public void getProfileLocal();
 }

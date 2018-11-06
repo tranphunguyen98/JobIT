@@ -1,5 +1,7 @@
 package com.example.team32gb.jobit.View.ListJobSearch;
 
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.example.team32gb.jobit.Model.ListJobSearch.ItemJob;
 import com.example.team32gb.jobit.Presenter.ListJobSearch.PresenterInListJobSearch;
 import com.example.team32gb.jobit.Presenter.ListJobSearch.PresenterLogicListJobSearch;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.ListJob.ListJobViewAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,14 +35,28 @@ public class ListJobSearchActivity extends AppCompatActivity implements ViewList
     private RecyclerView recyclerView;
     private List<DataJob> lsData;
     private PresenterInListJobSearch presenter;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_job_search);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putBoolean(Config.IS_ACTIVITY_APPLY,true);
+        editor.apply();
+
         myToolBar = findViewById(R.id.tbListJobSearch);
         recyclerView = this.findViewById(R.id.rvListJobSearch);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang xử lý...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 //        i/nitData();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -102,6 +119,6 @@ public class ListJobSearchActivity extends AppCompatActivity implements ViewList
         Log.e("kiemtrasnap1",itemJobs.get(0).getNameJob());
         ListJobViewAdapter adapter = new ListJobViewAdapter(this,itemJobs);
         recyclerView.setAdapter(adapter);
-
+        progressDialog.dismiss();
     }
 }

@@ -51,11 +51,11 @@
         <activity android:name=".JobRecruitmentActivity" />
         <activity android:name=".ListCandidateAcvitity" />
         <activity android:name=".View.MyJob.MyJobActivity" />
-        <activity android:name=".RecordRecruitmentActivity" />
+        <activity android:name=".View.SignUpAccountBusiness.RecordRecruitmentActivity" />
         <activity android:name=".ListCandidateAppliedActivity" />
         <activity android:name=".View.CreateCV.CreateCVActivity" />
         <activity android:name=".View.ChangePassword.ChangePasswordActivity" />
-        <activity android:name=".View.JobSeekerProfile.JobSeekerProfileActivity" />
+        <activity android:name=".View.ProfileUser.ProfileUserActivity" />
 
         <service android:name=".Lib.MyFirebaseMessagingService">
             <intent-filter>
@@ -65,8 +65,12 @@
 
         <activity android:name=".View.ListJobSearch.ListJobSearchActivity" />
         <activity android:name=".Test.TestDuyet" />
-        <activity android:name=".View.PostJob.PostJobRecruitmentActivity"></activity>
-        <activity android:name=".View.Applied.AppliedActivity"></activity>
+        <activity android:name=".View.PostJob.PostJobRecruitmentActivity" />
+        <activity android:name=".View.PostedJob.DetailPostedJobActivity" />
+        <activity android:name=".View.Applied.AppliedActivity" />
+        <activity android:name=".View.EmployerAppliedPosted.EmployerAppliedPostedActivity" />
+        <activity android:name=".View.WaitingForInterview.InterviewActivity" />
+        <activity android:name=".View.CompanyDetail.CompanyDetailActivity"></activity>
     </application>
 
 </manifest>

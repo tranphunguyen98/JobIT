@@ -22,6 +22,8 @@ public class Config {
     public static final String EMAIL_USER = "EMAIL_USER";
     public static final String PASSWORD_USER = "PASSWORD_USER";
     public static final String UID_USER = "UID_USER";
+    public static final String IS_ACTIVITY_APPLY = "IS_ACTIVITY_APPLY" ;
+
 
 
 
@@ -33,4 +35,6 @@ public class Config {
     public static final int IS_RECRUITER = 2;
     public static final int IS_ADMIN = 3;
 
+
+    public static int CHECK_FRAV = 0;
 }
