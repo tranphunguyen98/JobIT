@@ -1,6 +1,6 @@
 package com.example.team32gb.jobit;
 
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+
+import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.View.PostedJob.PostedFragment;
 
 public class JobRecruitmentActivity extends AppCompatActivity {
   private Toolbar myToolBar;
@@ -43,6 +46,20 @@ public class JobRecruitmentActivity extends AppCompatActivity {
 
         setFragment(new PostedFragment());
 
+        switch (Config.CHECK_FRAV){
+            case 0:
+                setFragment(new PostedFragment());
+                break;
+            case 1:
+                setFragment(new WaitingAcceptFragment());
+                break;
+            case 2:
+                setFragment(new ExpireFragment());
+                break;
+            case 3:
+                setFragment(new UpLoadPostFragment());
+                break;
+        }
         mainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
