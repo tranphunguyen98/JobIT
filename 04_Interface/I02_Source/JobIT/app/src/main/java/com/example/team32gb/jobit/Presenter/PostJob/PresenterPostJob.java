@@ -17,4 +17,10 @@ public class PresenterPostJob implements PresenterInPostJob {
     public void SavePost(String Uid, DataPostJob dataPostJob) {
         modelPostJob.SavePost(Uid,dataPostJob);
     }
+
+    @Override
+    public void SavePostEdit(String idJob, String Uid, DataPostJob dataPostJob) {
+        modelPostJob.savePostEdit(idJob,Uid,dataPostJob);
+    }
+
 }

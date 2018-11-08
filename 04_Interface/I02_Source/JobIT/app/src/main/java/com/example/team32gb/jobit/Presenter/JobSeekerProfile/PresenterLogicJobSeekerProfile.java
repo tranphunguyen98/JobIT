@@ -3,24 +3,23 @@ package com.example.team32gb.jobit.Presenter.JobSeekerProfile;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.util.Log;
 
 import com.example.team32gb.jobit.Lib.EventBus;
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
 import com.example.team32gb.jobit.Model.JobSeekerProfile.ModelJobSeekerProfile;
 import com.example.team32gb.jobit.Model.JobSeekerProfile.UserModel;
-import com.example.team32gb.jobit.View.JobSeekerProfile.ViewJobSeekerProfile;
+import com.example.team32gb.jobit.View.ProfileUser.ViewProfileUser;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.greenrobot.eventbus.Subscribe;
 
 public class PresenterLogicJobSeekerProfile implements PresenterInJobSeekerProfile {
     private ModelJobSeekerProfile modelJobSeekerProfile;
-    private ViewJobSeekerProfile view;
+    private ViewProfileUser view;
     private EventBus eventBus;
 
-    public PresenterLogicJobSeekerProfile(ViewJobSeekerProfile view, String uid) {
-        modelJobSeekerProfile = new ModelJobSeekerProfile(uid);
+    public PresenterLogicJobSeekerProfile(ViewProfileUser view, String uid) {
+        modelJobSeekerProfile = new ModelJobSeekerProfile();
         this.eventBus =GreenRobotEventBus.getInstance();
         this.view = view;
     }
@@ -47,42 +46,23 @@ public class PresenterLogicJobSeekerProfile implements PresenterInJobSeekerProfi
     }
 
     @Override
-    public void saveNameProfile(String name) {
-        modelJobSeekerProfile.saveNameProfile(name);
+    public void saveNameProfile(String refUser, String uid, String name) {
+        modelJobSeekerProfile.saveNameProfile(refUser,uid,name);
     }
 
     @Override
     public void saveImageProfile(Uri uri, String type) {
-        modelJobSeekerProfile.savePictureProfile(uri, type);
+        //modelJobSeekerProfile.savePictureProfile(uri, type);
     }
 
     @Override
-    public void saveImageProfile(Bitmap bitmap) {
-        modelJobSeekerProfile.savePictureProfile(bitmap);
+    public void saveImageProfile(String refUser, String uid,Bitmap bitmap) {
+        modelJobSeekerProfile.savePictureProfile(refUser,uid,bitmap);
     }
 
     @Override
-    public void getProfile() {
-        modelJobSeekerProfile.getUserModel(new JobSeekerInterface() {
-            @Override
-            public void getUserModel(final UserModel userModel) {
-                modelJobSeekerProfile.getStorageReferenceImage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        //view.showProfile(userModel,uri);
-                    }
-                });
-//                long ONE_MEGABYTE = 1024 * 1024;
-//                modelJobSeekerProfile.getStorageReferenceImage().getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//                    @Override
-//                    public void onSuccess(byte[] bytes) {
-//                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                        view.showProfile(userModel,bitmap);
-//                    }
-//
-//                });
-            }
-        });
+    public void getProfile(String refUser, String uid) {
+        modelJobSeekerProfile.getUserModel(refUser,uid);
     }
 
     @Override

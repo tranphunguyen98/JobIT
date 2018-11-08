@@ -29,7 +29,7 @@ public class ModelApplied {
     }
 
     public void getListJob(final String uid){
-        Log.e("kiemtraApply","a23");
+        Log.e("kiemtraApply","a23" + uid);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

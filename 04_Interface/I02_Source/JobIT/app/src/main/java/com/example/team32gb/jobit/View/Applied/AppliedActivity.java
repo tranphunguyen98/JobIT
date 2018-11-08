@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit.View.Applied;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.example.team32gb.jobit.Presenter.Applied.PresenterInApplied;
 import com.example.team32gb.jobit.Presenter.ListJobSearch.PresenterInListJobSearch;
 import com.example.team32gb.jobit.Presenter.ListJobSearch.PresenterLogicListJobSearch;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -38,6 +40,12 @@ public class AppliedActivity extends AppCompatActivity implements ViewListJobApp
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_applied);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putBoolean(Config.IS_ACTIVITY_APPLY,false);
+        editor.apply();
+
         myToolBar = findViewById(R.id.tbListApplied);
         recyclerView = this.findViewById(R.id.rvListApplied);
 //        i/nitData();
@@ -79,7 +87,6 @@ public class AppliedActivity extends AppCompatActivity implements ViewListJobApp
 
     @Override
     public void showListJob(List<ItemJobApplied> itemJobApplieds) {
-        Log.e("kiemtraItem",itemJobApplieds.size() + "");
         ListJobAppliedViewAdapter adapter = new ListJobAppliedViewAdapter(this,itemJobApplieds);
         recyclerView.setAdapter(adapter);
     }

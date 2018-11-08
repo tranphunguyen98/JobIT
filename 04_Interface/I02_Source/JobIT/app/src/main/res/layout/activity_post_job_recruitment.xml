@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".View.PostJob.PostJobRecruitmentActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tbJobRecruitment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/backgroundRed"/>
 
     <ScrollView
+        android:layout_below="@id/tbJobRecruitment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnPost"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,16 +32,7 @@
                 android:layout_marginTop="20dp"
                 android:textSize="25sp"
                 android:layout_gravity="center"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tên Công ty: "
-                android:textSize="20sp"
-                android:layout_marginTop="20dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtCompanyTittle"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,12 +122,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtQualification"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đăng"
-                android:layout_gravity="center"
-                android:id="@+id/btnPost"/>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+    <Button
+        android:id="@+id/btnPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng"
+        android:textColor="@color/backgroundRed"
+        android:background="@drawable/custom_background_button_save_apply"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textAllCaps="false"
+        />
+</RelativeLayout>

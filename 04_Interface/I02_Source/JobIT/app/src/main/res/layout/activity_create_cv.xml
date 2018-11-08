@@ -34,7 +34,6 @@
                 android:text="Upload CV"/>
 
 
-            <!--PART 1: THÔNG TIN CÁ NHÂN-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,10 +59,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
                         android:background="@drawable/icon_edit_createcv" />
                 </LinearLayout>
 
-                <!--Edit part 1-->
                 <LinearLayout
                     android:id="@+id/llEditPersonalInfor"
                     android:layout_width="match_parent"
@@ -286,6 +285,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
                         android:background="@drawable/icon_edit_createcv" />
 
                 </LinearLayout>
@@ -367,7 +367,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!--PART 3: PROJECT-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -394,6 +393,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
                         android:background="@drawable/icon_edit_createcv" />
                     <ImageButton
                         android:id="@+id/btnAddProjectInCV"
@@ -406,7 +406,6 @@
 
                 </LinearLayout>
 
-                <!--Edit Project-->
                 <LinearLayout
                     android:id="@+id/lllEditProject"
                     android:layout_width="match_parent"
@@ -483,7 +482,6 @@
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
-                    <!--Edit project 2-->
                     <LinearLayout
                         android:id="@+id/llEditProject2"
                         android:layout_width="match_parent"
@@ -503,6 +501,7 @@
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="5dp"
                                 android:background="@drawable/ic_delete_project_cv_24dp" />
                         </RelativeLayout>
                         <android.support.design.widget.TextInputLayout

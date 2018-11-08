@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PresenterInPostJob {
     void SavePost(String Uid, DataPostJob dataPostJob);
+    void SavePostEdit(String idJob,String Uid, DataPostJob dataPostJob);
 }

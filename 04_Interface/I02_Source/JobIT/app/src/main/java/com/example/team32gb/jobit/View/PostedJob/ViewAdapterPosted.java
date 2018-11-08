@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.team32gb.jobit.CandidatePostedFragment;
+import com.example.team32gb.jobit.ListCandidateAcvitity;
 import com.example.team32gb.jobit.ListCandidateAppliedActivity;
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
@@ -21,6 +23,7 @@ import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.View.EmployerAppliedPosted.EmployerAppliedPostedActivity;
 import com.example.team32gb.jobit.View.JobDetail.DetailJobActivity;
 import com.example.team32gb.jobit.View.ListJobSearch.ItemClickListener;
+import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -49,20 +52,18 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
     @Override
     public void onBindViewHolder(@NonNull ViewAdapterPosted.MyViewHolder myViewHolder, final int i) {
         myViewHolder.txtNameJob.setText(itemPostJobs.get(i).getNameJob());
-        myViewHolder.txtNameCompany.setText(itemPostJobs.get(i).getNameCompany());
         myViewHolder.txtTime.setText((itemPostJobs.get(i).getTime()));
 
         myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Intent intent = new Intent(context.getApplicationContext(),DetailPostedJobActivity.class);
+                Intent intent = new Intent(context.getApplicationContext(),DetailJobActivity.class);
                 Bundle bundle = new Bundle();
                 // Log.e("kiemtraid", position + "");
 
                 bundle.putString("idJob", itemPostJobs.get(position).getIdJob());
                 bundle.putString("idCompany", itemPostJobs.get(position).getIdCompany());
 
-                bundle.putString("nameCompany",itemPostJobs.get(position).getNameCompany());
                 bundle.putString("nameJob", itemPostJobs.get(position).getNameJob());
                 bundle.putString("typeJob", itemPostJobs.get(position).getTypeJob());
                 bundle.putString("minSalary", itemPostJobs.get(position).getMinSalary());
@@ -79,7 +80,13 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
         myViewHolder.btnApplied.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context.getApplicationContext(), EmployerAppliedPostedActivity.class);
+                Intent intent = new Intent(context.getApplicationContext(), ListCandidateAcvitity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("nameJob",itemPostJobs.get(i).getNameJob());
+                bundle.putString("timeJob",itemPostJobs.get(i).getTime());
+                bundle.putString("idCompany",itemPostJobs.get(i).getIdCompany());
+                bundle.putString("idJob",itemPostJobs.get(i).getIdJob());
+                intent.putExtra("bundle",bundle);
                 context.getApplicationContext().startActivity(intent);
             }
         });

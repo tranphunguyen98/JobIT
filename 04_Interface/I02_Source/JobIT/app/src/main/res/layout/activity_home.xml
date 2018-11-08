@@ -18,13 +18,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <ImageView
                 android:id="@+id/txtJobIT"
+                android:src="@drawable/jobit_text_red"
                 style="@style/StyleJobIT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
                 android:text="@string/jobit" />
 
             <LinearLayout
@@ -38,6 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:layout_marginStart="10dp"
                     android:text="@string/timkiem" />
 
                 <TextView
@@ -69,6 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:layout_marginStart="10dp"
                     android:text="@string/diadiem" />
 
                 <TextView
@@ -104,8 +107,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/custom_button_login_myjob_taocv"
-                android:drawableStart="@drawable/ic_login"
+                android:drawableStart="@drawable/ic_user"
                 android:drawableEnd="@drawable/ic_next"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
@@ -114,17 +118,21 @@
             <Button
                 android:id="@+id/btnAccount"
                 style="@style/Style_btnCv"
+                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/custom_button_login_myjob_taocv"
-                android:drawableStart="@drawable/ic_login"
+                android:drawableStart="@drawable/ic_user"
                 android:drawableEnd="@drawable/ic_next"
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:textStyle="bold"
                 android:text="user name" />
 
             <Button
                 android:id="@+id/btnMyJob"
                 style="@style/Style_btnCv"
+                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_button_login_myjob_taocv"
@@ -137,33 +145,40 @@
             <Button
                 android:id="@+id/btnCV"
                 style="@style/Style_btnCv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/custom_button_login_myjob_taocv"
-                android:drawableStart="@drawable/ic_cv"
-                android:drawableEnd="@drawable/ic_next"
-                android:text="@string/TaoCV" />
-
-            <Button
-                android:id="@+id/btnChangeUserType"
-                style="@style/Style_btnCv"
+                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_button_login_myjob_taocv"
                 android:drawableStart="@drawable/ic_cv"
                 android:drawablePadding="10dp"
+                android:drawableEnd="@drawable/ic_next"
+                android:gravity="center_vertical"
+                android:text="@string/TaoCV" />
+
+            <Button
+                android:id="@+id/btnChangeUserType"
+                style="@style/Style_btnCv"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_button_login_myjob_taocv"
+                android:drawableStart="@drawable/ic_change"
+                android:drawablePadding="10dp"
+                android:drawableEnd="@drawable/ic_next"
                 android:gravity="center_vertical"
                 android:text="Chuyển đổi chức năng" />
 
             <Button
                 android:id="@+id/btnSignOut"
                 style="@style/Style_btnCv"
+                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_button_login_myjob_taocv"
-                android:drawableStart="@drawable/ic_cv"
+                android:drawableStart="@drawable/ic_log_out"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
+                android:drawableEnd="@drawable/ic_next"
                 android:text="Đăng xuất" />
         </LinearLayout>
     </ScrollView>

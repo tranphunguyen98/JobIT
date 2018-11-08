@@ -15,4 +15,7 @@ public class ModelPostJob {
     public void SavePost(String Uid, DataPostJob dataPostJob){
         databaseReference.child(Uid).push().setValue(dataPostJob);
     }
+    public void savePostEdit(String idJob, String uid, DataPostJob dataPostJob) {
+        databaseReference.child(uid).child(idJob).setValue(dataPostJob);
+    }
 }

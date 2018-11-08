@@ -6,13 +6,25 @@
     android:layout_margin="5dp"
     android:background="@drawable/custom_backgroud_item_recyclerview"
     android:padding="5dp">
+    <ImageView
+        android:id="@+id/imgAvatarCompany"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/avatar_company"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"/>
+
 
     <TextView
         android:id="@+id/txtTenCV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imgAvatarCompany"
         android:text="Tên công việc"
         android:textSize="15dp"
+        android:layout_marginStart="5dp"
         android:textStyle="bold" />
 
     <TextView
@@ -20,14 +32,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtTenCV"
+        android:layout_alignStart="@+id/txtTenCV"
         android:text="Tên công ty"
         android:textSize="13dp" />
 
     <TextView
-        android:id="@+id/txtThơiGian"
+        android:id="@+id/txtSalary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtTenCT"
+        android:layout_alignStart="@+id/txtTenCV"
+        android:text="Từ $1000 đến $2000"
+        android:textColor="#fd860f"
+        android:textSize="13dp" />
+    <TextView
+        android:id="@+id/txtThơiGian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSalary"
+        android:layout_marginTop="5dp"
+        android:layout_alignStart="@+id/txtTenCV"
         android:text="Thời gian đăng việc"
         android:textSize="10dp" />
 
@@ -37,5 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:src="@drawable/ic_favorite" />
 </RelativeLayout>

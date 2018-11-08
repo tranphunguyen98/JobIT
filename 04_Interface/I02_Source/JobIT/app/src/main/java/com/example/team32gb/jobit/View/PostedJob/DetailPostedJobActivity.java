@@ -213,7 +213,6 @@ public class DetailPostedJobActivity extends AppCompatActivity implements Adapte
             txtDescription.setVisibility(View.VISIBLE);
             txtQuatifition.setVisibility(View.VISIBLE);
 
-            data.setNameCompany(txtNameCompany.getText().toString());
             data.setNameJob(txtNameJob.getText().toString());
             data.setTypeJob(txtType.getText().toString());
             data.setMinSalary(edtMinSalary.getText().toString());
@@ -224,7 +223,7 @@ public class DetailPostedJobActivity extends AppCompatActivity implements Adapte
             data.setEach(Each.get(spEach.getSelectedItemPosition()));
 
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("HH:mm dd/MM/yy");
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm dd/MM/yyyy");
             String str = df.format(c.getTime());
             data.setTime(str);
 

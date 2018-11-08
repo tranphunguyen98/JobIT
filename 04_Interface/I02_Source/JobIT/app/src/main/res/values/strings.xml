@@ -4,6 +4,7 @@
     <string name="fb_login_protocol_scheme">fb2157437357831317</string>
     <string name="tv_sign_up"><u>Sign Up?</u></string>
     <string name="tv_forgot_password"><u>Quên mật khẩu?</u></string>
+    <string name="tv_change_user_type"><u>Chuyển đối chức năng</u></string>
     <string name="tv_Sign_in"><u>Đăng nhập</u></string>
     <string name="tv_version">Phiên bản </string>
     <string name="jobit">JobIT</string>
