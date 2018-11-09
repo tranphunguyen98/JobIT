@@ -1,17 +1,33 @@
 package com.example.team32gb.jobit.Model.SignUpAccountBusiness;
 
-public class InfoCompanyModel {
-    String name;
-    String type;
-    String size;
+import static com.example.team32gb.jobit.Utility.Config.NOT_APPROVAL;
 
-    String address;
-    String province;
-    String introduce;
-    String namePresenter;
-    String phoneNumberPresenter;
+public class InfoCompanyModel {
+    protected String name;
+    protected String type;
+    protected String size;
+
+    protected String address;
+    protected String province;
+    protected String introduce;
+    protected String namePresenter;
+    protected String phoneNumberPresenter;
+    protected long approvalMode;
 
     public InfoCompanyModel() {
+        approvalMode =NOT_APPROVAL;   //0: Chưa duyệt
+    }
+
+    public InfoCompanyModel(String name, String type, String size, String address, String province, String introduce, String namePresenter, String phoneNumberPresenter) {
+        this.name = name;
+        this.type = type;
+        this.size = size;
+        this.address = address;
+        this.province = province;
+        this.introduce = introduce;
+        this.namePresenter = namePresenter;
+        this.phoneNumberPresenter = phoneNumberPresenter;
+        approvalMode =NOT_APPROVAL;   //0: Chưa duyệt
     }
 
     public String getName() {

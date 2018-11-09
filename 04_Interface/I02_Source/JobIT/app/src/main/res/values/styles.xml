@@ -57,4 +57,15 @@
         <item name="android:textAlignment">center</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
+    <style name="TitleInAdmin">
+        <item name="color">#111</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="SubTitleInAdmin">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:color">#d99311</item>
+    </style>
 </resources>

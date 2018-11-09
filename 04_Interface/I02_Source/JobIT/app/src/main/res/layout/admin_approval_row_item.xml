@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10sp"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="#faf5f5">
+
+    <LinearLayout
+        android:id="@+id/llitemCompanyAproval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtCompanyNameSendApproval"
+            style="@style/TitleInAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên công ty cần phê duyệt" />
+
+        <TextView
+            android:id="@+id/txtDateSendApproval"
+            style="@style/SubTitleInAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ngày gửi yêu cầu" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <ImageButton
+            android:id="@+id/imgbtnCheckApproval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/imgbtnCheckApproval"
+            android:background="@drawable/icon_check_approval"
+            android:layout_marginRight="@dimen/marginBtnAdmin"/>
+
+        <ImageButton
+            android:id="@+id/imgbtnUncheckApproval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/imgbtnCheckApproval"
+            android:background="@drawable/icon_uncheck_approval"
+            android:layout_marginRight="@dimen/marginBtnAdmin"/>
+
+        <ImageButton
+            android:id="@+id/imgbtnShowDetailApproval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_show_detail_company_approval_admin"
+            android:layout_marginRight="@dimen/marginBtnAdmin" />
+    </LinearLayout>
+</LinearLayout>

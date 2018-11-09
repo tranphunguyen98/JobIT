@@ -9,6 +9,7 @@ public class Config {
     public static final String REF_RECRUITERS_NODE = "recruiters";
     public static final String REF_ADMINS_NODE = "admins";
     public static final String REF_INFO_COMPANY = "companys";
+    public static final String REF_INFO_COMPANY_WAITING_APPROVAL = "companysWaitingAdminApproval";
     public static final String REF_FCM_TOKEN = "fcm_tokens";
     public static final String REF_AWAITING_APPROVAL_RECRUITERS = "awaiting_approval_recruiters";
     public static final String REF_AWAITING_APPROVAL = "awaiting_approval_recruiters";
@@ -37,4 +38,8 @@ public class Config {
 
 
     public static int CHECK_FRAV = 0;
+
+    public static final long NOT_APPROVAL = 0;
+    public static final long APPROVAL_SUCCESSFUL = 1;
+    public static final long APPROVAL_FAIL = 2;
 }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
+import com.example.team32gb.jobit.View.Admin.AdminHomeActivity;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
@@ -94,8 +95,10 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
                 editor.putInt(USER_TYPE, IS_RECRUITER);
                 editor.apply();
                 Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-//                Intent intent3 = new Intent(this, HomeJobSeekerActivity.class);
-//                startActivity(intent3);
+
+                Intent intent3 = new Intent(this, AdminHomeActivity.class);
+                startActivity(intent3);
+
                 this.finish();
                 break;
             default:
