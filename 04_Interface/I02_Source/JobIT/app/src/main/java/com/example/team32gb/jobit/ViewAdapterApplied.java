@@ -1,13 +1,19 @@
 package com.example.team32gb.jobit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.team32gb.jobit.Utility.Util;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -29,9 +35,38 @@ public class ViewAdapterApplied extends RecyclerView.Adapter<ViewAdapterApplied.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
         myViewHolder.txtName.setText(mData.get(i).getName());
-        myViewHolder.txtTime.setText(mData.get(i).getDayApplied());
+        Log.e("kiemtratime1",mData.get(i).getName());
+        myViewHolder.txtTime.setText(Util.getSubTime(mData.get(i).getDayApplied()));
+
+        myViewHolder.btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("kiemtraLog",mData.get(i).getIdJobSeeker());
+                DatabaseReference nodeRoot = FirebaseDatabase.getInstance().getReference();
+                String idCompany = mData.get(i).getIdCompany();
+                String idJob = mData.get(i).getIdJob();
+                String idJobSeeker = mData.get(i).getIdJobSeeker();
+                String time = mData.get(i).getDayApplied();
+
+                DatabaseReference drDaNop = nodeRoot.child("choDuyets").child(idCompany).child(idJob).child(idJobSeeker);
+                drDaNop.removeValue();
+                DatabaseReference drApplied = nodeRoot.child("Applieds").child(idJobSeeker).child(idCompany).child(idJob);
+                drApplied.removeValue();
+
+                DatabaseReference drChoPV = nodeRoot.child("choPhongVanNTDs").child(idCompany).child(idJob).child(idJobSeeker).child("timeApplied");
+                drChoPV.setValue(time);
+                DatabaseReference drChoPVNTV = nodeRoot.child("choPhongVanNTVs").child(idJobSeeker).child(idCompany).child(idJob).child("timeApplied");
+                drChoPVNTV.setValue(time);
+            }
+        });
+        myViewHolder.btnWacthCV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new I
+            }
+        });
     }
 
     @Override
@@ -43,14 +78,14 @@ public class ViewAdapterApplied extends RecyclerView.Adapter<ViewAdapterApplied.
 
         private TextView txtName;
         private TextView txtTime;
-        private Button btnDelete, btnEdit, btnWacthCV;
+        private Button btnAccept, btnDelete, btnWacthCV;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txtName = itemView.findViewById(R.id.txtName);
             txtTime = itemView.findViewById(R.id.txtTime);
+            btnAccept = itemView.findViewById(R.id.btnAccept);
             btnDelete = itemView.findViewById(R.id.btnDelete);
-            btnEdit = itemView.findViewById(R.id.btnEdit);
             btnWacthCV = itemView.findViewById(R.id.btnWatchCV);
         }
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,17 +14,26 @@ import android.widget.Toast;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
+import com.example.team32gb.jobit.View.Admin.AdminHomeActivity;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
+import com.example.team32gb.jobit.View.SignUpAccountBusiness.SignUpAccountBusiness;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static com.example.team32gb.jobit.Utility.Config.IS_LOGGED;
 import static com.example.team32gb.jobit.Utility.Config.IS_RECRUITER;
+import static com.example.team32gb.jobit.Utility.Config.REGESTERED_INFO;
 import static com.example.team32gb.jobit.Utility.Config.SHARED_PREFERENCES_NAME;
 import static com.example.team32gb.jobit.Utility.Config.USER_TYPE;
 
 public class SelectUserTypeActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button btnJobSeeker, btnEmployer, btnAdmin, btnDismiss;
+    private Button btnJobSeeker, btnEmployer, btnAdmin,btnDismiss;
     private SharedPreferences sharedPreferencesUserType;
     private int userType = 0;
 
@@ -50,7 +61,11 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
                 break;
             case Config.IS_RECRUITER:
                 if (sharedPreferencesUserType.getBoolean(IS_LOGGED, false)) {
-                    Util.jumpActivity(SelectUserTypeActivity.this, HomeRecruitmentActivity.class);
+                    if (sharedPreferencesUserType.getBoolean(REGESTERED_INFO, false)) {
+                        Util.jumpActivity(SelectUserTypeActivity.this, HomeRecruitmentActivity.class);
+                    } else {
+                        Util.jumpActivity(SelectUserTypeActivity.this, SignUpAccountBusiness.class);
+                    }
                 } else {
                     Util.jumpActivity(SelectUserTypeActivity.this, SignInActivity.class);
                 }
@@ -94,8 +109,10 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
                 editor.putInt(USER_TYPE, IS_RECRUITER);
                 editor.apply();
                 Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-//                Intent intent3 = new Intent(this, HomeJobSeekerActivity.class);
-//                startActivity(intent3);
+
+                Intent intent3 = new Intent(this, AdminHomeActivity.class);
+                startActivity(intent3);
+
                 this.finish();
                 break;
             default:

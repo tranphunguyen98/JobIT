@@ -26,6 +26,7 @@ import com.example.team32gb.jobit.Model.PostJob.DataPostJob;
 import com.example.team32gb.jobit.Presenter.PostJob.PresenterInPostJob;
 import com.example.team32gb.jobit.Presenter.PostJob.PresenterPostJob;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Util;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -146,13 +147,13 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
             edtJobDescription.setText(dataPostJobEdit.getDescription());
             edtQualification.setText(dataPostJobEdit.getQualification());
 
-            spnJobType.setSelection(getPositionFromString(dataPostJobEdit.getTypeJob(),Type));
+            spnJobType.setSelection(Util.getPositionSpinnerFromString(dataPostJobEdit.getTypeJob(),Type));
             adapterType.notifyDataSetChanged();
 
-            spnEach.setSelection(getPositionFromString(dataPostJobEdit.getEach(),Each));
+            spnEach.setSelection(Util.getPositionSpinnerFromString(dataPostJobEdit.getEach(),Each));
             adapterEach.notifyDataSetChanged();
 
-            spnNumHires.setSelection(getPositionFromString(dataPostJobEdit.getNumberEmployer(),NumHires));
+            spnNumHires.setSelection(Util.getPositionSpinnerFromString(dataPostJobEdit.getNumberEmployer(),NumHires));
             adapterNumHires.notifyDataSetChanged();
         }
 
@@ -372,10 +373,9 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
     }
 
-    private int getPositionFromString(String string, ArrayList<String> ls) {
+    private int getPositionSpinnerFromString(String string, ArrayList<String> ls) {
         for (int i = 0; i < ls.size();i++) {
             if(ls.get(i).equals(string)) {
-                Log.e("kiemtrasp",string + ":" + ls.get(i));
                 return i;
             }
         }

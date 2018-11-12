@@ -13,6 +13,7 @@ import com.example.team32gb.jobit.JobRecruitmentActivity;
 import com.example.team32gb.jobit.ListCandidateAcvitity;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.View.CompanyDetail.CompanyDetailActivity;
 import com.example.team32gb.jobit.View.ProfileUser.ProfileUserActivity;
 import com.example.team32gb.jobit.View.SelectUserType.SelectUserTypeActivity;
 import com.example.team32gb.jobit.View.SignUpAccountBusiness.RecordRecruitmentActivity;
@@ -69,7 +70,7 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
                // startActivity(intent);
                 break;
             case R.id.btnFileOfRecruit:
-                 Util.jumpActivity(this,RecordRecruitmentActivity.class);
+                 Util.jumpActivity(this,CompanyDetailActivity.class);
                 break;
             case R.id.btnProfileAccount:
                 Util.jumpActivity(this,ProfileUserActivity.class);
@@ -84,13 +85,8 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
                 Util.jumpActivity(this,SelectUserTypeActivity.class);
                 break;
             case R.id.btnSignOutRecruit:
-                SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
-                SharedPreferences.Editor editor =sharedPreferences.edit();
-                editor.putBoolean(Config.IS_LOGGED,false);
-                editor.apply();
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                firebaseAuth.signOut();
-                Util.jumpActivity(HomeRecruitmentActivity.this,SignInActivity.class);
+                Util.signOut(FirebaseAuth.getInstance(),this);
+                Util.jumpActivityRemoveStack(HomeRecruitmentActivity.this,SignInActivity.class);
                 break;
             default:
                 return;

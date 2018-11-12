@@ -5,18 +5,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Util {
     public static void jumpActivity(Context context, Class mclass ) {
+//        Log.e("kiemtrajump",context.toString() + "");
         Intent intent = new Intent(context,mclass);
+        context.startActivity(intent);
+    }
+    public static void jumpActivityRemoveStack(Context context, Class mclass ) {
+//        Log.e("kiemtrajump",context.toString() + "");
+        Intent intent = new Intent(context,mclass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
     public static void resetDataLocal(SharedPreferences sharedPreferences) {
@@ -86,6 +96,16 @@ public class Util {
         SharedPreferences sharedPreferences = context.getSharedPreferences(Config.SHARED_PREFERENCES_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(Config.IS_LOGGED,false);
+        editor.putBoolean(Config.REGESTERED_INFO,false);
         editor.apply();
+    }
+
+    public static int getPositionSpinnerFromString(String string, List<String> ls) {
+        for (int i = 0; i < ls.size();i++) {
+            if(ls.get(i).equals(string)) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

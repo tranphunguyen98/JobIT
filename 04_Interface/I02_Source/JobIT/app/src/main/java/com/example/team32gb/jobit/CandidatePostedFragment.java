@@ -54,6 +54,9 @@ public class CandidatePostedFragment extends Fragment implements FragmentCallBac
         super.onCreate(savedInstanceState);
         lsData = new ArrayList<>();
     }
+
+
+    @Override
     public void showList(final String idCompany, final String idJob) {
         Log.e("kiemtratruyen",idCompany + idJob );
         DatabaseReference nodeRoot = FirebaseDatabase.getInstance().getReference();
@@ -68,8 +71,11 @@ public class CandidatePostedFragment extends Fragment implements FragmentCallBac
                     String name = dataSnapshot.child(Config.REF_JOBSEEKERS_NODE).child(idCadidate).child("name").getValue(String.class);
 
                     Log.e("kiemtra11",time + ":" + name);
+                    dataApplied.setIdJobSeeker(idCadidate);
                     dataApplied.setName(name);
-                    dataApplied.setDayApplied(Util.getSubTime(time));
+                    dataApplied.setDayApplied(time);
+                    dataApplied.setIdJob(idJob);
+                    dataApplied.setIdCompany(idCompany);
                     lsData.add(dataApplied);
                 }
 

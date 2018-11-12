@@ -144,6 +144,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onStop() {
         super.onStop();
+        firebaseAuth.removeAuthStateListener(this);
     }
 
     @Override
@@ -161,6 +162,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btnCreateAccount:
                 Intent intentCA = new Intent(this, SignUpActivity.class);
+                intentCA.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intentCA);
                 break;
             case R.id.tvForgotPassword:
@@ -347,14 +349,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 //Lưu hình ảnh avatar vào bộ nhớ máy
                                 saveImageAvatarToExternalMemory(model, uid);
                                 edit.putBoolean(Config.IS_LOGGED, true);
-                                edit.apply();
+
                                 if (dsCompany.hasChild(uid)) {
                                     SignInActivity.this.finish();
+                                    edit.putBoolean(Config.REGESTERED_INFO,true);
                                     Util.jumpActivity(SignInActivity.this, HomeRecruitmentActivity.class);
                                 } else {
                                     SignInActivity.this.finish();
+
                                     Util.jumpActivity(SignInActivity.this, SignUpAccountBusiness.class);
                                 }
+                                edit.apply();
+                                Log.e("kiemtra1","thanh cong");
                             } else {
                                 //Lấy thông tin user từ FirebaseAuth
                                 model = getInfoFromFirebaseUser(user);

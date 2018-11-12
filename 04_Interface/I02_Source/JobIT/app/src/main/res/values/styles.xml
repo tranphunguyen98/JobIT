@@ -1,12 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="ButtonBorder" parent="Widget.AppCompat.Button.Colored"/>
+
+    <style name="ButtonBorder.Accent">
+        <item name="android:background">@drawable/bg_btn_outline</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
     <style name="StyleJobIT">
         <item name="android:textSize">40sp</item>
         <item name="android:textColor">#de1b1b</item>
@@ -18,14 +29,14 @@
         <item name="android:layout_marginTop">10dp</item>
     </style>
     <style name="Style_edtTK_DD">
-        <item name="android:textSize">20sp</item>
-        <item name="android:padding">5dp</item>
         <item name="android:layout_margin">10dp</item>
     </style>
     <style name="Style_btnTimViec">
-        <item name="android:textColor">#de2727</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
         <item name="android:textAllCaps">false</item>
     </style>
     <style name="Style_btnCv">
@@ -56,5 +67,16 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="TitleInAdmin">
+        <item name="color">#111</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="SubTitleInAdmin">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:color">#d99311</item>
     </style>
 </resources>
