@@ -3,8 +3,8 @@ package com.example.team32gb.jobit.View.Applied;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
-import com.example.team32gb.jobit.Model.ListJobSearch.ItemJob;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.JobDetail.DetailJobActivity;

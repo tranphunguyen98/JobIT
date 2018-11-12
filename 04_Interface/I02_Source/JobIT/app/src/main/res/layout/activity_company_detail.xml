@@ -4,22 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundRed"
+    android:background="@color/colorPrimaryLight"
     tools:context=".View.CompanyDetail.CompanyDetailActivity">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tbDetailListJob"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroundRed">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbDetailCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white"
+            >
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <LinearLayout
-        android:layout_below="@id/tbDetailListJob"
+        android:layout_below="@id/appbar"
         android:layout_above="@+id/lnEdit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/backgroundRed"
+        android:background="@color/colorPrimaryLight"
         android:orientation="vertical">
 
         <ScrollView
@@ -37,7 +44,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/backgroundRed"
+                    android:background="@color/colorPrimaryLight"
                     android:orientation="vertical">
 
                     <View
@@ -45,7 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_alignParentTop="true"
-                        android:background="@color/backgroundRed" />
+                        android:background="@color/colorPrimaryLight" />
 
                     <View
                         android:id="@+id/view1"
@@ -66,7 +73,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view1"
-                        android:background="#3ccd2027"
+                        android:background="@color/colorPrimaryMinLight"
                         android:orientation="vertical">
 
                         <TextView
@@ -134,10 +141,11 @@
 
                     </LinearLayout>
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/imgAvatarCompanyDetail"
                         android:layout_width="90dp"
                         android:layout_height="60dp"
+                        android:elevation="3dp"
                         android:layout_below="@+id/view"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="-31dp"

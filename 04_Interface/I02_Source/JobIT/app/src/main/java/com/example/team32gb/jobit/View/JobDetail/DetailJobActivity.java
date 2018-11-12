@@ -3,25 +3,26 @@ package com.example.team32gb.jobit.View.JobDetail;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.team32gb.jobit.Model.PostJob.DataPostJob;
-import com.example.team32gb.jobit.Model.SignUpAccountBusiness.InfoCompanyModel;
+import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
@@ -36,10 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class DetailJobActivity extends AppCompatActivity implements View.OnClickListener {
@@ -48,19 +46,18 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
     private TextView txtNameJob, txtTime, txtSalary, txtTypeJob, txtNumberOfCadidates, txtJobDescription, txtJobRequierment;
     private Button btnSave, btnApply;
     private String idJob, idCompany;
-    private Button btnAvatar,btnEdit;
+    private Button  btnEdit;
+    private AppCompatImageButton btnAvatar;
     private ProgressDialog progressDialog;
-    private LinearLayout lnApply,lnEdit;
+    private LinearLayout lnApply, lnEdit;
     private DatabaseReference nodeRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailjob);
 
-        myToolBar = findViewById(R.id.tbDetailListJob);
+        myToolBar = findViewById(R.id.tbDetailCompany);
         btnApply = findViewById(R.id.btnApply);
         btnEdit = this.findViewById(R.id.btnEditJob);
 
@@ -72,6 +69,7 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        nodeRoot = FirebaseDatabase.getInstance().getReference();
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Đang xử lý...");
         progressDialog.setIndeterminate(true);
@@ -109,62 +107,35 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
         btnAvatar.setOnClickListener(this);
 
 
-
         final Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("bundle");
-        idJob = bundle.getString("idJob");
-        idCompany = bundle.getString("idCompany");
+        final ItemPostJob itemPostJob = intent.getParcelableExtra("bundle");
+        idCompany = itemPostJob.getIdCompany();
+        idJob = itemPostJob.getIdJob();
 
-        nodeRoot = FirebaseDatabase.getInstance().getReference();
+        txtNameJob.setText(itemPostJob.getDataPostJob().getNameJob());
+        txtSalary.setText("Từ $" + itemPostJob.getDataPostJob().getMinSalary() + " đến $" + itemPostJob.getDataPostJob().getMaxSalary() + "/" + itemPostJob.getDataPostJob().getEach());
+        txtTypeJob.setText(itemPostJob.getDataPostJob().getTypeJob());
+        txtNumberOfCadidates.setText(itemPostJob.getDataPostJob().getNumberEmployer());
+        txtJobDescription.setText(itemPostJob.getDataPostJob().getDescription());
+        txtJobRequierment.setText(itemPostJob.getDataPostJob().getQualification());
+        txtTime.setText(Util.getSubTime(itemPostJob.getDataPostJob().getTime()));
 
-        nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                DataSnapshot dsJob = dataSnapshot.child("tinTuyenDungs").child(idCompany).child(idJob);
-                if (sharedPreferences.getBoolean(Config.IS_LOGGED, false)) {
-                    DataSnapshot dsApplied = dataSnapshot.child("Applieds").child(FirebaseAuth.getInstance().getUid());
-
-                    if (dsApplied.hasChild(idCompany)) {
-                        if (dsApplied.child(idCompany).hasChild(idJob)) {
-                            btnApply.setEnabled(false);
-                            btnApply.setTextColor(getResources().getColor(R.color.gray));
-                            btnApply.setText("Applied");
-                            btnApply.setBackground(getResources().getDrawable(R.drawable.custom_background_button_save_applied));
-                        }
-                    }
-                }
-
-                final DataPostJob dataPostJob = dsJob.getValue(DataPostJob.class);
-                txtNameJob.setText(dataPostJob.getNameJob());
-                txtSalary.setText("Từ $" + dataPostJob.getMinSalary() + " đến $" + dataPostJob.getMaxSalary() + "/" + dataPostJob.getEach());
-                txtTypeJob.setText(dataPostJob.getTypeJob());
-                txtNumberOfCadidates.setText(dataPostJob.getNumberEmployer());
-                txtJobDescription.setText(dataPostJob.getDescription());
-                txtJobRequierment.setText(dataPostJob.getQualification());
-                Util.setSubTime(dataPostJob.getTime(), txtTime);
-                btnEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent1 = new Intent(DetailJobActivity.this,PostJobRecruitmentActivity.class);
-                        intent1.putExtra("detail",dataPostJob);
-                        intent1.putExtra("idJob",idJob);
-                        startActivity(intent1);
-                    }
-                });
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                Intent intent1 = new Intent(DetailJobActivity.this, PostJobRecruitmentActivity.class);
+                intent1.putExtra("detail", itemPostJob.getDataPostJob());
+                intent1.putExtra("idJob", idJob);
+                startActivity(intent1);
             }
         });
+        progressDialog.dismiss();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.detailjob_actionbar, menu);
+        menuInflater.inflate(R.menu.listjob_actionbar, menu);
         return true;
     }
 
@@ -197,11 +168,9 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
                                 Toast.makeText(DetailJobActivity.this, "Apply thành công", Toast.LENGTH_SHORT).show();
 
                                 btnApply.setEnabled(false);
-                                btnApply.setTextColor(getResources().getColor(R.color.gray));
                                 btnApply.setText("Applied");
-                                btnApply.setBackground(getResources().getDrawable(R.drawable.custom_background_button_save_applied));
                             } else {
-                                Util.jumpActivity(DetailJobActivity.this,CreateCVActivity.class);
+                                Util.jumpActivity(DetailJobActivity.this, CreateCVActivity.class);
                             }
                         }
 

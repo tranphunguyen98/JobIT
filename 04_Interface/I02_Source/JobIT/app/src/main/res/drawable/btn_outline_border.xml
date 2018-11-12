@@ -5,7 +5,7 @@
 
     <stroke
         android:width="0.5dp"
-        android:color="@color/colorBorderLight">
+        android:color="@color/colorBlackLight">
     </stroke>
     <corners
         android:radius="5dp">

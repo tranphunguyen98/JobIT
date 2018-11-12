@@ -3,10 +3,17 @@ package com.example.team32gb.jobit.View.SignUpAccountBusiness;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,14 +31,15 @@ import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class SignUpAccountBusiness extends AppCompatActivity implements View.OnClickListener,
                                             AdapterView.OnItemSelectedListener,ViewSignUpAccountBusiness {
-    private Spinner spSize, spType,spProvince;
+    private Toolbar myToolBar;
+    private ActionBar actionBar;
+    private Spinner spType,spProvince;
+    private AppCompatSpinner spSize;
     private Button btnSignUp;
     private EditText edtName,edtAddress, edtIntroduce, edtNamePresenter, edtPhonePresenter;
     private boolean valid = false;
@@ -41,6 +49,15 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_account_business);
+
+        myToolBar = findViewById(R.id.tbEditDetailCompany);
+
+        myToolBar.setTitle("Thông tin công ty");
+        setSupportActionBar(myToolBar);
+
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         spSize = findViewById(R.id.spSize);
         spType = findViewById(R.id.spType);
@@ -239,12 +256,6 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Config.REGESTERED_INFO,true);
             editor.apply();
-            edtName.setText(" ");
-            edtAddress.setText(" ");
-            edtIntroduce.setText(" ");
-            edtNamePresenter.setText(" ");
-            edtPhonePresenter.setText(" ");
-            Util.jumpActivity(this,HomeRecruitmentActivity.class);
         }
         else{
             Toast.makeText(getApplication(), "Đăng kí không thành thành công",Toast.LENGTH_LONG).show();
@@ -282,5 +293,17 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
 
         presenter.saveInfoCompany(uid,companyModel);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.listjob_actionbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

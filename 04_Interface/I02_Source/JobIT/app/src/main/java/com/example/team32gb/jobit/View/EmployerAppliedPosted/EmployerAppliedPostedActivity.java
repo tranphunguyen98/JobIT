@@ -2,26 +2,20 @@ package com.example.team32gb.jobit.View.EmployerAppliedPosted;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
-import com.example.team32gb.jobit.Presenter.Applied.PresenterApplied;
-import com.example.team32gb.jobit.Presenter.Applied.PresenterInApplied;
 import com.example.team32gb.jobit.Presenter.EmployerAppliedPosted.PresenterEmployerAppliedPosted;
 import com.example.team32gb.jobit.Presenter.EmployerAppliedPosted.PresenterInEmployerAppliedPosted;
 import com.example.team32gb.jobit.R;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
 
 public class EmployerAppliedPostedActivity extends AppCompatActivity implements ViewEmployerAppliedPosted {
     private Toolbar myToolBar;

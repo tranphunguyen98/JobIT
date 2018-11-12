@@ -7,18 +7,38 @@ public class InfoCompanyModel implements Parcelable {
     String name;
     String type;
     String size;
-import static com.example.team32gb.jobit.Utility.Config.NOT_APPROVAL;
 
-    protected String address;
-    protected String province;
-    protected String introduce;
-    protected String namePresenter;
-    protected String phoneNumberPresenter;
-    protected long approvalMode;
+    String address;
+    String province;
+    String introduce;
+    String namePresenter;
+    String phoneNumberPresenter;
 
     public InfoCompanyModel() {
-        approvalMode =NOT_APPROVAL;   //0: Chưa duyệt
     }
+
+    protected InfoCompanyModel(Parcel in) {
+        name = in.readString();
+        type = in.readString();
+        size = in.readString();
+        address = in.readString();
+        province = in.readString();
+        introduce = in.readString();
+        namePresenter = in.readString();
+        phoneNumberPresenter = in.readString();
+    }
+
+    public static final Creator<InfoCompanyModel> CREATOR = new Creator<InfoCompanyModel>() {
+        @Override
+        public InfoCompanyModel createFromParcel(Parcel in) {
+            return new InfoCompanyModel(in);
+        }
+
+        @Override
+        public InfoCompanyModel[] newArray(int size) {
+            return new InfoCompanyModel[size];
+        }
+    };
 
     public String getName() {
         return name;

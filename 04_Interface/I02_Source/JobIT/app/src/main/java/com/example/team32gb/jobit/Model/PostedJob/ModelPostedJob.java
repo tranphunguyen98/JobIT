@@ -1,6 +1,6 @@
 package com.example.team32gb.jobit.Model.PostedJob;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
 import com.example.team32gb.jobit.Model.PostJob.DataPostJob;
@@ -32,7 +32,8 @@ public class ModelPostedJob {
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                        DataPostJob dataPostJob = snapshot.getValue(DataPostJob.class);
-                       ItemPostJob itemPostJob = new ItemPostJob(dataPostJob);
+                       ItemPostJob itemPostJob = new ItemPostJob();
+                       itemPostJob.setDataPostJob(dataPostJob);
                        itemPostJob.setIdJob(snapshot.getKey());
                        itemPostJob.setIdCompany(dataSnapshot.getKey());
                        itemPostJobs.add(itemPostJob);

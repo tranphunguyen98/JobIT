@@ -7,12 +7,16 @@
     android:orientation="vertical"
     tools:context=".View.ProfileUser.ProfileUserActivity">
 
-    <android.support.v7.widget.Toolbar
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroundRed">
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white">
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </android.support.v7.widget.Toolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgAvatarProfile"
@@ -94,15 +98,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="Bạn chưa xác thưc tài khoản"
-        android:textColor="@color/backgroundRed"
+        android:textColor="@color/colorPrimary"
         android:textSize="18sp" />
 
     <Button
         android:id="@+id/btnAuthenticateAccount"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_below="@+id/tvEmail"
         android:layout_alignParentStart="true"
         android:layout_gravity="center"
@@ -110,16 +115,14 @@
         android:layout_marginEnd="45dp"
         android:background="@drawable/custom_general_button"
         android:drawablePadding="10dp"
-        android:drawableTint="@color/backgroundRed"
         android:text="Xác thực tài khoản"
         android:textAllCaps="false"
-        android:textColor="@color/backgroundRed"
         android:textSize="17sp" />
 
     <Button
         android:id="@+id/btnMyCV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_below="@+id/tvEmail"
         android:layout_alignParentStart="true"
         android:layout_gravity="center"
@@ -128,16 +131,14 @@
         android:layout_marginEnd="45dp"
         android:background="@drawable/custom_general_button"
         android:drawablePadding="10dp"
-        android:drawableTint="@color/backgroundRed"
         android:text="CV của tôi"
         android:textAllCaps="false"
-        android:textColor="@color/backgroundRed"
         android:textSize="17sp" />
 
     <Button
         android:id="@+id/btnChangePassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_below="@+id/tvEmail"
         android:layout_alignParentStart="true"
         android:layout_gravity="center"
@@ -146,16 +147,14 @@
         android:layout_marginEnd="45dp"
         android:background="@drawable/custom_general_button"
         android:drawablePadding="10dp"
-        android:drawableTint="@color/backgroundRed"
         android:text="Thay đổi mật khẩu"
         android:textAllCaps="false"
-        android:textColor="@color/backgroundRed"
         android:textSize="17sp" />
 
     <Button
         android:id="@+id/btnSignOutProfile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_below="@+id/tvEmail"
         android:layout_alignParentStart="true"
         android:layout_gravity="center"
@@ -164,10 +163,8 @@
         android:layout_marginEnd="45dp"
         android:background="@drawable/custom_general_button"
         android:drawablePadding="10dp"
-        android:drawableTint="@color/backgroundRed"
         android:text="Đăng xuất"
         android:textAllCaps="false"
-        android:textColor="@color/backgroundRed"
         android:textSize="17sp" />
 
 </LinearLayout>

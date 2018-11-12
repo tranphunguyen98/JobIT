@@ -2,17 +2,14 @@ package com.example.team32gb.jobit.View.MyJob;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.Applied.AppliedActivity;
-import com.example.team32gb.jobit.View.ListJob.ListJobActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.example.team32gb.jobit.View.WaitingForInterview.InterviewActivity;
 
