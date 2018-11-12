@@ -40,7 +40,12 @@ public class MyJobActivity extends AppCompatActivity implements View.OnClickList
 
         switch (v.getId()){
             case R.id.btnSavedJob:
-                //TODO
+                if(sharedPreferences.getBoolean(Config.IS_LOGGED,false)) {
+                    Util.jumpActivity(this,AppliedActivity.class);
+                }
+                else {
+                    Util.jumpActivity(this,SignInActivity.class);
+                }
                 break;
             case R.id.btnAppliedJob:
                 if(sharedPreferences.getBoolean(Config.IS_LOGGED,false)) {

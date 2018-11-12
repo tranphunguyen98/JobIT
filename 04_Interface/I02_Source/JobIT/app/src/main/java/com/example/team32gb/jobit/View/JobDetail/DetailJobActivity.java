@@ -13,6 +13,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +30,10 @@ import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.CompanyDetail.CompanyDetailActivity;
 import com.example.team32gb.jobit.View.CreateCV.CreateCVActivity;
 import com.example.team32gb.jobit.View.PostJob.PostJobRecruitmentActivity;
+import com.example.team32gb.jobit.View.PostedJob.DetailPostedJobActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,11 +50,15 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
     private TextView txtNameJob, txtTime, txtSalary, txtTypeJob, txtNumberOfCadidates, txtJobDescription, txtJobRequierment;
     private Button btnSave, btnApply;
     private String idJob, idCompany;
-    private Button  btnEdit;
+    private Button btnEdit;
     private AppCompatImageButton btnAvatar;
     private ProgressDialog progressDialog;
     private LinearLayout lnApply, lnEdit;
     private DatabaseReference nodeRoot;
+    private ItemPostJob itemPostJob;
+    private boolean isLogged;
+    private int typeUser;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +86,15 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
 
         lnApply = findViewById(R.id.lnApply);
         lnEdit = findViewById(R.id.lnEdit);
+        uid = FirebaseAuth.getInstance().getUid();
 
         final SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        isLogged = sharedPreferences.getBoolean(Config.IS_LOGGED, false);
         if (!sharedPreferences.getBoolean(Config.IS_ACTIVITY_APPLY, false)) {
             lnApply.setVisibility(View.GONE);
         }
-        if (sharedPreferences.getInt(Config.USER_TYPE, 0) == Config.IS_RECRUITER) {
+        typeUser = sharedPreferences.getInt(Config.USER_TYPE, 0);
+        if (typeUser == Config.IS_RECRUITER) {
             lnEdit.setVisibility(View.VISIBLE);
             lnApply.setVisibility(View.INVISIBLE);
         } else {
@@ -108,7 +119,7 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
 
 
         final Intent intent = getIntent();
-        final ItemPostJob itemPostJob = intent.getParcelableExtra("bundle");
+        itemPostJob = intent.getParcelableExtra("bundle");
         idCompany = itemPostJob.getIdCompany();
         idJob = itemPostJob.getIdJob();
 
@@ -129,6 +140,34 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent1);
             }
         });
+        if (isLogged && typeUser == Config.IS_JOB_SEEKER) {
+            nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    DataSnapshot dsApplied = dataSnapshot.child("Applieds").child(uid).child(idCompany);
+                    if (dsApplied.hasChild(idJob)) {
+                        btnApply.setText("Applied");
+                        btnApply.setEnabled(false);
+                    }
+                    DataSnapshot dsSaved = dataSnapshot.child("viecLamCuaTois").child("daLuus").child(uid).child(idCompany).child("idJob");
+                    String _idJob = dsSaved.getValue(String.class);
+                    if (_idJob != null && !_idJob.isEmpty() && _idJob.equals(idJob)) {
+                        btnSave.setText("Đã Lưu");
+                        btnSave.setEnabled(false);
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+
         progressDialog.dismiss();
     }
 
@@ -150,8 +189,7 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
 
         switch (id) {
             case R.id.btnApply:
-                SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-                if (sharedPreferences.getBoolean(Config.IS_LOGGED, false)) {
+                if (isLogged) {
                     final String idJobseeker = FirebaseAuth.getInstance().getUid();
                     nodeRoot.child("cvs").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -183,6 +221,25 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
                 }
                 break;
             case R.id.btnSaveJob:
+                SharedPreferences sharedPreferencesSave = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+                if (sharedPreferencesSave.getBoolean(Config.IS_LOGGED, false)) {
+                    DatabaseReference dfDaLuus = nodeRoot.child("viecLamCuaTois").child("daLuus").child(uid).child(idCompany).child("idJob");
+                    dfDaLuus.setValue(idJob).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(DetailJobActivity.this, "Lưu tin thất bại", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(DetailJobActivity.this, "Lưu tin thành công", Toast.LENGTH_LONG).show();
+                            btnSave.setEnabled(false);
+                            btnSave.setText("Saved");
+                        }
+                    });
+                } else {
+                    Util.jumpActivity(DetailJobActivity.this, SignInActivity.class);
+                }
                 break;
             case R.id.imgAvatarCompany:
                 Intent intent = new Intent(this, CompanyDetailActivity.class);

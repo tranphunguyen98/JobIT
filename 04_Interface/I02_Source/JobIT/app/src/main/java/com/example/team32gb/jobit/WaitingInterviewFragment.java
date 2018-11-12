@@ -78,7 +78,7 @@ public class WaitingInterviewFragment extends Fragment implements FragmentCallBa
                     lsData.add(dataApplied);
                 }
 
-                ViewAdapterApplied adapter = new ViewAdapterApplied(getContext(),lsData);
+                ViewAdapterInterview adapter = new ViewAdapterInterview(getContext(),lsData);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);

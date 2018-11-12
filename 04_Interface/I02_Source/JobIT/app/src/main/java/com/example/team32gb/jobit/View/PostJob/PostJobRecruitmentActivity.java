@@ -197,9 +197,9 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
                         valid=false;
                         edtMinSalary.setError("Lương không hợp lệ");
                     }
-                    else if(Integer.parseInt(edtMinSalary.getText().toString()) < 10000){
+                    else if(Integer.parseInt(edtMinSalary.getText().toString()) < 100){
                         valid=false;
-                        edtMinSalary.setError("Lương phải lớn hơn 10000 VND");
+                        edtMinSalary.setError("Lương phải lớn hơn $100");
                     }
                     else
                         valid = true;
@@ -225,9 +225,9 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
                     edtMaxSalary.setError("Lương không hợp lệ");
 
                 }
-                else  if(Integer.parseInt(edtMaxSalary.getText().toString()) < 10000){
+                else  if(Integer.parseInt(edtMaxSalary.getText().toString()) < 100){
                     valid=false;
-                    edtMaxSalary.setError("Lương lớn hơn 10000 VND");
+                    edtMaxSalary.setError("Lương lớn hơn $100");
                 }
             }
         });
@@ -269,18 +269,18 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
                     valid=false;
                     edtMinSalary.setError("Lương không hợp lệ");
                 }
-                else  if(Integer.parseInt(edtMinSalary.getText().toString()) < 10000){
+                else  if(Integer.parseInt(edtMinSalary.getText().toString()) < 100){
                     valid=false;
-                    edtMinSalary.setError("Lương phải lớn hơn 10000 VND");
+                    edtMinSalary.setError("Lương phải lớn hơn $100");
                 }
                 if (edtMaxSalary.getText().toString().length() <= 0) {
 
                     valid=false;
                     edtMaxSalary.setError("Lương không hợp lệ");
                 }
-                else  if(Integer.parseInt(edtMaxSalary.getText().toString()) < 10000){
+                else  if(Integer.parseInt(edtMaxSalary.getText().toString()) < 100){
                     valid=false;
-                    edtMaxSalary.setError("Lương phải lớn hơn 10000 VND");
+                    edtMaxSalary.setError("Lương phải lớn hơn $100");
                 }
                 if (edtMinSalary.getText().toString().length() > 0 && edtMaxSalary.getText().toString().length() > 0){
                     if (Integer.parseInt(edtMinSalary.getText().toString()) >= Integer.parseInt(edtMaxSalary.getText().toString())) {

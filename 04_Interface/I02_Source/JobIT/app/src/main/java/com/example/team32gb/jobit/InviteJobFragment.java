@@ -2,15 +2,25 @@ package com.example.team32gb.jobit;
 
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.FragmentCallBack;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,22 +55,41 @@ public class InviteJobFragment extends Fragment implements FragmentCallBack {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lsData = new ArrayList<>();
-        lsData.add(new DataApplied("Nguyễn Văn A","5h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn B","1 tháng trước"));
-        lsData.add(new DataApplied("Nguyễn Văn C","6 day trước"));
-        lsData.add(new DataApplied("Nguyễn Văn D","45h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn E","35h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn F","15h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn G","25h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn H","4 ngày trước"));
-        lsData.add(new DataApplied("Nguyễn Văn I","3h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn K","9h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn L","7h trước"));
-        lsData.add(new DataApplied("Nguyễn Văn M","5 ngày trước"));
+
     }
-
     @Override
-    public void showList(String idCompany, String idJob) {
+    public void showList(final String idCompany, final String idJob) {
+        Log.e("kiemtratruyen",idCompany + idJob );
+        DatabaseReference nodeRoot = FirebaseDatabase.getInstance().getReference();
+        nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataSnapshot dsJob =dataSnapshot.child("moiLamNTDs").child(idCompany).child(idJob);
+                for(DataSnapshot dsCandidate : dsJob.getChildren()) {
+                    DataApplied dataApplied = new DataApplied();
+                    String idCadidate = dsCandidate.getKey();
+                    String time = dsCandidate.child("timeApplied").getValue(String.class);
+                    String name = dataSnapshot.child(Config.REF_JOBSEEKERS_NODE).child(idCadidate).child("name").getValue(String.class);
 
+                    Log.e("kiemtra11",time + ":" + name);
+                    dataApplied.setIdJobSeeker(idCadidate);
+                    dataApplied.setName(name);
+                    dataApplied.setDayApplied(time);
+                    dataApplied.setIdJob(idJob);
+                    dataApplied.setIdCompany(idCompany);
+                    lsData.add(dataApplied);
+                }
+
+                ViewAdapterInvite adapter = new ViewAdapterInvite(getContext(),lsData);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
