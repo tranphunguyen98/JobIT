@@ -6,15 +6,47 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".View.ListJobSearch.ListJobSearchActivity">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tbListJobSearch"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbListJobSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/white"
+                android:layout_marginStart="8dp"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/ic_search_16dp"
+                android:background="@drawable/custom_search_edit"
+                app:iconTint="@color/colorBlack"
+                android:drawablePadding="14dp"
+                android:text="Nhập tên công việc"
+                android:textAllCaps="false"
+                android:paddingStart="16dp"
+                android:gravity="start|center_vertical"
+                android:paddingTop="7dp"
+                android:paddingBottom="6dp"
+                app:iconPadding="16dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorBlack"
+                />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListJobSearch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryMinLight"
+        />
 
 </LinearLayout>

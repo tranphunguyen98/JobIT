@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.SelectUserType.SelectUserTypeActivity"
     android:background="@color/colorPrimary">
 
@@ -10,7 +11,7 @@
         android:id="@+id/imgJobit"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/jobit_text_white" />
 
@@ -28,71 +29,49 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:text="Bạn là?"
+            android:layout_marginBottom="8dp"
+            android:text="BẠN LÀ ?"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnJobSeeker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            style="@style/StyleButton"
 
-            android:background="@drawable/custom_button"
-            android:drawablePadding="8dp"
-            android:paddingStart="60dp"
-            android:paddingEnd="60dp"
-            android:text="Người tìm việc"
-
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-        <Button
+            android:text="Người tìm việc" />
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEmployer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/custom_button"
-            android:drawablePadding="10dp"
-            android:paddingStart="60dp"
-            android:paddingEnd="60dp"
-            android:text="Nhà tuyển dụng"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-        <Button
+            style="@style/StyleButton"
+            android:text="Nhà tuyển dụng" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/custom_button"
-            android:drawablePadding="10dp"
-            android:paddingStart="60dp"
-            android:paddingEnd="60dp"
-            android:text="Admin"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            style="@style/StyleButton"
+            android:text="Admin" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDismiss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            style="@style/ButtonBorder.Accent"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="BỎ QUA"
-    />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/white"
+            app:strokeWidth="0.5dp"
+            app:cornerRadius="4dp"
+            app:strokeColor="@color/colorBlackLight"
+            app:rippleColor="@android:color/white"
+            android:background="@android:color/transparent"
+            />
     </LinearLayout>
 
 

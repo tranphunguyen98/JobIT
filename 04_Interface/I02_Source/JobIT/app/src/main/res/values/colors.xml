@@ -2,12 +2,20 @@
 <resources>
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#0069c0</color>
+    <color name="colorPrimaryMinLight">#e3f2fd</color>
+    <color name="colorPrimaryLight1">#90caf9</color>
     <color name="colorPrimaryLight">#6ec6ff</color>
+    <color name="colorPrimaryDeep">#002171</color>
+
+    <color name="colorSecondary">#ff9800</color>
+    <color name="colorSecondaryVariant">#c66900</color>
     <color name="colorAccent">#ff9800</color>
     <color name="colorAccentLight">#ffc947</color>
-    <color name="colorSecondary">#ffc947</color>
-    <color name="colorBorderLight">#cfd8dc</color>
-    <color name="colorBorder">#9e9e9e</color>
+    <color name="colorBlackLight">#cfd8dc</color>
+    <color name="colorBlackMinLight">#eceff1</color>
+    <color name="colorBlack">#9e9e9e</color>
+    <color name="colorBlackDark">#263238</color>
+    <color name="colorGreenDark">#388e3c</color>
 
 
 

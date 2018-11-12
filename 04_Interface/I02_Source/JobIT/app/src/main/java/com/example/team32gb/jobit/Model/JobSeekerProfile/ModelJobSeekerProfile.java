@@ -2,11 +2,10 @@ package com.example.team32gb.jobit.Model.JobSeekerProfile;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
-import com.example.team32gb.jobit.Presenter.JobSeekerProfile.JobSeekerInterface;
 import com.example.team32gb.jobit.Utility.Config;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -81,21 +80,21 @@ public class ModelJobSeekerProfile {
     }
 
     public void savePictureProfile(final String refUsre, final String uid, final Uri uri) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                StorageTask task = srAvatar.putFile(uri);
-                task.addOnSuccessListener(new OnSuccessListener() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        Log.e("kiemtraUpload",  "onSuccess: " );
-                        userModel.setAvatar(srAvatar.getPath());
-                        nodeRoot.child(refUsre).child(uid).child("avatar").setValue(srAvatar.getPath());
-                    }
-                });
-
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                StorageTask task = srAvatar.putFile(uri);
+//                task.addOnSuccessListener(new OnSuccessListener() {
+//                    @Override
+//                    public void onSuccess(Object o) {
+//                        Log.e("kiemtraUpload",  "onSuccess: " );
+//                        userModel.setAvatar(srAvatar.getPath());
+//                        nodeRoot.child(refUsre).child(uid).child("avatar").setValue(srAvatar.getPath());
+//                    }
+//                });
+//
+//            }
+//        }).start();
     }
     public void savePictureProfile(final String refUsre, final String uid,final Bitmap bitmap) {
         new Thread(new Runnable() {

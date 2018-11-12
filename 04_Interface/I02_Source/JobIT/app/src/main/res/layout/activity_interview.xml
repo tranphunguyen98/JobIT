@@ -7,12 +7,17 @@
     android:orientation="vertical"
     tools:context=".View.WaitingForInterview.InterviewActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tbListInterview"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbListInterview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvListInterview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

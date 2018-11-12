@@ -1,11 +1,10 @@
 package com.example.team32gb.jobit.Model.Applied;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
-import com.example.team32gb.jobit.Model.ListJobSearch.ItemJob;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -8,8 +8,9 @@
     <string name="tv_Sign_in"><u>Đăng nhập</u></string>
     <string name="tv_version">Phiên bản </string>
     <string name="jobit">JobIT</string>
+    <string name="hint_text">hint_text</string>
     <string name="timkiem">Tìm kiếm</string>
-    <string name="motatiemkiem">chức danh, từ khóa hoặc công ty</string>
+    <string name="motatiemkiem">Chức danh, từ khóa hoặc công ty</string>
     <string name="diadiem">Địa điểm</string>
     <string name="motadiadiem">tỉnh hoặc thành phố</string>
     <string name="TimViec">Tìm việc</string>

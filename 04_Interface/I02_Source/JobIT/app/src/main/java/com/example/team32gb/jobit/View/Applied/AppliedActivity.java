@@ -2,13 +2,13 @@ package com.example.team32gb.jobit.View.Applied;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,8 +19,6 @@ import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
 import com.example.team32gb.jobit.Presenter.Applied.PresenterApplied;
 import com.example.team32gb.jobit.Presenter.Applied.PresenterInApplied;
-import com.example.team32gb.jobit.Presenter.ListJobSearch.PresenterInListJobSearch;
-import com.example.team32gb.jobit.Presenter.ListJobSearch.PresenterLogicListJobSearch;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +52,6 @@ public class AppliedActivity extends AppCompatActivity implements ViewListJobApp
         recyclerView.setLayoutManager(layoutManager);
 
         myToolBar.setTitle("Đã apply");
-        myToolBar.setBackgroundColor(Color.parseColor("#FFD14D59"));
         setSupportActionBar(myToolBar);
 
         actionBar = getSupportActionBar();
@@ -76,7 +73,6 @@ public class AppliedActivity extends AppCompatActivity implements ViewListJobApp
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.listjob_actionbar, menu);
-        MenuItem searchItem = (MenuItem) menu.findItem(R.id.tbSearch).getActionView();
         return true;
     }
 

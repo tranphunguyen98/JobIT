@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ListCandidateAcvitity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbListCandidate"
         android:layout_width="match_parent"
         android:background="@color/backgroundRed"
@@ -48,7 +48,7 @@ alksfdj;laskjf;lákdfalsf"
         android:layout_above="@+id/mainNav"
         android:layout_below="@id/tbListCandidate"></FrameLayout>
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainNav"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -57,5 +57,5 @@ alksfdj;laskjf;lákdfalsf"
         android:background="#ad0808"
         android:backgroundTint="#a40813"
         app:itemTextColor="#fff"
-        app:menu="@menu/listcandidate_nav"></android.support.design.widget.BottomNavigationView>
+        app:menu="@menu/listcandidate_nav"></com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>

@@ -1,6 +1,6 @@
 package com.example.team32gb.jobit.Model.CreateCV;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;

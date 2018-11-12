@@ -6,6 +6,7 @@ import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
 import com.example.team32gb.jobit.Model.ListJobSearch.ItemJob;
 import com.example.team32gb.jobit.Model.ListJobSearch.ModelListJobSearch;
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
+import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.View.ListJobSearch.ViewListJobSearch;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -40,9 +41,9 @@ public class PresenterLogicListJobSearch implements PresenterInListJobSearch {
 
     @Override
     @Subscribe
-    public void showListJob(List<ItemJob> itemJobs) {
+    public void showListJob(List<ItemPostJob> itemPostJobs) {
 //        Log.e("kiemtrasnap",itemJobs.get(0).getNameJob());
-        view.showListJob(itemJobs);
+        view.showListJob(itemPostJobs);
     }
 
 }

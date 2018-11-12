@@ -3,10 +3,16 @@ package com.example.team32gb.jobit.View.CompanyDetail;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
+
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,8 +31,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class CompanyDetailActivity extends AppCompatActivity {
+    private Toolbar myToolBar;
+    private ActionBar actionBar;
+
     private TextView txtNameCompany, txtSizeCompany, txtTypeCompany, txtAddress, txtIntroduce, txtContact, txtPhone;
-    private Button btnCompanyAvatar,btnEdit;
+    private Button btnEdit;
+    private AppCompatImageButton imageButton;
     private LinearLayout lnEdit;
     private ProgressDialog progressDialog;
     String idCompany;
@@ -42,7 +52,8 @@ public class CompanyDetailActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        btnCompanyAvatar = findViewById(R.id.imgAvatarCompanyDetail);
+        myToolBar = findViewById(R.id.tbDetailCompany);
+
         txtNameCompany = this.findViewById(R.id.txtNameCompany);
         txtAddress = this.findViewById(R.id.txtAddressCompany);
         txtContact = this.findViewById(R.id.txtContact);
@@ -50,10 +61,19 @@ public class CompanyDetailActivity extends AppCompatActivity {
         txtSizeCompany = this.findViewById(R.id.txtSizeCompanyDetail);
         txtTypeCompany = this.findViewById(R.id.txtTypeCompanyDetail);
 
+        imageButton = findViewById(R.id.imgAvatarCompanyDetail);
+
         lnEdit = this.findViewById(R.id.lnEdit);
         btnEdit = this.findViewById(R.id.btnEditJob);
 
         txtIntroduce = this.findViewById(R.id.txtIntroduceCompany);
+
+        myToolBar.setTitle("Thông tin công ty");
+        setSupportActionBar(myToolBar);
+
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         final Intent intent = getIntent();
         idCompany = intent.getStringExtra("idCompany");
 
@@ -98,5 +118,17 @@ public class CompanyDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.listjob_actionbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

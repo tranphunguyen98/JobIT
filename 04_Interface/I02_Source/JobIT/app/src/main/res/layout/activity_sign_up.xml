@@ -19,17 +19,17 @@
         android:paddingBottom="30dp">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="100dp"
+            android:layout_width="160dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="64dp"
             android:background="@drawable/jobit_text_white" />
 
         <EditText
             android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_perm_identity_white_24dp"
             android:drawablePadding="10dp"
@@ -83,10 +83,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:background="@drawable/custom_button"
-            android:drawablePadding="10dp"
             android:paddingStart="60dp"
             android:paddingEnd="60dp"
             android:text="Đăng ký"
+            android:backgroundTint="@color/colorSecondary"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp" />

@@ -3,7 +3,7 @@ package com.example.team32gb.jobit.View.HomeRecruitmentActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,26 +16,21 @@ import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.CompanyDetail.CompanyDetailActivity;
 import com.example.team32gb.jobit.View.ProfileUser.ProfileUserActivity;
 import com.example.team32gb.jobit.View.SelectUserType.SelectUserTypeActivity;
-import com.example.team32gb.jobit.View.SignUpAccountBusiness.RecordRecruitmentActivity;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.PostJob.PostJobRecruitmentActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeRecruitmentActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button btnUpLoad,btnPost,btnCandidateList,btnFileOfRecruit, btnSignOurRecruit, btnChangeUserType, btnProfileAccount;
+    private Button btnUpLoad,btnPost,btnFileOfRecruit, btnSignOurRecruit, btnChangeUserType, btnProfileAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_recruit);
 
         btnUpLoad = findViewById(R.id.btnUploadPost);
         btnPost = findViewById(R.id.btnPost);
-        btnCandidateList = findViewById(R.id.btnCandidateList);
         btnFileOfRecruit = findViewById(R.id.btnFileOfRecruit);
         btnProfileAccount = findViewById(R.id.btnProfileAccount);
         btnSignOurRecruit = findViewById(R.id.btnSignOutRecruit);
@@ -43,7 +38,6 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
 
         btnUpLoad.setOnClickListener(this);
         btnPost.setOnClickListener(this);
-        btnCandidateList.setOnClickListener(this);
         btnFileOfRecruit.setOnClickListener(this);
         btnProfileAccount.setOnClickListener(this);
         btnChangeUserType.setOnClickListener(this);
@@ -63,10 +57,6 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.btnPost:
                  Util.jumpActivity(this,JobRecruitmentActivity.class);
-               // startActivity(intent);
-                break;
-            case R.id.btnCandidateList:
-                 Util.jumpActivity(this,ListCandidateAcvitity.class);
                // startActivity(intent);
                 break;
             case R.id.btnFileOfRecruit:
