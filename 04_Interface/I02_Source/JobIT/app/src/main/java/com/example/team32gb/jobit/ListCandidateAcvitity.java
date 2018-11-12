@@ -30,6 +30,7 @@ public class ListCandidateAcvitity extends AppCompatActivity {
     private FrameLayout mainFrag;
     private BottomNavigationView mainNav;
     private String nameJob = "", timeJob = "",idCompany,idJob;
+    private Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -43,7 +44,7 @@ public class ListCandidateAcvitity extends AppCompatActivity {
         txtTimeJob = this.findViewById(R.id.txtTime);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("bundle");
+        bundle = intent.getBundleExtra("bundle");
         if(bundle != null) {
             nameJob = bundle.getString("nameJob");
             timeJob = bundle.getString("timeJob");
@@ -77,7 +78,9 @@ public class ListCandidateAcvitity extends AppCompatActivity {
                       setFragment(candidatePostedFragment);
                       return true;
                   case R.id.navWaitingInterview:
-                      setFragment(new WaitingInterviewFragment());
+                      WaitingInterviewFragment waitingInterviewFragment = new WaitingInterviewFragment();
+                      waitingInterviewFragment.showList(idCompany,idJob);
+                      setFragment(waitingInterviewFragment);
                       return true;
                   case R.id.navInviteJob:
                       setFragment(new InviteJobFragment());

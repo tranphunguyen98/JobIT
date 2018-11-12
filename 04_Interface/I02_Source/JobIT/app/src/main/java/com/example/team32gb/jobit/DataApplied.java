@@ -5,8 +5,27 @@ import android.widget.TextView;
 public class DataApplied {
     private String Name;
     private String DayApplied;
+    private String idJobSeeker;
+    private String idCompany;
+    private String idJob;
 
     public DataApplied() {
+    }
+
+    public String getIdCompany() {
+        return idCompany;
+    }
+
+    public void setIdCompany(String idCompany) {
+        this.idCompany = idCompany;
+    }
+
+    public String getIdJob() {
+        return idJob;
+    }
+
+    public void setIdJob(String idJob) {
+        this.idJob = idJob;
     }
 
     public DataApplied(String name, String dayApplied) {
@@ -28,5 +47,13 @@ public class DataApplied {
 
     public void setDayApplied(String dayApplied) {
         DayApplied = dayApplied;
+    }
+
+    public String getIdJobSeeker() {
+        return idJobSeeker;
+    }
+
+    public void setIdJobSeeker(String idJobSeeker) {
+        this.idJobSeeker = idJobSeeker;
     }
 }

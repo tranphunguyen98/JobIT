@@ -1,11 +1,13 @@
 package com.example.team32gb.jobit.Model.SignUpAccountBusiness;
 
-import static com.example.team32gb.jobit.Utility.Config.NOT_APPROVAL;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class InfoCompanyModel {
-    protected String name;
-    protected String type;
-    protected String size;
+public class InfoCompanyModel implements Parcelable {
+    String name;
+    String type;
+    String size;
+import static com.example.team32gb.jobit.Utility.Config.NOT_APPROVAL;
 
     protected String address;
     protected String province;
@@ -15,18 +17,6 @@ public class InfoCompanyModel {
     protected long approvalMode;
 
     public InfoCompanyModel() {
-        approvalMode =NOT_APPROVAL;   //0: Chưa duyệt
-    }
-
-    public InfoCompanyModel(String name, String type, String size, String address, String province, String introduce, String namePresenter, String phoneNumberPresenter) {
-        this.name = name;
-        this.type = type;
-        this.size = size;
-        this.address = address;
-        this.province = province;
-        this.introduce = introduce;
-        this.namePresenter = namePresenter;
-        this.phoneNumberPresenter = phoneNumberPresenter;
         approvalMode =NOT_APPROVAL;   //0: Chưa duyệt
     }
 
@@ -92,5 +82,22 @@ public class InfoCompanyModel {
 
     public void setPhoneNumberPresenter(String phoneNumberPresenter) {
         this.phoneNumberPresenter = phoneNumberPresenter;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(size);
+        dest.writeString(address);
+        dest.writeString(province);
+        dest.writeString(introduce);
+        dest.writeString(namePresenter);
+        dest.writeString(phoneNumberPresenter);
     }
 }

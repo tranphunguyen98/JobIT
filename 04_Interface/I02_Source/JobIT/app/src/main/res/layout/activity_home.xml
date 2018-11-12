@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".View.HomeJobSeeker.HomeJobSeekerActivity">
 
     <ScrollView
@@ -20,11 +21,11 @@
 
             <ImageView
                 android:id="@+id/txtJobIT"
-                android:src="@drawable/jobit_text_red"
+                android:src="@drawable/jobit_text_blue"
                 style="@style/StyleJobIT"
                 android:layout_width="140dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="16dp"
                 android:layout_gravity="center"
                 android:text="@string/jobit" />
 
@@ -38,8 +39,7 @@
                     style="@style/Style_txtTK_DD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="16dp"
                     android:text="@string/timkiem" />
 
                 <TextView
@@ -51,13 +51,23 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
+            <com.google.android
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_text"/>
+
+            </com.google.android>
+
             <EditText
                 android:id="@+id/edtTimKiem"
                 style="@style/Style_edtTK_DD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/custom_edittext_tkiem_ddiem"
+                android:layout_marginTop="8dp"
                 android:drawableEnd="@drawable/ic_search" />
 
             <LinearLayout
@@ -97,8 +107,8 @@
                 style="@style/Style_btnTimViec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/custom_background_btntimviec"
+                android:layout_margin="8dp"
+                android:background="@drawable/custom_button_search"
                 android:text="@string/TimViec" />
 
             <Button

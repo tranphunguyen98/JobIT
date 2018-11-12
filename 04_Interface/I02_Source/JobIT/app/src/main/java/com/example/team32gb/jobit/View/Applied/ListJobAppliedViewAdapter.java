@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
 import com.example.team32gb.jobit.Model.ListJobSearch.ItemJob;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.JobDetail.DetailJobActivity;
 import com.example.team32gb.jobit.View.ListJobSearch.ItemClickListener;
 
@@ -42,10 +43,10 @@ public class ListJobAppliedViewAdapter extends RecyclerView.Adapter<ListJobAppli
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-        Log.e("kiemtraid", "onBindViewHolder" + i);
+        Log.e("kiemtraid", "onBindViewHolder" + mdata.get(i).getTimeApply());
         myViewHolder.txtNameJob.setText(mdata.get(i).getNameJob());
         myViewHolder.txtNameCompany.setText(mdata.get(i).getNameCompany());
-        myViewHolder.txtTime.setText("Ngày apply: " + (mdata.get(i).getTimeApply()));
+        myViewHolder.txtTime.setText(Util.getSubTime(mdata.get(i).getTimeApply()));
         myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View v, int position) {

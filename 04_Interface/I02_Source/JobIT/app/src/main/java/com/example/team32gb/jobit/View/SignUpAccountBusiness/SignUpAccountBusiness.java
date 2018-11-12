@@ -1,9 +1,12 @@
 package com.example.team32gb.jobit.View.SignUpAccountBusiness;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,9 +19,15 @@ import com.example.team32gb.jobit.Model.SignUpAccountBusiness.InfoCompanyModel;
 import com.example.team32gb.jobit.Presenter.SignUpAccountBusiness.PresenterInSignUpAccountBusiness;
 import com.example.team32gb.jobit.Presenter.SignUpAccountBusiness.PresenterLogicSignUpAccountBusiness;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 public class SignUpAccountBusiness extends AppCompatActivity implements View.OnClickListener,
                                             AdapterView.OnItemSelectedListener,ViewSignUpAccountBusiness {
@@ -27,6 +36,7 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
     private EditText edtName,edtAddress, edtIntroduce, edtNamePresenter, edtPhonePresenter;
     private boolean valid = false;
     private PresenterInSignUpAccountBusiness presenter;
+    private InfoCompanyModel infoCompanyModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +54,7 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
         edtPhonePresenter = findViewById(R.id.edtPhonePresenter);
 
 
+
         ArrayAdapter<CharSequence> adapterSize = ArrayAdapter.createFromResource(this,R.array.QuyMoCongTy,R.layout.support_simple_spinner_dropdown_item);
         spSize.setAdapter(adapterSize);
 
@@ -52,6 +63,29 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
 
         ArrayAdapter<CharSequence> adapterProvince = ArrayAdapter.createFromResource(this,R.array.TinhThanh,R.layout.support_simple_spinner_dropdown_item);
         spProvince.setAdapter(adapterProvince);
+
+        Intent intent = getIntent();
+        infoCompanyModel = intent.getParcelableExtra("bundle");
+        if(infoCompanyModel != null) {
+            edtNamePresenter.setText(infoCompanyModel.getNamePresenter());
+            edtName.setText(infoCompanyModel.getName());
+            edtPhonePresenter.setText(infoCompanyModel.getPhoneNumberPresenter());
+            edtAddress.setText(infoCompanyModel.getAddress());
+            edtIntroduce.setText(infoCompanyModel.getIntroduce());
+
+            List<String> lsQuyMoCongTy = Arrays.asList(getResources().getStringArray(R.array.QuyMoCongTy));
+            List<String> lsLoaiHinhCongTy = Arrays.asList(getResources().getStringArray(R.array.DanhSachLoaiHinhCongTy));
+            List<String> lsTinhThanh = Arrays.asList(getResources().getStringArray(R.array.TinhThanh));
+
+            spSize.setSelection(Util.getPositionSpinnerFromString(infoCompanyModel.getSize(),lsQuyMoCongTy));
+            adapterSize.notifyDataSetChanged();
+
+            spType.setSelection(Util.getPositionSpinnerFromString(infoCompanyModel.getType(),lsLoaiHinhCongTy));
+            adapterType.notifyDataSetChanged();
+
+            spProvince.setSelection(Util.getPositionSpinnerFromString(infoCompanyModel.getProvince(),lsTinhThanh));
+            adapterProvince.notifyDataSetChanged();
+        }
 
         spSize.setOnItemSelectedListener(this);
 
@@ -201,6 +235,10 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
         if(valid){
             Save();
             Toast.makeText(getApplication(), "Đăng kí thành công",Toast.LENGTH_LONG).show();
+            SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(Config.REGESTERED_INFO,true);
+            editor.apply();
             edtName.setText(" ");
             edtAddress.setText(" ");
             edtIntroduce.setText(" ");

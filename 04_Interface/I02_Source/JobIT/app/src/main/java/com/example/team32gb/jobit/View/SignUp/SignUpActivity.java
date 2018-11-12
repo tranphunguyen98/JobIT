@@ -22,6 +22,7 @@ import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
+import com.example.team32gb.jobit.View.SignUpAccountBusiness.SignUpAccountBusiness;
 import com.facebook.share.Share;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private TextView tvJumpSignIn;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+    int userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         switch (id) {
             case R.id.btnSignUp:
                 SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-                int userType = sharedPreferences.getInt(Config.USER_TYPE, 0);
+                userType = sharedPreferences.getInt(Config.USER_TYPE, 0);
                 Log.e("kiemtrasignup",userType+"");
                 switch (userType) {
                     case Config.IS_JOB_SEEKER:
@@ -182,7 +184,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         String uid = task.getResult().getUser().getUid();
                         saveInfotToServer(refUserType, uid);
 
-                        Util.jumpActivity(SignUpActivity.this, HomeJobSeekerActivity.class);
+                        switch (userType) {
+                            case Config.IS_JOB_SEEKER:
+                                SignUpActivity.this.finish();
+                                Util.jumpActivity(SignUpActivity.this, HomeJobSeekerActivity.class);
+                                break;
+                            case Config.IS_RECRUITER:
+                                SignUpActivity.this.finish();
+                                Util.jumpActivity(SignUpActivity.this, SignUpAccountBusiness.class);
+                                break;
+                            case Config.IS_ADMIN:
+                                //signUp(Config.REF_ADMINS_NODE);
+                                break;
+                            default:
+                                break;
+                        }
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(SignUpActivity.this, "Đăng ký thất bại, vui lòng đăng ký bằng Email khác", Toast.LENGTH_SHORT).show();

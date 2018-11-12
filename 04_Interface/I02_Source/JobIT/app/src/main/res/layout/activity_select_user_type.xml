@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.SelectUserType.SelectUserTypeActivity"
-    android:background="@color/backgroundRed">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/imgJobit"
@@ -18,78 +18,81 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgJobit"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
         android:orientation="vertical"
-        android:paddingStart="45dp"
-        android:paddingEnd="45dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:paddingBottom="30dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
             android:text="Bạn là?"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnJobSeeker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custom_button_sign_in"
-            android:drawablePadding="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+
+            android:background="@drawable/custom_button"
+            android:drawablePadding="8dp"
             android:paddingStart="60dp"
             android:paddingEnd="60dp"
             android:text="Người tìm việc"
+
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
         <Button
             android:id="@+id/btnEmployer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custom_button_sign_in"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_button"
             android:drawablePadding="10dp"
             android:paddingStart="60dp"
             android:paddingEnd="60dp"
             android:text="Nhà tuyển dụng"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
         <Button
             android:id="@+id/btnAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custom_button_sign_in"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_button"
             android:drawablePadding="10dp"
             android:paddingStart="60dp"
             android:paddingEnd="60dp"
             android:text="Admin"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnDismiss"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/custom_button_create_accout"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp"
-            android:textAllCaps="false"
-            android:text="Bỏ qua"
-            android:textColor="#ffffff" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            style="@style/ButtonBorder.Accent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="BỎ QUA"
+    />
     </LinearLayout>
 
 
@@ -99,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Team32GB"
+        android:text="© Team32Gb"
         android:textColor="#ffffff"
         android:layout_marginBottom="10dp"
         android:textSize="15sp" />

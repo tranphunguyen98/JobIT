@@ -14,6 +14,7 @@ public class Config {
     public static final String REF_AWAITING_APPROVAL_RECRUITERS = "awaiting_approval_recruiters";
     public static final String REF_AWAITING_APPROVAL = "awaiting_approval_recruiters";
 
+
     //Dữ liệu offline
     public static final String SHARED_PREFERENCES_NAME = "team32gb";
     public static final String USER_TYPE = "USER_TYPE";
@@ -24,6 +25,8 @@ public class Config {
     public static final String PASSWORD_USER = "PASSWORD_USER";
     public static final String UID_USER = "UID_USER";
     public static final String IS_ACTIVITY_APPLY = "IS_ACTIVITY_APPLY" ;
+    public static final String REGESTERED_INFO = "IS_ACTIVITY_APPLY" ;
+
 
 
 

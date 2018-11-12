@@ -83,6 +83,7 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
                 Intent intent = new Intent(context.getApplicationContext(), ListCandidateAcvitity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("nameJob",itemPostJobs.get(i).getNameJob());
+                Log.e("kiemtratime",itemPostJobs.get(i).getTime());
                 bundle.putString("timeJob",itemPostJobs.get(i).getTime());
                 bundle.putString("idCompany",itemPostJobs.get(i).getIdCompany());
                 bundle.putString("idJob",itemPostJobs.get(i).getIdJob());

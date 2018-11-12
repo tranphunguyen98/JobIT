@@ -32,17 +32,18 @@ public class ModelInterview {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot dfApplieds = dataSnapshot.child("Applieds").child(uid);
+                DataSnapshot dfApplieds = dataSnapshot.child("choPhongVanNTVs").child(uid);
                 for(DataSnapshot snapshotCompany: dfApplieds.getChildren()) {
                     for(DataSnapshot snJob : snapshotCompany.getChildren()) {
                         ItemJobApplied itemJobApplied =new ItemJobApplied();
                         itemJobApplied.setIdJob(snJob.getKey());
                         itemJobApplied.setIdCompany(snapshotCompany.getKey());
-                        String timeApplied = snJob.child("timeAppiled").getValue(String.class);
+                        String timeApplied = snJob.child("timeApplied").getValue(String.class);
                         itemJobApplied.setTimeApply(timeApplied);
                         String idJob = snJob.getKey();
                         DataJob dataJob = dataSnapshot.child("tinTuyenDungs").child(itemJobApplied.getIdCompany()).child(itemJobApplied.getIdJob()).getValue(DataJob.class);
                         itemJobApplied.setDataJob(dataJob);
+                        Log.e("kiemtraid",dataJob.getTime());
                         itemJobApplieds.add(itemJobApplied);
                     }
                 }

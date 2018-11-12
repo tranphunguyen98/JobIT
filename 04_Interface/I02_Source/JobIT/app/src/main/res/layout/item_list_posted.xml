@@ -5,13 +5,13 @@
     android:layout_margin="10dp"
     android:background="#fff"
     android:orientation="horizontal"
-    android:weightSum="4">
+    android:weightSum="6">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_weight="3"
+        android:layout_weight="5"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -22,13 +22,6 @@
             android:text="Tên công việc"
             android:textSize="15dp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txtNameCompany"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên công ty"
-            android:textSize="13dp" />
 
         <TextView
             android:id="@+id/txtTime"
@@ -42,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
-            android:drawableStart="@drawable/ic_apply"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="Các hồ sơ đã nộp "
