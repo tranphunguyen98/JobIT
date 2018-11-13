@@ -1,35 +1,32 @@
-package com.example.team32gb.jobit.View.WaitingForInterview;
+package com.example.team32gb.jobit.View.SavedJob;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
-import com.example.team32gb.jobit.Presenter.WaitingForInterviewNTV.PresenterInInterview;
-import com.example.team32gb.jobit.Presenter.WaitingForInterviewNTV.PresenterInterview;
+import com.example.team32gb.jobit.Presenter.SavedJob.PresenterSavedJob;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.View.WaitingForInterview.ListJobInterviewViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class InterviewActivity extends AppCompatActivity implements ViewListJobInterview {
-
+public class SavedJobActivity extends AppCompatActivity implements ViewListSavedJob{
     private Toolbar myToolBar;
     private ActionBar actionBar;
     private RecyclerView recyclerView;
-    private PresenterInInterview presenter;
+    private PresenterSavedJob presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interview);
+        setContentView(R.layout.activity_saved_job);
         myToolBar = findViewById(R.id.tbListInterview);
         recyclerView = this.findViewById(R.id.rvListInterview);
 
@@ -41,34 +38,16 @@ public class InterviewActivity extends AppCompatActivity implements ViewListJobI
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        myToolBar.setTitle("Chờ phỏng vấn");
+        myToolBar.setTitle("Đã lưu");
         setSupportActionBar(myToolBar);
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        presenter = new PresenterInterview(this);
+        presenter = new PresenterSavedJob(this);
         presenter.onCreate();
         presenter.getListJob(FirebaseAuth.getInstance().getUid());
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.listjob_actionbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

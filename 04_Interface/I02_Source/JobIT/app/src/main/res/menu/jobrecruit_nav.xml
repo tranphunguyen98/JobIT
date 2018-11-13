@@ -5,17 +5,10 @@
     <item
         android:id="@+id/navPosted"
         android:title="Đã đăng tuyển"
-        android:icon="@drawable/ic_cv" />
+        android:icon="@drawable/ic_cv1" />
     <item
         android:id="@+id/navExpire"
         android:title="Việc hết hạn"
         android:icon="@drawable/ic_watchcv"/>
-    <item
-        android:id="@+id/navWaiting"
-        android:title="Chờ duyệt"
-        android:icon="@drawable/ic_accept" />
-    <item
-        android:id="@+id/navUploadPost"
-        android:icon="@drawable/ic_apply"
-        android:title="Đăng việc làm" />
+
 </menu>

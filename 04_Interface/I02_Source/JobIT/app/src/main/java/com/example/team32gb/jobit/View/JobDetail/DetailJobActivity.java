@@ -162,14 +162,11 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
                         btnApply.setText("Applied");
                         btnApply.setEnabled(false);
                     }
-                    DataSnapshot dsSaved = dataSnapshot.child("viecLamCuaTois").child("daLuus").child(uid).child(idCompany).child("idJob");
-                    String _idJob = dsSaved.getValue(String.class);
-                    if (_idJob != null && !_idJob.isEmpty() && _idJob.equals(idJob)) {
+                    DataSnapshot dsSaved = dataSnapshot.child("daLuus").child(uid).child(idCompany);
+                    if (dsSaved.hasChild(idJob)) {
                         btnSave.setText("Đã Lưu");
                         btnSave.setEnabled(false);
                     }
-
-
                 }
 
                 @Override
@@ -236,8 +233,10 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
             case R.id.btnSaveJob:
                 SharedPreferences sharedPreferencesSave = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
                 if (sharedPreferencesSave.getBoolean(Config.IS_LOGGED, false)) {
-                    DatabaseReference dfDaLuus = nodeRoot.child("viecLamCuaTois").child("daLuus").child(uid).child(idCompany).child("idJob");
-                    dfDaLuus.setValue(idJob).addOnFailureListener(new OnFailureListener() {
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+                    String currentDate = sdf.format(new Date());
+                    DatabaseReference dfDaLuus = nodeRoot.child("daLuus").child(uid).child(idCompany).child(idJob).child("timeApplied");
+                    dfDaLuus.setValue(currentDate).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(DetailJobActivity.this, "Lưu tin thất bại", Toast.LENGTH_LONG).show();
@@ -247,7 +246,7 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(DetailJobActivity.this, "Lưu tin thành công", Toast.LENGTH_LONG).show();
                             btnSave.setEnabled(false);
-                            btnSave.setText("Saved");
+                            btnSave.setText("Đã Lưu");
                         }
                     });
                 } else {

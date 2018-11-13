@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.FragmentCallBack;
+import com.example.team32gb.jobit.View.WaitingAcceptNTD.ViewAdapterApplied;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

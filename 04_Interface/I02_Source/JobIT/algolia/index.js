@@ -14,6 +14,34 @@ const algolia = algoliasearch(
 );
 const index = algolia.initIndex("tinTuyenDungs");
 
+// Get all contacts from Firebase
+database.ref('/tinTuyenDungs').once('value', tinTuyenDungs => {
+  // Build an array of all records to push to Algolia
+  const records = [];
+  tinTuyenDungs.forEach(tinTuyenDung => {
+    tinTuyenDung.forEach(tin => {
+       // get the key and data from the snapshot
+    const childKey = tin.key;
+    const childData = tin.val();
+    // We set the Algolia objectID as the Firebase .key
+    childData.objectID = childKey;
+    // Add object for indexing
+    records.push(childData);
+  })   
+  });
+
+  // Add or update new objects
+  index
+    .saveObjects(records)
+    .then(() => {
+      console.log('Contacts imported into Algolia');
+    })
+    .catch(error => {
+      console.error('Error when importing contact into Algolia', error);
+      process.exit(1);
+    });
+});
+
 const tinTuyenDungsRef = database.ref('/tinTuyenDungs');
 tinTuyenDungsRef.on('child_added', addOrUpdateIndexRecord);
 tinTuyenDungsRef.on('child_changed', addOrUpdateIndexRecord);

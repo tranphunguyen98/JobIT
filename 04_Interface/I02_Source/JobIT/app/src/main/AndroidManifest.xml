@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -71,7 +71,9 @@
         <activity android:name=".View.EmployerAppliedPosted.EmployerAppliedPostedActivity" />
         <activity android:name=".View.WaitingForInterview.InterviewActivity" />
         <activity android:name=".View.CompanyDetail.CompanyDetailActivity" />
-        <activity android:name=".View.InviteJob.InviteJobActivity"></activity>
+        <activity android:name=".View.InviteJob.InviteJobActivity" />
+        <activity android:name=".View.SavedJob.SavedJobActivity" />
+        <activity android:name=".View.WatchCV.WatchCVActivity"></activity>
     </application>
 
 </manifest>

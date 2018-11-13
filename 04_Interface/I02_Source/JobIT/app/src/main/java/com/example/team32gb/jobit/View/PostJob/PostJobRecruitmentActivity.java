@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.team32gb.jobit.JobRecruitmentActivity;
 import com.example.team32gb.jobit.Model.PostJob.DataPostJob;
 import com.example.team32gb.jobit.Presenter.PostJob.PresenterInPostJob;
 import com.example.team32gb.jobit.Presenter.PostJob.PresenterPostJob;
@@ -294,15 +295,6 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
                 {
                     Save();
                     Toast.makeText(getApplication(), "Đăng kí thành công",Toast.LENGTH_LONG).show();
-                    edtJobTitle.setText("");
-                    edtJobTitle.setError(null);
-                    edtMinSalary.setText("");
-                    edtMinSalary.setError(null);
-                    edtMaxSalary.setText("");
-                    edtMaxSalary.setError(null);
-                    edtJobDescription.setText("");
-                    edtJobDescription.setError(null);
-                    edtQualification.setText("");
                 }
                 else
                     Toast.makeText(getApplication(), "Đăng kí không thành thành công",Toast.LENGTH_LONG).show();

@@ -3,7 +3,7 @@
     <item
         android:id="@+id/navPosted"
         android:title="Đã nộp hồ sơ"
-        android:icon="@drawable/ic_cv" />
+        android:icon="@drawable/ic_cv1" />
     <item
         android:id="@+id/navWaitingInterview"
         android:title="Chờ phỏng vấn"

@@ -1,12 +1,9 @@
-package com.example.team32gb.jobit.View.WaitingForInterview;
+package com.example.team32gb.jobit.View.SavedJob;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,28 +23,30 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class ListJobInterviewViewAdapter extends RecyclerView.Adapter<ListJobInterviewViewAdapter.MyViewHolder> {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+public class ListSavedJobViewAdapter  extends RecyclerView.Adapter<ListSavedJobViewAdapter.MyViewHolder>{
     Context context;
     List<ItemPostJob> mdata;
 
-    public ListJobInterviewViewAdapter(Context context, List<ItemPostJob> mdata) {
+    public ListSavedJobViewAdapter(Context context, List<ItemPostJob> mdata) {
         this.context = context;
         this.mdata = mdata;
     }
 
     @NonNull
     @Override
-    public ListJobInterviewViewAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
+    public ListSavedJobViewAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
         Log.e("kiemtraid", "oncreateViewHolder" + i);
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.activity_item_listjob, viewGroup, false);
-        final ListJobInterviewViewAdapter.MyViewHolder viewHolder = new ListJobInterviewViewAdapter.MyViewHolder(v);
+        final ListSavedJobViewAdapter.MyViewHolder viewHolder = new ListSavedJobViewAdapter.MyViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ListJobInterviewViewAdapter.MyViewHolder myViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ListSavedJobViewAdapter.MyViewHolder myViewHolder, final int i) {
         Log.e("kiemtraid", "onBindViewHolder" + mdata.get(i).getTimeApplied());
         myViewHolder.txtNameJob.setText(mdata.get(i).getDataPostJob().getNameJob());
         myViewHolder.txtNameCompany.setText(mdata.get(i).getNameCompany());

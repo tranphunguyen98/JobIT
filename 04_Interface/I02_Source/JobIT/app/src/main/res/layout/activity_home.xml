@@ -119,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 style="@style/StyleButtonList"
-                app:icon="@drawable/ic_cv"
+                app:icon="@drawable/ic_cv1"
                 android:text="@string/TaoCV" />
 
             <com.google.android.material.button.MaterialButton

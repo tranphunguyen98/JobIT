@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,14 +15,10 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
-import com.example.team32gb.jobit.Presenter.InviteJob.PresenerInviteJob;
-import com.example.team32gb.jobit.Presenter.InviteJob.PresenterInInviteJob;
-import com.example.team32gb.jobit.Presenter.WaitingForInterview.PresenterInInterview;
-import com.example.team32gb.jobit.Presenter.WaitingForInterview.PresenterInterview;
+import com.example.team32gb.jobit.Presenter.InviteJobNTV.PresenerInviteJob;
+import com.example.team32gb.jobit.Presenter.InviteJobNTV.PresenterInInviteJob;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
-import com.example.team32gb.jobit.View.WaitingForInterview.ListJobInterviewViewAdapter;
-import com.example.team32gb.jobit.View.WaitingForInterview.ViewListJobInterview;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;

@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
+    android:background="@color/colorPrimaryMinLight"
     tools:context=".View.MyJob.MyJobActivity">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+   android:background="@color/colorPrimaryLight"
+    android:layout_margin="20dp"
+    android:layout_weight="1">
     <TextView
         android:id="@+id/btnMyJob"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight="2"
         android:gravity="center"
+        android:textStyle="italic"
         android:textSize="25sp"
-        android:textColor="@color/colorPrimary"
+     android:textColor="#ffffff"
         android:text="CÔNG VIỆC CỦA TÔI" />
+</LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/llMyjobBtn"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
+        android:background="@color/colorPrimaryMinLight"
         android:orientation="vertical"
         android:layout_margin="16dp">
 
@@ -30,13 +41,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Tìm kiếm gần đây" />
+            android:text="Tìm kiếm gần đây"
+            app:icon="@drawable/ic_list"
+            style="@style/StyleButtonList1"/>
 
         <Button
             android:id="@+id/btnSavedJob"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            style="@style/StyleButtonList1"
+            app:icon = "@drawable/ic_myjob"
             android:text="Đã lưu" />
 
         <Button
@@ -44,6 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            style="@style/StyleButtonList1"
+            app:icon = "@drawable/ic_apply"
             android:text="Đã apply" />
 
         <Button
@@ -51,12 +68,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            style="@style/StyleButtonList1"
+            app:icon = "@drawable/ic_cv1"
             android:text="Chờ phỏng vấn" />
         <Button
             android:id="@+id/btnMoiLam"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            app:icon = "@drawable/ic_recruitment"
+            style="@style/StyleButtonList1"
             android:text="Mời làm" />
     </LinearLayout>
 </LinearLayout>

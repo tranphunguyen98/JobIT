@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.team32gb.jobit.ListCandidateAcvitity;
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.JobDetail.DetailJobActivity;
 import com.example.team32gb.jobit.View.ListJobSearch.ItemClickListener;
 
@@ -45,7 +46,7 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
     @Override
     public void onBindViewHolder(@NonNull ViewAdapterPosted.MyViewHolder myViewHolder, final int i) {
         myViewHolder.txtNameJob.setText(itemPostJobs.get(i).getDataPostJob().getNameJob());
-        myViewHolder.txtTime.setText((itemPostJobs.get(i).getDataPostJob().getTime()));
+        myViewHolder.txtTime.setText(Util.getSubTime(itemPostJobs.get(i).getDataPostJob().getTime()));
 
         myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
@@ -59,6 +60,7 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context.getApplicationContext(), ListCandidateAcvitity.class);
+
                 Bundle bundle = new Bundle();
                 bundle.putString("nameJob",itemPostJobs.get(i).getDataPostJob().getNameJob());
                 Log.e("kiemtratime",itemPostJobs.get(i).getDataPostJob().getTime());
@@ -67,6 +69,12 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
                 bundle.putString("idJob",itemPostJobs.get(i).getIdJob());
                 intent.putExtra("bundle",bundle);
                 context.getApplicationContext().startActivity(intent);
+            }
+        });
+        myViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

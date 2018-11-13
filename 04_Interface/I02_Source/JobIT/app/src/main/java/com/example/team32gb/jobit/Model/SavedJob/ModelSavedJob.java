@@ -1,6 +1,5 @@
-package com.example.team32gb.jobit.Model.WaitingForInterview;
+package com.example.team32gb.jobit.Model.SavedJob;
 
-import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
@@ -15,13 +14,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelInterview {
+import androidx.annotation.NonNull;
+
+public class ModelSavedJob {
     List<ItemPostJob> itemPostJobs;
     GreenRobotEventBus eventBus;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    public ModelInterview() {
+    public ModelSavedJob() {
         itemPostJobs = new ArrayList<>();
         eventBus = GreenRobotEventBus.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -30,9 +31,8 @@ public class ModelInterview {
 
     public void getListJob(final String uid){
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot dfChoPhongVan = dataSnapshot.child("choPhongVanNTVs").child(uid);
+                DataSnapshot dfChoPhongVan = dataSnapshot.child("daLuus").child(uid);
                 for(DataSnapshot snapshotCompany: dfChoPhongVan.getChildren()) {
                     for (DataSnapshot snJob : snapshotCompany.getChildren()) {
                         ItemPostJob itemPostJob = new ItemPostJob();
