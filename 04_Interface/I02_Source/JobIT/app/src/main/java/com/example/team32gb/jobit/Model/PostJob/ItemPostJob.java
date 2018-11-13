@@ -8,21 +8,14 @@ public class ItemPostJob implements Parcelable{
     String idCompany;
     String nameCompany;
     String timeApplied;
-
-    public String getTimeApplied() {
-        return timeApplied;
-    }
-
-    public void setTimeApplied(String timeApplied) {
-        this.timeApplied = timeApplied;
-    }
-
     DataPostJob dataPostJob;
+
 
     protected ItemPostJob(Parcel in) {
         idJob = in.readString();
         idCompany = in.readString();
         nameCompany = in.readString();
+        timeApplied = in.readString();
         dataPostJob = in.readParcelable(DataPostJob.class.getClassLoader());
     }
 
@@ -31,6 +24,7 @@ public class ItemPostJob implements Parcelable{
         dest.writeString(idJob);
         dest.writeString(idCompany);
         dest.writeString(nameCompany);
+        dest.writeString(timeApplied);
         dest.writeParcelable(dataPostJob, flags);
     }
 
@@ -50,6 +44,15 @@ public class ItemPostJob implements Parcelable{
             return new ItemPostJob[size];
         }
     };
+
+    public String getTimeApplied() {
+        return timeApplied;
+    }
+
+    public void setTimeApplied(String timeApplied) {
+        this.timeApplied = timeApplied;
+    }
+
 
     public String getNameCompany() {
         return nameCompany;

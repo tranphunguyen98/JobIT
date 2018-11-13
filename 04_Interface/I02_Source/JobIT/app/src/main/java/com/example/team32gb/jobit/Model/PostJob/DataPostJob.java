@@ -13,9 +13,9 @@ public class DataPostJob implements Parcelable {
     String description;
     String qualification;
     String time;
-
-    public DataPostJob() {
-    }
+    String idJob;
+    String idCompnay;
+    String avatar;
 
     protected DataPostJob(Parcel in) {
         nameJob = in.readString();
@@ -27,6 +27,34 @@ public class DataPostJob implements Parcelable {
         description = in.readString();
         qualification = in.readString();
         time = in.readString();
+        idJob = in.readString();
+        idCompnay = in.readString();
+        avatar = in.readString();
+        nameCompany = in.readString();
+        province = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nameJob);
+        dest.writeString(typeJob);
+        dest.writeString(each);
+        dest.writeString(maxSalary);
+        dest.writeString(minSalary);
+        dest.writeString(numberEmployer);
+        dest.writeString(description);
+        dest.writeString(qualification);
+        dest.writeString(time);
+        dest.writeString(idJob);
+        dest.writeString(idCompnay);
+        dest.writeString(avatar);
+        dest.writeString(nameCompany);
+        dest.writeString(province);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<DataPostJob> CREATOR = new Creator<DataPostJob>() {
@@ -40,6 +68,52 @@ public class DataPostJob implements Parcelable {
             return new DataPostJob[size];
         }
     };
+
+    public String getIdJob() {
+        return idJob;
+    }
+
+    public void setIdJob(String idJob) {
+        this.idJob = idJob;
+    }
+
+    public String getIdCompany() {
+        return idCompnay;
+    }
+
+    public void setIdCompnay(String idCompnay) {
+        this.idCompnay = idCompnay;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getNameCompany() {
+        return nameCompany;
+    }
+
+    public void setNameCompany(String nameCompany) {
+        this.nameCompany = nameCompany;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    String nameCompany;
+    String province;
+
+    public DataPostJob() {
+    }
 
     public String getEach() {
         return each;
@@ -125,22 +199,5 @@ public class DataPostJob implements Parcelable {
         this.time = time;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(nameJob);
-        dest.writeString(typeJob);
-        dest.writeString(each);
-        dest.writeString(maxSalary);
-        dest.writeString(minSalary);
-        dest.writeString(numberEmployer);
-        dest.writeString(description);
-        dest.writeString(qualification);
-        dest.writeString(time);
-    }
 }
 

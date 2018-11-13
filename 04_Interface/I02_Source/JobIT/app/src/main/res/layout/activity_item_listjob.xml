@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:algolia="http://schemas.android.com/apk/res-auto">
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_listjob"
@@ -34,8 +35,11 @@
         android:layout_toStartOf="@+id/imgFav"
         android:text="Tên công việc"
         android:textSize="15dp"
+        attribute='@{"nameJob"}'
+        highlighted='@{true}'
         android:layout_marginTop="12dp"
         android:maxLines="2"
+
         android:textStyle="bold" />
 
     <TextView
@@ -57,12 +61,20 @@
         android:layout_alignStart="@+id/txtTenCV"
         android:text="Từ $1000 đến $2000"
         android:textColor="#fd860f"
-        android:textSize="13dp" />
+        android:textSize="13sp" />
+        <TextView
+            android:id="@+id/txtProvince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtSalary"
+            android:layout_alignStart="@+id/txtTenCV"
+            android:text="Hồ Chí Minh"
+            android:textSize="10dp" />
     <TextView
         android:id="@+id/txtThơiGian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtSalary"
+        android:layout_below="@+id/txtProvince"
         android:layout_marginTop="4dp"
         android:layout_alignStart="@+id/txtTenCV"
         android:text="Thời gian đăng việc"
@@ -78,3 +90,4 @@
         android:src="@drawable/ic_favorite" />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
+</layout>

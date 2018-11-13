@@ -9,6 +9,6 @@ import java.util.List;
 public interface PresenterInListJobSearch {
     void onCreate();
     void onDestroy();
-    void getListJob();
+    void getListJob(String timKiem, String diaDiem);
     void showListJob(List<ItemPostJob> ItemPostJob);
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
@@ -27,6 +28,7 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
     private Button btnAccount;
     private Button btnSignOut;
     private Button btnChangeUserType;
+    private EditText edtTimKiem,edtDiaDiem;
     private SharedPreferences sharedPreferences;
     FirebaseAuth firebaseAuth;
 
@@ -35,6 +37,8 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        edtTimKiem = findViewById(R.id.edtTimKiem);
+        edtDiaDiem = findViewById(R.id.edtDiaDiem);
 
         btnSearch = findViewById(R.id.btnSearch);
         btnSignIn = findViewById(R.id.btnDangNhap);
@@ -108,7 +112,12 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
         int id = v.getId();
         switch (id) {
             case R.id.btnSearch:
-                Util.jumpActivity(this, ListJobSearchActivity.class);
+                Intent intent = new Intent(this,ListJobSearchActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("timKiem",edtTimKiem.getText().toString());
+                bundle.putString("diaDiem",edtDiaDiem.getText().toString());
+                intent.putExtra("bundle",bundle);
+                this.startActivity(intent);
                 break;
             case R.id.btnDangNhap:
                 Intent intentSI = new Intent(this, SignInActivity.class);

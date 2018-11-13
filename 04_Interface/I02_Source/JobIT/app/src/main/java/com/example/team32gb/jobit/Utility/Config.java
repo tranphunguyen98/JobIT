@@ -33,6 +33,7 @@ public class Config {
     public static final String REF_CVS_NODE = "cvs";
 
     public static final String REF_FOLDER_AVATAR = "images/avatars";
+    public static final String REF_FOLDER_LOGO = "images/logos";
     public static final String REF_FOLDER_IMAGE = "avatars";
     public static final int IS_JOB_SEEKER = 1;
     public static final int IS_RECRUITER = 2;

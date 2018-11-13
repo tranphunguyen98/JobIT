@@ -135,14 +135,15 @@ public class CompanyDetailActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onStart() {
         super.onStart();
-        String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + idCompany + ".jpg";
+        String avatarPath = Environment.getExternalStorageDirectory() + "/logo" +
+                "" + "/" + idCompany + ".jpg";
         Log.e("kiemtraanh",avatarPath);
         Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
         if(bitmap != null && avatarPath != null && !avatarPath.isEmpty()) {
             imageButton.setBackground(new BitmapDrawable(bitmap));
         } else {
             long ONE_MEGABYTE = 1024 * 1024;
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR).child(idCompany);
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_LOGO).child(idCompany);
             storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {

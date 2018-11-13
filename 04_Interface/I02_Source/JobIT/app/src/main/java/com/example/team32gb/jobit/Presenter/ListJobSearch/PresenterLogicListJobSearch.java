@@ -35,9 +35,10 @@ public class PresenterLogicListJobSearch implements PresenterInListJobSearch {
     }
 
     @Override
-    public void getListJob() {
-        model.getListJob();
+    public void getListJob(String timKiem, String diaDiem) {
+        model.getListJob(timKiem,diaDiem);
     }
+
 
     @Override
     @Subscribe

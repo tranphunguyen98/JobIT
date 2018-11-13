@@ -126,10 +126,10 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
 
         final Intent intent = getIntent();
         itemPostJob = intent.getParcelableExtra("bundle");
-        idCompany = itemPostJob.getIdCompany();
-        idJob = itemPostJob.getIdJob();
+        idCompany = itemPostJob.getDataPostJob().getIdCompany();
+        idJob = itemPostJob.getDataPostJob().getIdJob();
 
-        String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + idCompany + ".jpg";
+        String avatarPath = Environment.getExternalStorageDirectory() + "/logo" + "/" + idCompany + ".jpg";
         Log.e("kiemtraanh",avatarPath);
         Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
         if(bitmap != null && avatarPath != null && !avatarPath.isEmpty()) {

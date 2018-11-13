@@ -48,7 +48,6 @@ public class ListJobSearchActivity extends AppCompatActivity implements ViewList
         editor.putBoolean(Config.IS_ACTIVITY_APPLY,true);
         editor.apply();
 
-
         myToolBar = findViewById(R.id.tbListJobSearch);
         recyclerView = this.findViewById(R.id.rvListJobSearch);
 
@@ -58,7 +57,6 @@ public class ListJobSearchActivity extends AppCompatActivity implements ViewList
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-
         myToolBar.setTitle("Tìm việc");
         setSupportActionBar(myToolBar);
 
@@ -66,7 +64,11 @@ public class ListJobSearchActivity extends AppCompatActivity implements ViewList
         actionBar.setDisplayHomeAsUpEnabled(true);
         presenter = new PresenterLogicListJobSearch(this);
         presenter.onCreate();
-        presenter.getListJob();
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        String timKiem = bundle.getString("timKiem");
+        String diaDiem = bundle.getString("diaDiem");
+//        Log.e("kiemtraBundle",timKiem + ":" + diaDiem);
+        presenter.getListJob(timKiem,diaDiem);
 
     }
 

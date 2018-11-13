@@ -68,9 +68,7 @@ public class HomeRecruitmentActivity extends AppCompatActivity implements View.O
             case R.id.btnChangeUserTypeRecruiter:
                 SharedPreferences sharedPreferences1 = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
                 SharedPreferences.Editor editor1 =sharedPreferences1.edit();
-                FirebaseAuth.getInstance().signOut();
                 editor1.putInt(Config.USER_TYPE,0);
-                editor1.putBoolean(Config.IS_LOGGED,false);
                 editor1.apply();
                 Util.jumpActivity(this,SelectUserTypeActivity.class);
                 break;

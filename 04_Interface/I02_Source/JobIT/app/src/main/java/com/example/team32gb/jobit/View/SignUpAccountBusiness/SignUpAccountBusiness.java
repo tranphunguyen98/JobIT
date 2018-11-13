@@ -127,7 +127,7 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
 //                    }
 //                }
 //            });
-            Util.loadImageFromLocal(imageButton,uid);
+            Util.loadImageFromFolderLogoLocal(imageButton,uid);
 
 
             List<String> lsQuyMoCongTy = Arrays.asList(getResources().getStringArray(R.array.QuyMoCongTy));
@@ -357,11 +357,11 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
 
                     imageButton.setBackground(new BitmapDrawable(bitmapThumbnail));
                     Log.e("kiemtraImage", "1");
-                    File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/avatar");
+                    File folderDownloaded = new File(Environment.getExternalStorageDirectory() + "/logo");
                     if (!folderDownloaded.exists()) {
                         folderDownloaded.mkdir();
                     }
-                    String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + uid + ".jpg";
+                    String avatarPath = Environment.getExternalStorageDirectory() + "/logo" + "/" + uid + ".jpg";
                     Log.e("kiemtraImage", avatarPath);
                     File file = new File(avatarPath);
                     FileOutputStream fileOutputStream;
@@ -372,7 +372,7 @@ public class SignUpAccountBusiness extends AppCompatActivity implements View.OnC
                     fileOutputStream.flush();
                     fileOutputStream.close();
 
-                    StorageReference srAvatar = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR);
+                    StorageReference srAvatar = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_LOGO);
                     final StorageReference storageReferenceImage = srAvatar.child(uid);
                     final DatabaseReference nodeRoot = FirebaseDatabase.getInstance().getReference();
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();

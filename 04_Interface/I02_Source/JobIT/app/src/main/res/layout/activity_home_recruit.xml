@@ -6,11 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".View.HomeRecruitmentActivity.HomeRecruitmentActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="6"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorBlackMinLight"
+        android:layout_above="@+id/ln">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NHÀ TUYỂN DỤNG"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25sp"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ln"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical">
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUploadPost"
             android:layout_width="match_parent"

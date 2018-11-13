@@ -16,6 +16,7 @@ import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.example.team32gb.jobit.View.SignUpAccountBusiness.SignUpAccountBusiness;
+import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.team32gb.jobit.Utility.Config.IS_LOGGED;
 import static com.example.team32gb.jobit.Utility.Config.IS_RECRUITER;
@@ -77,32 +78,40 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String uid =firebaseAuth.getUid();
         SharedPreferences.Editor editor = sharedPreferencesUserType.edit();
         switch (id) {
             case R.id.btnJobSeeker:
             case R.id.btnDismiss:
+                firebaseAuth.signOut();
+                editor.putBoolean(Config.IS_LOGGED, false);
+                editor.putBoolean(Config.REGESTERED_INFO,false);
                 editor.putInt(USER_TYPE, Config.IS_JOB_SEEKER);
                 editor.apply();
-                Util.jumpActivity(SelectUserTypeActivity.this, HomeJobSeekerActivity.class);
+                Util.jumpActivityRemoveStack(SelectUserTypeActivity.this, HomeJobSeekerActivity.class);
                 this.finish();
                 break;
             case R.id.btnEmployer:
+                firebaseAuth.signOut();
+                editor.putBoolean(Config.IS_LOGGED, false);
+                editor.putBoolean(Config.REGESTERED_INFO,false);
                 editor.putInt(USER_TYPE, IS_RECRUITER);
                 editor.apply();
                 if (sharedPreferencesUserType.getBoolean(IS_LOGGED, false)) {
-                    Util.jumpActivity(SelectUserTypeActivity.this, HomeRecruitmentActivity.class);
+                    Util.jumpActivityRemoveStack(SelectUserTypeActivity.this, HomeRecruitmentActivity.class);
                 } else {
-                    Util.jumpActivity(SelectUserTypeActivity.this, SignInActivity.class);
+                    Util.jumpActivityRemoveStack(SelectUserTypeActivity.this, SignInActivity.class);
                 }
                 this.finish();
                 break;
             case R.id.btnAdmin:
-                editor.putInt(USER_TYPE, IS_RECRUITER);
-                editor.apply();
-                Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
-//                Intent intent3 = new Intent(this, HomeJobSeekerActivity.class);
-//                startActivity(intent3);
-                this.finish();
+//                editor.putInt(USER_TYPE, IS_RECRUITER);
+//                editor.apply();
+//                Toast.makeText(this, "Admin", Toast.LENGTH_SHORT).show();
+////                Intent intent3 = new Intent(this, HomeJobSeekerActivity.class);
+////                startActivity(intent3);
+//                this.finish();
                 break;
             default:
                 break;
