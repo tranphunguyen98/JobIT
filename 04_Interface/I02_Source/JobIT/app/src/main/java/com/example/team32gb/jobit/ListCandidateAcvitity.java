@@ -81,7 +81,9 @@ public class ListCandidateAcvitity extends AppCompatActivity {
                       setFragment(waitingInterviewFragment);
                       return true;
                   case R.id.navInviteJob:
-                      setFragment(new InviteJobFragment());
+                      InviteJobFragment inviteJobFragment = new InviteJobFragment();
+                      inviteJobFragment.showList(idCompany,idJob);
+                      setFragment(inviteJobFragment);
                       return true;
                       default:
                           return false;

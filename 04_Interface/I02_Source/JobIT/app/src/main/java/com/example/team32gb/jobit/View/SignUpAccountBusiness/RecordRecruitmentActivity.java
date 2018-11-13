@@ -178,11 +178,11 @@ public class RecordRecruitmentActivity extends AppCompatActivity implements View
             txtPhone.setVisibility(View.GONE);
             edtPhone.setVisibility(View.VISIBLE);
 
-            edtNameCompany.setText(txtNameCompany.getText().toString());
-            edtAddress.setText(txtAddress.getText().toString());
-            edtIntroduce.setText(txtIntroduce.getText().toString());
-            edtContact.setText(txtContact.getText().toString());
-            edtPhone.setText(txtPhone.getText().toString());
+//            edtNameCompany.setText(txtNameCompany.getText().toString());
+//            edtAddress.setText(txtAddress.getText().toString());
+//            edtIntroduce.setText(txtIntroduce.getText().toString());
+//            edtContact.setText(txtContact.getText().toString());
+//            edtPhone.setText(txtPhone.getText().toString());
 
             edtNameCompany.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -340,42 +340,42 @@ public class RecordRecruitmentActivity extends AppCompatActivity implements View
                 infoCompanyModel.setNamePresenter(edtContact.getText().toString());
                 infoCompanyModel.setPhoneNumberPresenter(edtPhone.getText().toString());
 
-                txtNameCompany.setText(name + edtNameCompany.getText());
+                txtNameCompany.setText(edtNameCompany.getText());
                 edtNameCompany.setText(" ");
                 edtNameCompany.setVisibility(View.GONE);
                 txtNameCompany.setVisibility(View.VISIBLE);
 
-                txtSizeCompany.setText(size + arrSize[spSize.getSelectedItemPosition()]);
+                txtSizeCompany.setText(arrSize[spSize.getSelectedItemPosition()]);
                 txtSizeCompany.setVisibility(View.VISIBLE);
                 spSize.setVisibility(View.GONE);
                 lnSize.setVisibility(View.GONE);
 
-                txtTypeCompany.setText(type + arrType[spType.getSelectedItemPosition()]);
+                txtTypeCompany.setText(arrType[spType.getSelectedItemPosition()]);
                 txtTypeCompany.setVisibility(View.VISIBLE);
                 spType.setVisibility(View.GONE);
                 lnType.setVisibility(View.GONE);
 
-                txtAddress.setText(address + edtAddress.getText());
+                txtAddress.setText(edtAddress.getText());
                 edtAddress.setText(" ");
                 edtAddress.setVisibility(View.GONE);
                 txtAddress.setVisibility(View.VISIBLE);
 
-                txtProvince.setText(province + arrProvince[spProvince.getSelectedItemPosition()]);
+                txtProvince.setText(arrProvince[spProvince.getSelectedItemPosition()]);
                 txtProvince.setVisibility(View.VISIBLE);
                 spProvince.setVisibility(View.GONE);
                 lnProvice.setVisibility(View.GONE);
 
-                txtIntroduce.setText(introduce + edtIntroduce.getText());
+                txtIntroduce.setText(edtIntroduce.getText());
                 edtIntroduce.setText(" ");
                 edtIntroduce.setVisibility(View.GONE);
                 txtIntroduce.setVisibility(View.VISIBLE);
 
-                txtContact.setText(contact + edtContact.getText());
+                txtContact.setText(edtContact.getText());
                 edtContact.setText(" ");
                 edtContact.setVisibility(View.GONE);
                 txtContact.setVisibility(View.VISIBLE);
 
-                txtPhone.setText(phone + edtPhone.getText());
+                txtPhone.setText(edtPhone.getText());
                 edtPhone.setText(" ");
                 edtPhone.setVisibility(View.GONE);
                 txtPhone.setVisibility(View.VISIBLE);
