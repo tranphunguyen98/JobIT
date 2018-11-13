@@ -77,7 +77,7 @@ public class ModelListJobSearch {
             };
             JSONObject settings = new JSONObject().put("customRanking", "desc(maxSalary)");
             index.setSettingsAsync(settings, completionHandler);
-            Query query = new Query(timKiem)
+            Query query = new Query(timKiem + " " + diaDiem)
                     .setAttributesToHighlight("nameJob")
                     .setHitsPerPage(20);
             index.searchAsync(query, completionHandler);

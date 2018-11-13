@@ -114,10 +114,19 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
             case R.id.btnSearch:
                 Intent intent = new Intent(this,ListJobSearchActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("timKiem",edtTimKiem.getText().toString());
-                bundle.putString("diaDiem",edtDiaDiem.getText().toString());
-                intent.putExtra("bundle",bundle);
-                this.startActivity(intent);
+                String timKiem = edtTimKiem.getText().toString();
+                String diaDiem  = edtDiaDiem.getText().toString();
+                if(timKiem.trim().length() <= 0 && diaDiem.trim().length() <= 0) {
+                    edtTimKiem.setError("Hãy nhập thông tin tìm kiếm");
+                    edtDiaDiem.setError("Hãy nhập thông tin tìm kiếm");
+
+                } else {
+                    bundle.putString("timKiem",edtTimKiem.getText().toString());
+                    bundle.putString("diaDiem",edtDiaDiem.getText().toString());
+                    intent.putExtra("bundle",bundle);
+                    this.startActivity(intent);
+                }
+
                 break;
             case R.id.btnDangNhap:
                 Intent intentSI = new Intent(this, SignInActivity.class);
