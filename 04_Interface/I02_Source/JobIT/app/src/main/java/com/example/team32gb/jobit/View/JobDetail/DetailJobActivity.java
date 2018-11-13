@@ -8,12 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 
 import android.provider.ContactsContract;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -118,10 +123,18 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
         btnAvatar.setOnClickListener(this);
 
 
+
         final Intent intent = getIntent();
         itemPostJob = intent.getParcelableExtra("bundle");
         idCompany = itemPostJob.getIdCompany();
         idJob = itemPostJob.getIdJob();
+
+        String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + idCompany + ".jpg";
+        Log.e("kiemtraanh",avatarPath);
+        Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
+        if(bitmap != null && avatarPath != null && !avatarPath.isEmpty()) {
+            btnAvatar.setBackground(new BitmapDrawable(bitmap));
+        }
 
         txtNameJob.setText(itemPostJob.getDataPostJob().getNameJob());
         txtSalary.setText("Từ $" + itemPostJob.getDataPostJob().getMinSalary() + " đến $" + itemPostJob.getDataPostJob().getMaxSalary() + "/" + itemPostJob.getDataPostJob().getEach());

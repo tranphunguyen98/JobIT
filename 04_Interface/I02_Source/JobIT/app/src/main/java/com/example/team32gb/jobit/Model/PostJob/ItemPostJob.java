@@ -7,6 +7,16 @@ public class ItemPostJob implements Parcelable{
     String idJob;
     String idCompany;
     String nameCompany;
+    String timeApplied;
+
+    public String getTimeApplied() {
+        return timeApplied;
+    }
+
+    public void setTimeApplied(String timeApplied) {
+        this.timeApplied = timeApplied;
+    }
+
     DataPostJob dataPostJob;
 
     protected ItemPostJob(Parcel in) {

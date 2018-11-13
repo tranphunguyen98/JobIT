@@ -2,6 +2,8 @@ package com.example.team32gb.jobit.View.WaitingForInterview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,54 +11,71 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
+import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
+import com.example.team32gb.jobit.View.Applied.ListJobAppliedViewAdapter;
 import com.example.team32gb.jobit.View.JobDetail.DetailJobActivity;
 import com.example.team32gb.jobit.View.ListJobSearch.ItemClickListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 public class ListJobInterviewViewAdapter extends RecyclerView.Adapter<ListJobInterviewViewAdapter.MyViewHolder> {
 
     Context context;
-    List<ItemJobApplied> mdata;
+    List<ItemPostJob> mdata;
 
-    public ListJobInterviewViewAdapter(Context context, List<ItemJobApplied> mdata) {
+    public ListJobInterviewViewAdapter(Context context, List<ItemPostJob> mdata) {
         this.context = context;
         this.mdata = mdata;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
+    public ListJobInterviewViewAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
         Log.e("kiemtraid", "oncreateViewHolder" + i);
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.activity_item_listjob, viewGroup, false);
-        final MyViewHolder viewHolder = new MyViewHolder(v);
+        final ListJobInterviewViewAdapter.MyViewHolder viewHolder = new ListJobInterviewViewAdapter.MyViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-        Log.e("kiemtraid", "onBindViewHolder" + i);
-        myViewHolder.txtNameJob.setText(mdata.get(i).getNameJob());
+    public void onBindViewHolder(@NonNull final ListJobInterviewViewAdapter.MyViewHolder myViewHolder, final int i) {
+        Log.e("kiemtraid", "onBindViewHolder" + mdata.get(i).getTimeApplied());
+        myViewHolder.txtNameJob.setText(mdata.get(i).getDataPostJob().getNameJob());
         myViewHolder.txtNameCompany.setText(mdata.get(i).getNameCompany());
-        myViewHolder.txtTime.setText(Util.getSubTime(mdata.get(i).getTimeApply()));
+        myViewHolder.txtTime.setText(Util.getSubTime(mdata.get(i).getTimeApplied()));
+        myViewHolder.txtTime.setText(Util.getSubTime(mdata.get(i).getDataPostJob().getTime()));
+        String minSalary = mdata.get(i).getDataPostJob().getMinSalary();
+        String maxSalary = mdata.get(i).getDataPostJob().getMaxSalary();
+        myViewHolder.txtSalary.setText("Từ $" + minSalary + " đến $" + maxSalary);
+
+        long ONE_MEGABYTE = 1024 * 1024;
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR).child(mdata.get(i).getIdCompany());
+        storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                myViewHolder.imageView.setImageBitmap(bitmap);
+            }
+        });
+
         myViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(context.getApplicationContext(), DetailJobActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                Bundle bundle = new Bundle();
-                Log.e("kiemtraid", position + "");
-                bundle.putString("idJob", mdata.get(position).getIdJob());
-                bundle.putString("idCompany", mdata.get(position).getIdCompany());
-                bundle.putString("nameJob", mdata.get(position).getNameJob());
-                intent.putExtra("bundle", bundle);
+                intent.putExtra("bundle", mdata.get(i));
                 context.getApplicationContext().startActivity(intent);
             }
         });
@@ -72,7 +91,9 @@ public class ListJobInterviewViewAdapter extends RecyclerView.Adapter<ListJobInt
         private TextView txtNameJob;
         private TextView txtNameCompany;
         private TextView txtTime;
-        private RelativeLayout item_listjob;
+        private TextView txtSalary;
+        private ImageView imageView;
+        // private RelativeLayout item_listjob;
         private ItemClickListener itemClickListener;
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -85,7 +106,11 @@ public class ListJobInterviewViewAdapter extends RecyclerView.Adapter<ListJobInt
             txtNameJob = itemView.findViewById(R.id.txtTenCV);
             txtNameCompany = itemView.findViewById(R.id.txtTenCT);
             txtTime = itemView.findViewById(R.id.txtThơiGian);
-            item_listjob = itemView.findViewById(R.id.item_listjob);
+            txtSalary = itemView.findViewById(R.id.txtSalary);
+
+
+            imageView = itemView.findViewById(R.id.imgAvatarCompany);
+            //    item_listjob = itemView.findViewById(R.id.item_listjob);
         }
 
         @Override

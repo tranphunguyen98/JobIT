@@ -1,11 +1,10 @@
-package com.example.team32gb.jobit.Presenter.WaitingForInterview;
+package com.example.team32gb.jobit.Presenter.InviteJob;
 
-import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 
 import java.util.List;
 
-public interface PresenterInInterview {
+public interface PresenterInInviteJob {
     void onCreate();
     void onDestroy();
     void getListJob(String uid);

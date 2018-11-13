@@ -3,14 +3,24 @@ package com.example.team32gb.jobit.Utility;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import androidx.appcompat.widget.AppCompatImageButton;
 
 public class Util {
     public static void jumpActivity(Context context, Class mclass ) {
@@ -102,5 +112,29 @@ public class Util {
             }
         }
         return 0;
+    }
+
+    public static void saveImageToLocal(Bitmap bitmap, String uid) {
+        String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + uid + ".jpg";
+        Log.e("kiemtraImage", avatarPath);
+        File file = new File(avatarPath);
+        FileOutputStream fileOutputStream;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Log.e("kiemtraImage", avatarPath);
+
+    }
+
+    public static void loadImageFromLocal(AppCompatImageButton btnAvatar,String idCompany) {
+        String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + idCompany + ".jpg";
+        Log.e("kiemtraanh",avatarPath);
+        Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
+        if(bitmap != null && avatarPath != null && !avatarPath.isEmpty()) {
+            btnAvatar.setBackground(new BitmapDrawable(bitmap));
+        }
     }
 }

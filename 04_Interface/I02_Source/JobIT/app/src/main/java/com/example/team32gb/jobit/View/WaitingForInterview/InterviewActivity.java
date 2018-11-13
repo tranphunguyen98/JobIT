@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
+import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.Presenter.WaitingForInterview.PresenterInInterview;
 import com.example.team32gb.jobit.Presenter.WaitingForInterview.PresenterInterview;
 import com.example.team32gb.jobit.R;
@@ -32,8 +33,6 @@ public class InterviewActivity extends AppCompatActivity implements ViewListJobI
     private PresenterInInterview presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interview);
         myToolBar = findViewById(R.id.tbListInterview);
@@ -48,7 +47,6 @@ public class InterviewActivity extends AppCompatActivity implements ViewListJobI
         recyclerView.setLayoutManager(layoutManager);
 
         myToolBar.setTitle("Chờ phỏng vấn");
-        myToolBar.setBackgroundColor(Color.parseColor("#FFD14D59"));
         setSupportActionBar(myToolBar);
 
         actionBar = getSupportActionBar();
@@ -79,8 +77,8 @@ public class InterviewActivity extends AppCompatActivity implements ViewListJobI
     }
 
     @Override
-    public void showListJob(List<ItemJobApplied> itemJobApplieds) {
-        ListJobAppliedViewAdapter adapter = new ListJobAppliedViewAdapter(this,itemJobApplieds);
+    public void showListJob(List<ItemPostJob> itemPostJobs) {
+        ListJobInterviewViewAdapter adapter = new ListJobInterviewViewAdapter(this,itemPostJobs);
         recyclerView.setAdapter(adapter);
     }
 }

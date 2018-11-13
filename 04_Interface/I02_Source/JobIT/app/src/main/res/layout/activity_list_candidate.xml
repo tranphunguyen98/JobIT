@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ListCandidateAcvitity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbListCandidate"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:background="@color/backgroundRed"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"/>
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbListCandidate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"

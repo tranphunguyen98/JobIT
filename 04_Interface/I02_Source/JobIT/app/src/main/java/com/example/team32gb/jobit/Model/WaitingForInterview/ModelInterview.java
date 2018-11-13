@@ -6,6 +6,8 @@ import android.util.Log;
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
 import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
 import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
+import com.example.team32gb.jobit.Model.PostJob.DataPostJob;
+import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,13 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelInterview {
-    List<ItemJobApplied> itemJobApplieds;
+    List<ItemPostJob> itemPostJobs;
     GreenRobotEventBus eventBus;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
     public ModelInterview() {
-        itemJobApplieds = new ArrayList<>();
+        itemPostJobs = new ArrayList<>();
         eventBus = GreenRobotEventBus.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
@@ -32,22 +34,31 @@ public class ModelInterview {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot dfApplieds = dataSnapshot.child("choPhongVanNTVs").child(uid);
-                for(DataSnapshot snapshotCompany: dfApplieds.getChildren()) {
-                    for(DataSnapshot snJob : snapshotCompany.getChildren()) {
-                        ItemJobApplied itemJobApplied =new ItemJobApplied();
-                        itemJobApplied.setIdJob(snJob.getKey());
-                        itemJobApplied.setIdCompany(snapshotCompany.getKey());
+                DataSnapshot dfChoPhongVan = dataSnapshot.child("choPhongVanNTVs").child(uid);
+                for(DataSnapshot snapshotCompany: dfChoPhongVan.getChildren()) {
+                    for (DataSnapshot snJob : snapshotCompany.getChildren()) {
+                        ItemPostJob itemPostJob = new ItemPostJob();
+                        itemPostJob.setIdJob(snJob.getKey());
+                        itemPostJob.setIdCompany(snapshotCompany.getKey());
                         String timeApplied = snJob.child("timeApplied").getValue(String.class);
-                        itemJobApplied.setTimeApply(timeApplied);
+                        itemPostJob.setTimeApplied(timeApplied);
                         String idJob = snJob.getKey();
-                        DataJob dataJob = dataSnapshot.child("tinTuyenDungs").child(itemJobApplied.getIdCompany()).child(itemJobApplied.getIdJob()).getValue(DataJob.class);
-                        itemJobApplied.setDataJob(dataJob);
-                        Log.e("kiemtraid",dataJob.getTime());
-                        itemJobApplieds.add(itemJobApplied);
+                        Log.e("kiemtraApply", idJob);
+                        String nameCompany = dataSnapshot.child("companys").child(itemPostJob.getIdCompany()).child("name").getValue(String.class);
+
+                        itemPostJob.setNameCompany(nameCompany);
+                        DataPostJob dataPostJob = dataSnapshot.child("tinTuyenDungs").child(itemPostJob.getIdCompany()).child(itemPostJob.getIdJob()).getValue(DataPostJob.class);
+                        if (dataPostJob != null) {
+                            Log.e("kiemtraApply", dataPostJob.getNameJob());
+                        } else {
+                            Log.e("kiemtraApply", "fail1");
+
+                        }
+                        itemPostJob.setDataPostJob(dataPostJob);
+                        itemPostJobs.add(itemPostJob);
                     }
                 }
-                eventBus.post(itemJobApplieds);
+                eventBus.post(itemPostJobs);
             }
 
             @Override

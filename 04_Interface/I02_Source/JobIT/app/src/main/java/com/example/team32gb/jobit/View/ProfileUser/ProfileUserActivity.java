@@ -9,9 +9,13 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,10 +43,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import androidx.appcompat.widget.Toolbar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileUserActivity extends AppCompatActivity implements View.OnClickListener, ViewProfileUser {
     private static final int SELECT_PICTURE = 10;
+    private Toolbar myToolBar;
+    private ActionBar actionBar;
     private Button btnAuthenticateAccount, btnMyCV, btnChangePassword, btnSignOut;
     private EditText edtNameProfile;
     private ImageButton btnEditName, btnSaveNameProfile;
@@ -83,6 +90,16 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
         btnSaveNameProfile.setOnClickListener(this);
         imgAvatarProfile.setOnClickListener(this);
 
+        myToolBar = findViewById(R.id.tbProfile);
+
+        myToolBar.setTitle("Thông tin tài khoản");
+        setSupportActionBar(myToolBar);
+
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -118,8 +135,8 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
             userModel.setAvatar(storageReference.child(Config.REF_FOLDER_AVATAR).child(uid).getPath());
 
             String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + uid + ".jpg";
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
             showProfile(userModel, bitmap);
         }
@@ -283,5 +300,17 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
         tvEmailProfile.setText(userModel.getEmail());
         tvNameProfile.setText(userModel.getName());
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.listjob_actionbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
