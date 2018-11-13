@@ -7,6 +7,7 @@ import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
 import com.example.team32gb.jobit.Model.Applied.ModelApplied;
 import com.example.team32gb.jobit.Model.ListJobSearch.ItemJob;
 import com.example.team32gb.jobit.Model.ListJobSearch.ModelListJobSearch;
+import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.Presenter.ListJobSearch.PresenterInListJobSearch;
 import com.example.team32gb.jobit.View.Applied.ViewListJobApplied;
 import com.example.team32gb.jobit.View.ListJobSearch.ViewListJobSearch;
@@ -43,9 +44,11 @@ public class PresenterApplied implements PresenterInApplied {
 
     @Override
     @Subscribe
-    public void showListJob(List<ItemJobApplied> itemJobApplieds) {
-        Log.e("kiemtraapplied",itemJobApplieds.get(0).getNameJob());
-        view.showListJob(itemJobApplieds);
+    public void showListJob(List<ItemPostJob> itemPostJobs) {
+        Log.e("kiemtraapplied",itemPostJobs.get(0).getDataPostJob().getNameJob());
+        Log.e("kiemtraapplied","hello");
+
+        view.showListJob(itemPostJobs);
     }
 
 }

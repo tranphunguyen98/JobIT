@@ -70,7 +70,8 @@
         <activity android:name=".View.Applied.AppliedActivity" />
         <activity android:name=".View.EmployerAppliedPosted.EmployerAppliedPostedActivity" />
         <activity android:name=".View.WaitingForInterview.InterviewActivity" />
-        <activity android:name=".View.CompanyDetail.CompanyDetailActivity"></activity>
+        <activity android:name=".View.CompanyDetail.CompanyDetailActivity" />
+        <activity android:name=".View.InviteJob.InviteJobActivity"></activity>
     </application>
 
 </manifest>

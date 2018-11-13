@@ -7,25 +7,36 @@ public class InfoCompanyModel implements Parcelable {
     String name;
     String type;
     String size;
-
-    String address;
-    String province;
-    String introduce;
-    String namePresenter;
-    String phoneNumberPresenter;
-
-    public InfoCompanyModel() {
-    }
+    String avatar;
 
     protected InfoCompanyModel(Parcel in) {
         name = in.readString();
         type = in.readString();
         size = in.readString();
+        avatar = in.readString();
         address = in.readString();
         province = in.readString();
         introduce = in.readString();
         namePresenter = in.readString();
         phoneNumberPresenter = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(size);
+        dest.writeString(avatar);
+        dest.writeString(address);
+        dest.writeString(province);
+        dest.writeString(introduce);
+        dest.writeString(namePresenter);
+        dest.writeString(phoneNumberPresenter);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<InfoCompanyModel> CREATOR = new Creator<InfoCompanyModel>() {
@@ -39,6 +50,23 @@ public class InfoCompanyModel implements Parcelable {
             return new InfoCompanyModel[size];
         }
     };
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    String address;
+    String province;
+    String introduce;
+    String namePresenter;
+    String phoneNumberPresenter;
+
+    public InfoCompanyModel() {
+    }
 
     public String getName() {
         return name;
@@ -104,20 +132,4 @@ public class InfoCompanyModel implements Parcelable {
         this.phoneNumberPresenter = phoneNumberPresenter;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(type);
-        dest.writeString(size);
-        dest.writeString(address);
-        dest.writeString(province);
-        dest.writeString(introduce);
-        dest.writeString(namePresenter);
-        dest.writeString(phoneNumberPresenter);
-    }
 }

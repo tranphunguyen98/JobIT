@@ -1,65 +1,62 @@
-package com.example.team32gb.jobit.View.Applied;
+package com.example.team32gb.jobit.View.InviteJob;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.team32gb.jobit.Model.Applied.ItemJobApplied;
-import com.example.team32gb.jobit.Model.ListJobSearch.DataJob;
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
-import com.example.team32gb.jobit.Presenter.Applied.PresenterApplied;
-import com.example.team32gb.jobit.Presenter.Applied.PresenterInApplied;
+import com.example.team32gb.jobit.Presenter.InviteJob.PresenerInviteJob;
+import com.example.team32gb.jobit.Presenter.InviteJob.PresenterInInviteJob;
+import com.example.team32gb.jobit.Presenter.WaitingForInterview.PresenterInInterview;
+import com.example.team32gb.jobit.Presenter.WaitingForInterview.PresenterInterview;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.View.WaitingForInterview.ListJobInterviewViewAdapter;
+import com.example.team32gb.jobit.View.WaitingForInterview.ViewListJobInterview;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class AppliedActivity extends AppCompatActivity implements ViewListJobApplied {
-
+public class InviteJobActivity extends AppCompatActivity implements ViewListJobInvite {
     private Toolbar myToolBar;
     private ActionBar actionBar;
     private RecyclerView recyclerView;
-    private List<DataJob> lsData;
-    private PresenterInApplied presenter;
+    private PresenterInInviteJob presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_applied);
+        setContentView(R.layout.activity_invite_job);
+        myToolBar = findViewById(R.id.tbListInterview);
+        recyclerView = this.findViewById(R.id.rvListInterview);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor= sharedPreferences.edit();
         editor.putBoolean(Config.IS_ACTIVITY_APPLY,false);
         editor.apply();
 
-        myToolBar = findViewById(R.id.tbListApplied);
-        recyclerView = this.findViewById(R.id.rvListApplied);
-//        i/nitData();
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        myToolBar.setTitle("Đã apply");
+        myToolBar.setTitle("Mời làm");
         setSupportActionBar(myToolBar);
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        presenter = new PresenterApplied(this);
+        presenter = new PresenerInviteJob(this);
         presenter.onCreate();
         presenter.getListJob(FirebaseAuth.getInstance().getUid());
 
@@ -85,8 +82,7 @@ public class AppliedActivity extends AppCompatActivity implements ViewListJobApp
 
     @Override
     public void showListJob(List<ItemPostJob> itemPostJobs) {
-        Log.e("kiemtraaaplied","Heeeeellllooo");
-        ListJobAppliedViewAdapter adapter = new ListJobAppliedViewAdapter(this,itemPostJobs);
+        ListJobInviteViewAdapter adapter = new ListJobInviteViewAdapter(this,itemPostJobs);
         recyclerView.setAdapter(adapter);
     }
 }

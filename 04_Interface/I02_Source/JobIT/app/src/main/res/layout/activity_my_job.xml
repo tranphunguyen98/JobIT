@@ -13,6 +13,8 @@
         android:layout_gravity="center"
         android:layout_weight="2"
         android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="@color/colorPrimary"
         android:text="CÔNG VIỆC CỦA TÔI" />
 
     <LinearLayout
@@ -20,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="16dp">
 
         <Button
             android:id="@+id/btnHistoryJob"
@@ -48,6 +51,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Đang phỏng vấn" />
+            android:text="Chờ phỏng vấn" />
+        <Button
+            android:id="@+id/btnMoiLam"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Mời làm" />
     </LinearLayout>
 </LinearLayout>
