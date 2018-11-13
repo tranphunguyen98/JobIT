@@ -1,11 +1,17 @@
 package com.example.team32gb.jobit.View.CreateCV;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+
+import com.example.team32gb.jobit.InviteJobFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -22,12 +28,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import static android.view.View.GONE;
 
 public class CreateCVActivity extends AppCompatActivity implements View.OnClickListener, ViewCreateCV {
     private static final String TAG = "kiemtraactivity";
     Button btnAttachCV;
     Button btnSaveCV;
+    Button BtnSelectDateOfBird;
+
     ImageButton btnEditPersonalInfor;
     ImageButton btnEditCareerSkill;
     ImageButton btnEditProject;
@@ -77,6 +89,9 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
 
     private String uid;
 
+    Calendar calendar;
+    DatePickerDialog datePickerDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +99,7 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
 
         btnAttachCV = findViewById(R.id.btnAttachCV);
         btnSaveCV = findViewById(R.id.btnSaveCV);
+        BtnSelectDateOfBird = findViewById(R.id.btnSelectDateOfBird);
 
         llEditPersonalInfor = findViewById(R.id.llEditPersonalInfor);
         llEditCareerSkill = findViewById(R.id.llEditCareerSkill);
@@ -135,16 +151,55 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
         btnAddProject.setOnClickListener(this);
         btnAttachCV.setOnClickListener(this);
         btnSaveCV.setOnClickListener(this);
+        btnSelectDateOfBird.setOnClickListener(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME,MODE_PRIVATE);
         uid = FirebaseAuth.getInstance().getUid();
         edtNameUser.setText(sharedPreferences.getString(Config.NAME_USER,""));
         edtEmail.setText(sharedPreferences.getString(Config.EMAIL_USER,""));
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         presenterInCreateCV = new PresenterLogicCreateCV(this);
         presenterInCreateCV.onCreate();
+        if(sharedPreferences.getInt(Config.USER_TYPE,0) == Config.IS_RECRUITER) {
+            btnAttachCV.setVisibility(View.INVISIBLE);
+            btnSaveCV.setVisibility(View.INVISIBLE);
+            btnAddProject.setVisibility(View.INVISIBLE);
+            btnRemoveProject2.setVisibility(View.INVISIBLE);
+            rbFemale.setEnabled(false);
+            rbMale.setEnabled(false);
+            rbMarried.setEnabled(false);
+            rbSingle.setEnabled(false);
+            edtNameUser.setEnabled(false);
+            edtDateOfBird.setEnabled(false);
+            edtEmail.setEnabled(false);
+            edtPhone.setEnabled(false);
+            edtAddress.setEnabled(false);
+            edtHobbies.setEnabled(false);
+            edtCareerObject.setEnabled(false);
+            edtEduQuali.setEnabled(false);
+            edtWorkExperience.setEnabled(false);
+            edtSkill.setEnabled(false);
+            edtLanguage.setEnabled(false);
+
+
+            edtNameProject1.setEnabled(false);
+            edtDescription1.setEnabled(false);
+            edtRole1.setEnabled(false);
+            edtNumberMember1.setEnabled(false);
+
+            edtNameProject2.setEnabled(false);
+            edtDescription2.setEnabled(false);
+            edtRole2.setEnabled(false);
+            edtNumberMember2.setEnabled(false);
+            btnSelectDateOfBird.setVisibility(View.INVISIBLE);
+            Intent intent = getIntent();
+            Bundle bundle = intent.getBundleExtra("bundle");
+            uid = bundle.getString("idJobSeeker");
+            Log.e("ktid",uid);
+        }
+
+
         presenterInCreateCV.getCVFromUid(uid);
     }
 
@@ -170,6 +225,23 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     llEditCareerSkill.setVisibility(View.VISIBLE);
                 }
+                break;
+            case R.id.btnSelectDateOfBird:
+                calendar = Calendar.getInstance();
+                SimpleDateFormat simpleDateFormat = null;
+                simpleDateFormat = new SimpleDateFormat("dd/mm/yyyy", Locale.getDefault());
+
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        edtDateOfBird.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                    }
+                }, day, month, year);
+                datePickerDialog.show();
                 break;
             case R.id.btnEditProject:
                 if (llEditProject1.getVisibility() == View.VISIBLE) {
@@ -199,7 +271,6 @@ public class CreateCVActivity extends AppCompatActivity implements View.OnClickL
 
         }
     }
-
     public void saveCV() {
         CVEmployeeModel cvEmployeeModel = new CVEmployeeModel();
         cvEmployeeModel.setAddress(edtAddress.getText().toString());

@@ -1,7 +1,8 @@
 package com.example.team32gb.jobit;
 
-import android.graphics.Color;
 import androidx.annotation.NonNull;
+
+import com.example.team32gb.jobit.View.WaitingAcceptNTD.WaitingAcceptFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,7 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.View.PostedJob.PostedFragment;
 
 public class JobRecruitmentActivity extends AppCompatActivity {
@@ -43,20 +43,6 @@ public class JobRecruitmentActivity extends AppCompatActivity {
 
         setFragment(new PostedFragment());
 
-        switch (Config.CHECK_FRAV){
-            case 0:
-                setFragment(new PostedFragment());
-                break;
-            case 1:
-                setFragment(new WaitingAcceptFragment());
-                break;
-            case 2:
-                setFragment(new ExpireFragment());
-                break;
-            case 3:
-                setFragment(new UpLoadPostFragment());
-                break;
-        }
         mainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -64,14 +50,8 @@ public class JobRecruitmentActivity extends AppCompatActivity {
                     case R.id.navPosted:
                         setFragment(new PostedFragment());
                         return true;
-                    case R.id.navWaiting:
-                        setFragment(new WaitingAcceptFragment());
-                        return true;
                     case R.id.navExpire:
                         setFragment(new ExpireFragment());
-                        return true;
-                    case R.id.navUploadPost:
-                        setFragment(new UpLoadPostFragment());
                         return true;
                         default:
                             return false;

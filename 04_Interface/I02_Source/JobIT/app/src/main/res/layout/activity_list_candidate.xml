@@ -7,50 +7,55 @@
     tools:context=".ListCandidateAcvitity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tbListCandidate"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true">
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="60dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txtNameJob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên công việc"
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#fff"/>
+                <TextView
+                    android:id="@+id/txtTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6 giờ trước"
+                    android:textSize="11sp"
+                    android:layout_alignParentBottom="true"
+                    android:maxLines="1"
+                    android:textColor="#dedede"/>
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/txtNameJob"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên công việc
-alksfdj;laskjf;lákdfalsf"
-            android:textStyle="bold"
-            android:maxLines="2"
-            android:textSize="14sp"
-            android:layout_centerVertical="true"
-            android:textColor="#fff"/>
-        <TextView
-            android:id="@+id/txtTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="6 giờ trước"
-            android:textSize="11sp"
-            android:layout_alignParentBottom="true"
-            android:maxLines="1"
-            android:textColor="#dedede"/>
-    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/mainFrag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/mainNav"
-        android:layout_below="@id/tbListCandidate"></FrameLayout>
+        android:layout_below="@+id/appbar"
+        android:background="@color/colorPrimaryLight"
+        >
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainNav"
@@ -58,8 +63,10 @@ alksfdj;laskjf;lákdfalsf"
         android:layout_height="70dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="#ad0808"
-        android:backgroundTint="#a40813"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimary"
         app:itemTextColor="#fff"
-        app:menu="@menu/listcandidate_nav"></com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/listcandidate_nav">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>

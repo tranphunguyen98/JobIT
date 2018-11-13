@@ -54,8 +54,6 @@ public class ListCandidateAcvitity extends AppCompatActivity {
         }
 
         myToolBar.setTitle("");
-        myToolBar.setTitleTextColor(Color.parseColor("#FFFFFFFF"));
-        myToolBar.setBackgroundColor(Color.parseColor("#FFD14D59"));
         setSupportActionBar(myToolBar);
 
         actionBar = getSupportActionBar();

@@ -59,6 +59,7 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context.getApplicationContext(), ListCandidateAcvitity.class);
+
                 Bundle bundle = new Bundle();
                 bundle.putString("nameJob",itemPostJobs.get(i).getDataPostJob().getNameJob());
                 Log.e("kiemtratime",itemPostJobs.get(i).getDataPostJob().getTime());
@@ -67,6 +68,12 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
                 bundle.putString("idJob",itemPostJobs.get(i).getIdJob());
                 intent.putExtra("bundle",bundle);
                 context.getApplicationContext().startActivity(intent);
+            }
+        });
+        myViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

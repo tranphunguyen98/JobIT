@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.team32gb.jobit.View.WaitingAcceptNTD.ViewAdapterApplied;
+
 import java.util.ArrayList;
 import java.util.List;
 

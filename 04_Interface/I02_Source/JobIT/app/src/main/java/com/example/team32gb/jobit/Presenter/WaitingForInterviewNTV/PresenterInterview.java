@@ -1,27 +1,24 @@
-package com.example.team32gb.jobit.Presenter.InviteJob;
+package com.example.team32gb.jobit.Presenter.WaitingForInterviewNTV;
 
 import android.util.Log;
 
 import com.example.team32gb.jobit.Lib.GreenRobotEventBus;
-import com.example.team32gb.jobit.Model.InviteJob.ModelInviteJob;
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.Model.WaitingForInterview.ModelInterview;
-import com.example.team32gb.jobit.Presenter.WaitingForInterview.PresenterInInterview;
-import com.example.team32gb.jobit.View.InviteJob.ViewListJobInvite;
 import com.example.team32gb.jobit.View.WaitingForInterview.ViewListJobInterview;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-public class PresenerInviteJob implements PresenterInInviteJob {
-    ViewListJobInvite view;
-    ModelInviteJob model;
+public class PresenterInterview implements PresenterInInterview {
+    ViewListJobInterview view;
+    ModelInterview model;
     GreenRobotEventBus eventBus;
 
-    public PresenerInviteJob(ViewListJobInvite view){
+    public PresenterInterview(ViewListJobInterview view){
         this.view = view;
-        model = new ModelInviteJob();
+        model = new ModelInterview();
         eventBus = GreenRobotEventBus.getInstance();
     }
 
@@ -46,4 +43,5 @@ public class PresenerInviteJob implements PresenterInInviteJob {
         Log.e("kiemtraapplied",itemPostJobs.get(0).getDataPostJob().getNameJob());
         view.showListJob(itemPostJobs);
     }
+
 }

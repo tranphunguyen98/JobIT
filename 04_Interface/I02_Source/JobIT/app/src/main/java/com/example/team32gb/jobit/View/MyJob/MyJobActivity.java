@@ -11,6 +11,7 @@ import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
 import com.example.team32gb.jobit.View.Applied.AppliedActivity;
 import com.example.team32gb.jobit.View.InviteJob.InviteJobActivity;
+import com.example.team32gb.jobit.View.SavedJob.SavedJobActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.example.team32gb.jobit.View.WaitingForInterview.InterviewActivity;
 
@@ -45,7 +46,7 @@ public class MyJobActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.btnSavedJob:
                 if(sharedPreferences.getBoolean(Config.IS_LOGGED,false)) {
-                    Util.jumpActivity(this,AppliedActivity.class);
+                    Util.jumpActivity(this,SavedJobActivity.class);
                 }
                 else {
                     Util.jumpActivity(this,SignInActivity.class);

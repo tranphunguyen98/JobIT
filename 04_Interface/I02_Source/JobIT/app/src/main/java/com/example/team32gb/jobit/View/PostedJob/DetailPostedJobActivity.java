@@ -259,7 +259,6 @@ public class DetailPostedJobActivity extends AppCompatActivity implements Adapte
                 }
             });
 
-            Config.CHECK_FRAV = 0;
             Intent intent = new Intent(this, JobRecruitmentActivity.class);
             finish();
             startActivity(intent);

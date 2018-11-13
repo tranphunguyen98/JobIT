@@ -15,11 +15,11 @@
         <TextView
             android:id="@+id/txtMyCV"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="@color/colorPrimary"
             android:text="CV CỦA TÔI"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -48,8 +48,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Thông tin cá nhân" />
+                    android:text="Thông tin cá nhân"
+                    android:textColor="@color/colorPrimary" />
 
                 <ImageButton
                     android:id="@+id/btnEditPersonalInfor"
@@ -72,7 +72,7 @@
                     android:id="@+id/wrapperNameEmployee"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="2">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtNameEmployee"
@@ -85,7 +85,7 @@
                     android:id="@+id/llDateOfBirth"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -106,9 +106,9 @@
                         android:id="@+id/btnSelectDateOfBird"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
                         android:text="Chọn" />
                 </LinearLayout>
 
@@ -116,7 +116,7 @@
                     android:id="@+id/llGender"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="3"
                     android:orientation="vertical">
 
                     <TextView
@@ -131,7 +131,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_margin="20dp"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:orientation="horizontal">
 
                         <RadioButton
@@ -159,7 +159,7 @@
                     android:id="@+id/wrapperEmail"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="2">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtEmail"
@@ -172,7 +172,7 @@
                     android:id="@+id/wrapperPhone"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="2">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtPhone"
@@ -186,7 +186,7 @@
                     android:id="@+id/wrapperAddress"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="3">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtAdress"
@@ -199,7 +199,7 @@
                     android:id="@+id/llMaritalStatus"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="3"
                     android:orientation="vertical">
 
                     <TextView
@@ -214,7 +214,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_margin="20dp"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:orientation="horizontal">
 
                         <RadioButton
@@ -246,7 +246,7 @@
                         android:id="@+id/wrapperHobbies"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="2">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edtHobbies"
@@ -277,9 +277,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimary"
                     android:text="Kỹ năng nghề nghiệp"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary" />
 
                 <ImageButton
                     android:id="@+id/btnEditCareerSkill"
@@ -387,8 +387,8 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Project"
-                    android:textColor="@color/colorPrimary"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary" />
 
                 <ImageButton
                     android:id="@+id/btnEditProject"
