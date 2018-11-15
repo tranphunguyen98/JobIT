@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.team32gb.jobit.Model.Report.ReportJobseekerModel;
 import com.example.team32gb.jobit.Model.Report.ReportWaitingAdminApprovalModel;
 import com.example.team32gb.jobit.Presenter.AdminApproval.PresenterAdminApprovalReport;
+import com.example.team32gb.jobit.Presenter.AdminApproval.PresenterAdminShowHistoryReport;
 import com.example.team32gb.jobit.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.example.team32gb.jobit.Utility.Config.IS_JOB_SEEKER;
 import static com.example.team32gb.jobit.Utility.Config.REF_JOBSEEKERS_NODE;
 import static com.example.team32gb.jobit.Utility.Config.REF_REPORT;
 
@@ -149,12 +151,29 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
         switch (v.getId()) {
             case R.id.btnShowDetailHistoryReport:
                 //todo: presentrt show history
+                PresenterAdminShowHistoryReport presenter = new PresenterAdminShowHistoryReport();
 
+                ViewGroup rootView = (ViewGroup) ((ViewGroup) this
+                        .findViewById(android.R.id.content)).getChildAt(0);
+                final Dialog dialogShowHistory = new Dialog(AdminShowDetailReportJobseekerActivity.this);
+                View viewHistory = LayoutInflater.from(AdminShowDetailReportJobseekerActivity.this)
+                        .inflate(R.layout.admin_show_history_report, rootView, false);
 
+                Button btnCloseHistory = viewHistory.findViewById(R.id.btnShowDetailHistoryReport);
+                TextView txtHistoryReport = viewHistory.findViewById(R.id.txtHistoryReport);
 
+                dialogShowHistory.setContentView(viewHistory);
 
+                txtHistoryReport.setText( presenter.getHistory(model.getIdAccused(), IS_JOB_SEEKER));
 
+//                btnCloseHistory.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialogShowHistory.dismiss();
+//                    }
+//                });
 
+                dialogShowHistory.show();
                 break;
             case R.id.btnShowDetailReportIgnore:
                 setupDialogIgnoreReport();
@@ -193,12 +212,18 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
         btnSenWarningOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onSendWarningReportToJobseeker(modelReportWaiting, edtMessageFromAdmin.getText().toString());
-                Toast.makeText(AdminShowDetailReportJobseekerActivity.this, "Đã gửi cảnh cáo", Toast.LENGTH_SHORT).show();
+                String message = edtMessageFromAdmin.getText().toString();
+                if (message.equals("")){
+                    edtMessageFromAdmin.setError("Bạn phải nhập nhắc nhở cảnh báo");
+                }
+                else{
+                    presenter.onSendWarningReportToJobseeker(modelReportWaiting,message);
+                    dialog.dismiss();
+                    Toast.makeText(AdminShowDetailReportJobseekerActivity.this, "Đã gửi cảnh cáo", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(AdminShowDetailReportJobseekerActivity.this, AdminReportFragmentTab1.class);
-                startActivity(intent);
-                dialog.dismiss();
+                    Intent intent = new Intent(AdminShowDetailReportJobseekerActivity.this, AdminReportFragmentTab1.class);
+                    startActivity(intent);
+                }
             }
         });
 

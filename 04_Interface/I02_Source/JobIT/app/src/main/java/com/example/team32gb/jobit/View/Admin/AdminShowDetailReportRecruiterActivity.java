@@ -196,12 +196,19 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
         btnSenWarningOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onSendWarningReportToRecruiter(modelReportWaiting, edtMessageFromAdmin.getText().toString());
-                Toast.makeText(AdminShowDetailReportRecruiterActivity.this, "Đã gửi cảnh cáo", Toast.LENGTH_SHORT).show();
+                String message = edtMessageFromAdmin.getText().toString();
+                if (message.equals("")){
+                    edtMessageFromAdmin.setError("Bạn phải nhập nhắc nhở cảnh báo");
+                }
+                else{
+                    presenter.onSendWarningReportToRecruiter(modelReportWaiting,message);
+                    dialog.dismiss();
+                    Toast.makeText(AdminShowDetailReportRecruiterActivity.this, "Đã gửi cảnh cáo", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(AdminShowDetailReportRecruiterActivity.this, AdminReportFragmentTab1.class);
-                startActivity(intent);
-                dialog.dismiss();
+                    Intent intent = new Intent(AdminShowDetailReportRecruiterActivity.this, AdminReportFragmentTab1.class);
+                    startActivity(intent);
+                }
+
             }
         });
 

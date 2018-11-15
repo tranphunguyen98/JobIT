@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit.Presenter.AdminStatistic;
 
+import android.app.ProgressDialog;
 import android.widget.TextView;
 
 import com.example.team32gb.jobit.Lib.EventBus;
@@ -25,13 +26,16 @@ public class PresenterAdminStatistic implements PresenterInAdminStatistic {
         eventBus.unregister(this);
     }
 
+
     @Override
-    public long statisticEmployee(TextView tv) {
-        return model.statisticEmployee(tv);
+    public long statisticEmployee(TextView tv, ProgressDialog dialog) {
+        return model.statisticEmployee(tv, dialog);
     }
 
     @Override
-    public long statisticRecruiter(TextView tv) {
-        return model.statisticRecruiter(tv);
+    public long statisticRecruiter(TextView tv, ProgressDialog dialog) {
+        return model.statisticRecruiter(tv, dialog);
     }
+
+
 }

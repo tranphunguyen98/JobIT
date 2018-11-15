@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit.View.Admin;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,11 +21,17 @@ public class AdminStatisticActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ActionBar actionBar;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_statistic);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang tải dữ liệu ...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         txtAdminStatisticEmployee = findViewById(R.id.txtAdminStatisticEmployee);
         txtAdminStatisticRecruiter = findViewById(R.id.txtAdminStatisticRecruiter);
@@ -35,13 +42,12 @@ public class AdminStatisticActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         presenter = new PresenterAdminStatistic();
+        long countEmployee = -1;
+        long countRecuiter = -1;
 
-        long count = presenter.statisticEmployee(txtAdminStatisticEmployee);
-
-        count = presenter.statisticRecruiter(txtAdminStatisticRecruiter);
+        countEmployee = presenter.statisticEmployee(txtAdminStatisticEmployee, progressDialog);
+        countRecuiter = presenter.statisticRecruiter(txtAdminStatisticRecruiter, progressDialog);
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,7 +57,7 @@ public class AdminStatisticActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.homeAdmin:
                 Intent intent = new Intent(this, AdminHomeActivity.class);
                 startActivity(intent);

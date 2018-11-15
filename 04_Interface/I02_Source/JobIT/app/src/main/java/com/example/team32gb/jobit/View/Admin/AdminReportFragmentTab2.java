@@ -180,9 +180,14 @@ public class AdminReportFragmentTab2 extends Fragment {
         btnSenWarningOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo: presenter send warning, update data on firebase
-                presenter.onSendWarningReportToRecruiter(model, edtMessageFromAdmin.getText().toString());
-                dialog.dismiss();
+                String message = edtMessageFromAdmin.getText().toString();
+                if (message.equals("")){
+                    edtMessageFromAdmin.setError("Bạn phải nhập nhắc nhở cảnh báo");
+                }
+                else{
+                    presenter.onSendWarningReportToJobseeker(model,message);
+                    dialog.dismiss();
+                }
             }
         });
 

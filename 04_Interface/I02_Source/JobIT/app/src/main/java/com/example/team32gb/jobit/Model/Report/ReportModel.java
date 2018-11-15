@@ -1,14 +1,18 @@
 package com.example.team32gb.jobit.Model.Report;
 
 public class ReportModel {
-    protected String idReporter; //id của người tố cáo
-    protected String idAccused; //id của người bị tố cáo
-    protected String decription;
-    protected String adminComment;  //Nếu adminComment=="" thì tố cáo này chưa được phê duyệt
+    String idReporter; //id của người tố cáo
+    String idAccused; //id của người bị tố cáo
+    String decription;
+    String adminComment;
+    String dateSendReport;
+    Boolean isWarned;
+
 
 
     public ReportModel() {
-        adminComment="";
+        isWarned = false;   //Chưa được phê duyệt
+        adminComment ="";
     }
 
     public String getIdReporter() {
@@ -41,5 +45,21 @@ public class ReportModel {
 
     public void setAdminComment(String adminComment) {
         this.adminComment = adminComment;
+    }
+
+    public Boolean getisWarned() {
+        return isWarned;
+    }
+
+    public void setisWarned(Boolean warned) {
+        isWarned = warned;
+    }
+
+    public String getDateSendReport() {
+        return dateSendReport;
+    }
+
+    public void setDateSendReport(String dateSendReport) {
+        this.dateSendReport = dateSendReport;
     }
 }

@@ -108,3 +108,74 @@ exports.thongBaoUngVienApply = functions.database.ref('/choDuyets/{companyId}/{i
 
     //     // return Promise.all
     // })
+
+    exports.thongBaoPheDuyetNhaTuyenDung = functions.database.ref('/companys/{companyId}/approvalMode')
+    .onUpdate(async(snapshot, context) => {
+        const companyId = context.params.companyId
+        const approvalMode = admin.database().ref('/companys/' + companyId + '/approvalMode').once('value')
+
+        const results = await Promise.all([approvalMode])
+        const approvalModeSnapshot = results[0]
+        const isApproval = parseInt(approvalModeSnapshot.val())
+
+        let payload
+
+        console.log('companyId: ' + companyId + ', Approval mode: '+ isApproval)
+        if(isApproval  === 1){
+               payload = {
+                notification:{
+                    title: 'Phê duyệt hồ sơ thành công',
+                    body: 'Hồ sơ của bạn trên Job IT đã được thành công',
+                    badge: '1',
+                    sound: 'default'
+                 }
+                 }
+        }
+        else {
+            payload = {
+                notification:{
+                    title: 'Phê duyệt hồ sơ thất bại',
+                    body: 'Hồ sơ trên Job IT của bạn không được duyệt. Bạn hãy kiểm tra lại.',
+                    badge: '1',
+                    sound: 'default'
+                 }
+                 }
+        }
+
+        return admin.database().ref('/fcm_tokens/' + companyId + '/token').once('value')
+        .then(fcm_token => {
+                console.log('token available : ' + fcm_token.val())
+                    return admin.messaging().sendToDevice(fcm_token.val(),payload)
+                
+            
+        })
+    })
+
+    
+    exports.thongBaoCanhCaoJobseeker = functions.database.ref('/reports/jobseekers/{idUser}/{idReport}/isWarned')
+    .onUpdate(async(snapshot, context) => {
+        const idUser = context.params.idUser
+        const idReport = context.params.idReport
+        const adminCommentData = admin.database().ref('/reports/jobseekers/'+ idUser+  '/'+idReport + '/adminComment').once('value')
+        console.log('jobSeekerId: ' + idUser + ', idReport '+ idReport, ', adminComment: '+ adminCommentData)
+
+        const results = await Promise.all([adminCommentData])
+        const dataSnapshot = results[0]
+        const adminComment = dataSnapshot.val() 
+
+        
+               const payload = {
+                notification:{
+                    title: 'Cảnh cáo',
+                    body: adminComment,
+                    badge: '1',
+                    sound: 'default'
+                 }
+                }
+
+        return admin.database().ref('/fcm_tokens/' + idUser + '/token').once('value')
+        .then(fcm_token => {
+                console.log('token available : ' + fcm_token.val())
+                    return admin.messaging().sendToDevice(fcm_token.val(),payload)
+        })
+    })

@@ -1,5 +1,6 @@
 package com.example.team32gb.jobit.Model.AdminStatistic;
 
+import android.app.ProgressDialog;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,12 +21,13 @@ public class AdminStatisticModel {
     public AdminStatisticModel() {
     }
 
-    public long statisticEmployee(final TextView tv){
+    public long statisticEmployee(final TextView tv, final ProgressDialog dialog){
         ref.child(REF_JOBSEEKERS_NODE).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 count = dataSnapshot.getChildrenCount();
                 tv.setText(String.valueOf(count));
+                dialog.dismiss();
             }
 
             @Override
@@ -36,12 +38,13 @@ public class AdminStatisticModel {
         return count;
     }
 
-    public long statisticRecruiter(final TextView tv){
+    public long statisticRecruiter(final TextView tv, final ProgressDialog dialog){
         ref.child(REF_RECRUITERS_NODE).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 count = dataSnapshot.getChildrenCount();
                 tv.setText(String.valueOf(count));
+                dialog.dismiss();
             }
 
             @Override
@@ -51,5 +54,4 @@ public class AdminStatisticModel {
         });
         return count;
     }
-
 }

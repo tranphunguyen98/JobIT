@@ -48,11 +48,11 @@ public class ReportWaitingAdminApprovalModel {
     }
 
     public void onSendWarningReportToJobseeker(String messageFromAdmin) {
-        DatabaseReference refData = FirebaseDatabase.getInstance().getReference()
+        final DatabaseReference refData = FirebaseDatabase.getInstance().getReference()
                 .child(REF_REPORT).child(REF_JOBSEEKERS_NODE)
-                .child(idAccused).child(idReport).child("adminComment");
-        //Đưa comment của admin lên firebase dùng để kiểm tra và gửi notification về cho người nhận cảnh cáo
-        refData.setValue(messageFromAdmin).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .child(idAccused).child(idReport);
+        //Đưa comment của admin lên firebase dùng để gửi notification về cho người nhận cảnh cáo
+        refData.child("adminComment").setValue(messageFromAdmin).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 DatabaseReference refWaitingReport = FirebaseDatabase.getInstance().getReference()
@@ -60,6 +60,8 @@ public class ReportWaitingAdminApprovalModel {
                         .child(idReport);
                 //Xóa tố cáo trong mục chờ duyệt
                 refWaitingReport.removeValue();
+                //Cập nhật isWarned = true
+                refData.child("isWarned").setValue(true);
             }
         });
 
@@ -74,11 +76,11 @@ public class ReportWaitingAdminApprovalModel {
     }
 
     public void onSendWarningReportToRecuiter(String messageFromAdmin){
-        DatabaseReference refData = FirebaseDatabase.getInstance().getReference()
+        final DatabaseReference refData = FirebaseDatabase.getInstance().getReference()
                 .child(REF_REPORT).child(REF_RECRUITERS_NODE)
-                .child(idAccused).child(idReport).child("adminComment");
+                .child(idAccused).child(idReport);
         //Đưa comment của admin lên firebase dùng để kiểm tra và gửi notification về cho người nhận cảnh cáo
-        refData.setValue(messageFromAdmin).addOnSuccessListener(new OnSuccessListener<Void>() {
+        refData.child("adminComment").setValue(messageFromAdmin).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 DatabaseReference refWaitingReport = FirebaseDatabase.getInstance().getReference()
@@ -86,6 +88,9 @@ public class ReportWaitingAdminApprovalModel {
                         .child(idReport);
                 //Xóa tố cáo trong mục chờ duyệt
                 refWaitingReport.removeValue();
+                //Cập nhật isWarned = true
+                refData.child("isWarned").setValue(true);
+
             }
         });
     }
