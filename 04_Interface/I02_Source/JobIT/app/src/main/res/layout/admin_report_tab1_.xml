@@ -8,9 +8,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReportEmployee"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layoutAnimation="@anim/layout_anim_recyclerview_admin"
-        android:background="#eff1f2">
+        android:background="#eff1f2"
+        android:layout_marginTop="20dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -4,226 +4,240 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Admin.ShowDetailCopanyApprovalActivity">
+    tools:context=".View.Admin.ShowDetailCompanyApprovalActivity">
 
-    <ScrollView
-        android:id="@+id/svDetailCompanyApproval"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/llwrapperDetailCompany"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbDetailCompanyApprval"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@color/white"
+            app:title="Duyệt nhà tuyển dụng"
+            app:subtitle="Chi tiết">
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/lnEdit"
+        android:layout_below="@id/appbar"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryLight"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/llNameCompanyApproval"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
+                android:layout_height="100dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
+                android:background="@android:color/transparent"
+                android:orientation="vertical">
 
-                <TextView
-                    style="@style/TitleInAdmin"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tên công ty" />
+                    android:background="@color/colorPrimaryLight"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txtNameCompanyApproval"
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/colorPrimaryLight" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/view"
+                        android:background="@drawable/custom_background_detail_job2" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view1"
+                        android:layout_alignBottom="@+id/ln"
+                        android:background="#ffffff" />
+
+                    <LinearLayout
+                        android:id="@+id/ln"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view1"
+                        android:background="@color/colorPrimaryMinLight"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtNameCompanyApproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:padding="5dp"
+                            android:text="Tên Công Ty"
+                            android:textColor="#000"
+                            android:textSize="23sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtDateSendCompanyApproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="Ngày gửi yêu cầu"
+                            android:textAlignment="center"
+                            android:textColor="#393939"
+                            android:textSize="15sp" />
+
+
+                        <TextView
+                            android:id="@+id/txtAddressCompanyApproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="Địa chỉ"
+                            android:textAlignment="center"
+                            android:textColor="#393939"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/txtNamePresentCompanyApproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="Liên hệ"
+                            android:textColor="#393939"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/txtPhoneCompanyApproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="Số điện thoại"
+                            android:textColor="#393939"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/txtSizeCompanyApproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="Quy mô công ty"
+                            android:textColor="#393939"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/txtTypeCompanyApproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="Loại hình công ty"
+                            android:textColor="#393939"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/imgAvatarCompanyApproval"
+                        android:layout_width="90dp"
+                        android:layout_height="60dp"
+                        android:layout_below="@+id/view"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="-31dp"
+                        android:background="@drawable/avatar_company"
+                        android:elevation="3dp" />
+
+
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#c2c2c2" />
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:background="#ffffff"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="GIỚI THIỆU CÔNG TY"
+                        android:textColor="#202020"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtIntroduceCompanyApproval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Phần giới thiệu"
+                        android:textColor="#202020"
+                        android:textSize="15dp" />
+                </LinearLayout>
             </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/llDateSendCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày gửi yêu cầu phê duyệt"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtDateSendCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llTypeCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Loại công ty"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtTypeCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llSizeCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Quy mô"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtSizeCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llAddressCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Địa chỉ"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtAddressCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llProvinceCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tỉnh"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtProvinceCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llIntroduceCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Giới thiệu"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtIntroduceCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llNamePresentCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Người đại diện"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtNamePresentCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llPhoneCompanyApproval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Điện thoại"
-                    style="@style/TitleInAdmin"/>
-
-                <TextView
-                    android:id="@+id/txtPhoneCompanyApproval"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp" />
-
-        </LinearLayout>
-    </ScrollView>
-    <Button
-        android:id="@+id/btnDetailCompanyApprovalOK"
-        android:layout_width="180dp"
+    <LinearLayout
+        android:id="@+id/lnEdit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:text="Duyệt"
-        android:background="#97baa6"
-        android:layout_margin="10dp"/>
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryMinLight">
 
-    <Button
-        android:id="@+id/btnDetailCompanyApprovalCancel"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/btnDetailCompanyApprovalOK"
-        android:text="Không duyệt"
-        android:background="#cc2200"
-        android:layout_margin="10dp"/>
+        <Button
+            android:id="@+id/btnDetailCompanyApprovalOK"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Duyệt"/>
+
+        <Button
+            android:id="@+id/btnDetailCompanyApprovalCancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Hủy" />
+
+    </LinearLayout>
+
 </RelativeLayout>
+
+

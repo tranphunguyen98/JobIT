@@ -2,11 +2,14 @@ package com.example.team32gb.jobit.View.Admin;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -134,9 +137,19 @@ public class AdminReportFragmentTab2 extends Fragment {
         rvEmployer.setAdapter(adapter);
         rvEmployer.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        LayoutAnimationController animationController = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_anim_recyclerview_admin);
+        rvEmployer.setLayoutAnimation(animationController);
+        runLayoutAnimation(rvEmployer);
         return v;
     }
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_anim_recyclerview_admin);
 
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

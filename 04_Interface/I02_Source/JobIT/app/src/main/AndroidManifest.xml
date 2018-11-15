@@ -75,7 +75,7 @@
         <activity android:name=".View.SavedJob.SavedJobActivity" />
         <activity android:name=".View.WatchCV.WatchCVActivity"></activity>
         <activity android:name=".View.Admin.AdminHomeActivity" />
-        <activity android:name=".View.Admin.ShowDetailCopanyApprovalActivity" />
+        <activity android:name=".View.Admin.ShowDetailCompanyApprovalActivity" />
         <activity android:name=".View.Admin.AdminShowDetailReportJobseekerActivity" />
         <activity android:name=".View.Admin.AdminShowDetailReportRecruiterActivity" />
         <activity android:name=".View.Admin.AdminStatisticActivity" />

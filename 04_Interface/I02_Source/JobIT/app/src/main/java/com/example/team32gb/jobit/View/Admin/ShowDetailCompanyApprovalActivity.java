@@ -1,11 +1,18 @@
 package com.example.team32gb.jobit.View.Admin;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,40 +22,50 @@ import com.example.team32gb.jobit.Model.AdminApproval.CompanyWaitingApprovalMode
 import com.example.team32gb.jobit.Model.SignUpAccountBusiness.InfoCompanyModel;
 import com.example.team32gb.jobit.Presenter.AdminApproval.PresenterAdminApprovalRecruiter;
 import com.example.team32gb.jobit.R;
+import com.example.team32gb.jobit.Utility.Config;
+import com.example.team32gb.jobit.Utility.Util;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
 
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY;
 
-public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
-    TextView txtName;
-    TextView txtDate;
-    TextView txtType;
-    TextView txtSize;
-    TextView txtAddress;
-    TextView txtProvince;
-    TextView txtIntroduce;
-    TextView txtNamePresenter;
-    TextView txtPhoneNumberPresenter;
-    Button btnApprovalGreen;
-    Button brnApprovalCancelRed;
-
+public class ShowDetailCompanyApprovalActivity extends AppCompatActivity {
+    private TextView txtName;
+    private TextView txtDate;
+    private TextView txtType;
+    private TextView txtSize;
+    private TextView txtAddress;
+    private TextView txtIntroduce;
+    private TextView txtNamePresenter;
+    private TextView txtPhoneNumberPresenter;
+    private Button btnApprovalGreen;
+    private Button btnApprovalCancelRed;
+    private AppCompatImageButton imgAvatarCompanyApproval;
+    private Toolbar toolbar;
+    private ActionBar actionBar;
     Context context;
-    Dialog dialog;
-    Button btnApproval;
-    Button btnApprovalCancel;
-    TextView txtAdminAskBeforeApproval;
+    private Dialog dialog;
+    private Button btnApproval;
+    private Button btnApprovalCancel;
+    private TextView txtAdminAskBeforeApproval;
+    private ProgressDialog progressDialog;
 
     PresenterAdminApprovalRecruiter presenter;
     DatabaseReference refData;
     InfoCompanyModel model = new InfoCompanyModel();
-    CompanyWaitingApprovalModel modelCompanyWaiting ;
+    CompanyWaitingApprovalModel modelCompanyWaiting;
     String idCompany;
     String dateSendApproval;
     boolean isApproval = true;
@@ -64,12 +81,22 @@ public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
         txtType = findViewById(R.id.txtTypeCompanyApproval);
         txtSize = findViewById(R.id.txtSizeCompanyApproval);
         txtAddress = findViewById(R.id.txtAddressCompanyApproval);
-        txtProvince = findViewById(R.id.txtProvinceCompanyApproval);
         txtIntroduce = findViewById(R.id.txtIntroduceCompanyApproval);
         txtNamePresenter = findViewById(R.id.txtNamePresentCompanyApproval);
         txtPhoneNumberPresenter = findViewById(R.id.txtPhoneCompanyApproval);
         btnApprovalGreen = findViewById(R.id.btnDetailCompanyApprovalOK);
-        brnApprovalCancelRed = findViewById(R.id.btnDetailCompanyApprovalCancel);
+        btnApprovalCancelRed = findViewById(R.id.btnDetailCompanyApprovalCancel);
+        imgAvatarCompanyApproval = findViewById(R.id.imgAvatarCompanyApproval);
+
+        toolbar = findViewById(R.id.tbDetailCompanyApprval);
+        setSupportActionBar(toolbar);
+        actionBar =getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        progressDialog = new ProgressDialog(ShowDetailCompanyApprovalActivity.this);
+        progressDialog.setMessage("Đang tải dữ liệu...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         Intent intent = getIntent();
         idCompany = intent.getStringExtra(AdminApprovalActivity.ID_COMPANY);
@@ -85,14 +112,13 @@ public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
                     Log.e("admin", "get model company");
                     txtName.setText(model.getName());
                     Log.e("admin", "Set text name company");
-                    txtDate.setText(dateSendApproval);
-                    txtType.setText(model.getType());
-                    txtSize.setText(model.getSize());
-                    txtAddress.setText(model.getAddress());
-                    txtProvince.setText(model.getProvince());
-                    txtIntroduce.setText(model.getIntroduce());
-                    txtNamePresenter.setText(model.getNamePresenter());
-                    txtPhoneNumberPresenter.setText(model.getPhoneNumberPresenter());
+                    txtDate.setText("Ngày gửi yêu cầu: " + dateSendApproval);
+                    txtType.setText("Kiểu công ty: " + model.getType());
+                    txtSize.setText("Quy mô công ty: " + model.getSize());
+                    txtAddress.setText("Địa chỉ: " + model.getAddress());
+                    txtIntroduce.setText("Giới thiệu: " + model.getIntroduce());
+                    txtNamePresenter.setText("Liên hệ: " + model.getNamePresenter());
+                    txtPhoneNumberPresenter.setText("Số điện thoại: " + model.getPhoneNumberPresenter());
 
                     btnApprovalGreen.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -104,7 +130,7 @@ public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
                             dialog.show();
                         }
                     });
-                    brnApprovalCancelRed.setOnClickListener(new View.OnClickListener() {
+                    btnApprovalCancelRed.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Log.e("admin", "test btn");
@@ -114,6 +140,7 @@ public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
                             dialog.show();
                         }
                     });
+                    progressDialog.dismiss();
                 }
 
                 @Override
@@ -125,9 +152,32 @@ public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String avatarPath = Environment.getExternalStorageDirectory() + "/logo" +
+                "" + "/" + idCompany + ".jpg";
+        Log.e("kiemtraanh", avatarPath);
+        Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
+        if (bitmap != null && avatarPath != null && !avatarPath.isEmpty()) {
+            imgAvatarCompanyApproval.setBackground(new BitmapDrawable(bitmap));
+        } else {
+            long ONE_MEGABYTE = 1024 * 1024;
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_LOGO).child(idCompany);
+            storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    imgAvatarCompanyApproval.setImageBitmap(bitmap);
+                    Util.saveImageToLocal(bitmap, idCompany);
+                }
+            });
+        }
+    }
+
     void setUpDialog() {
-        presenter =  new PresenterAdminApprovalRecruiter();
-        dialog = new Dialog(ShowDetailCopanyApprovalActivity.this);
+        presenter = new PresenterAdminApprovalRecruiter();
+        dialog = new Dialog(ShowDetailCompanyApprovalActivity.this);
 
         View v = LayoutInflater.from(context).inflate(R.layout.admin_approval_dialog, null);
         btnApproval = v.findViewById(R.id.btnAdminApprovalOKDialog);
@@ -147,20 +197,20 @@ public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
                 if (isApproval) {
                     if (presenter.onApproval(modelCompanyWaiting, isApproval)) {
                         dialog.dismiss();
-                        Toast.makeText(ShowDetailCopanyApprovalActivity.this, "Duyệt thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowDetailCompanyApprovalActivity.this, "Duyệt thành công", Toast.LENGTH_SHORT).show();
                         closeActivity();
                     } else {
                         dialog.dismiss();
-                        Toast.makeText(ShowDetailCopanyApprovalActivity.this, "Duyệt thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowDetailCompanyApprovalActivity.this, "Duyệt thất bại", Toast.LENGTH_SHORT).show();
                     }
                 } else {  //Không duyệt
                     if (presenter.onApproval(modelCompanyWaiting, isApproval)) {
                         dialog.dismiss();
-                        Toast.makeText(ShowDetailCopanyApprovalActivity.this, "Hủy hồ sơ thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowDetailCompanyApprovalActivity.this, "Hủy hồ sơ thành công", Toast.LENGTH_SHORT).show();
                         closeActivity();
                     } else {
                         dialog.dismiss();
-                        Toast.makeText(ShowDetailCopanyApprovalActivity.this, "Hủy hồ sơ thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowDetailCompanyApprovalActivity.this, "Hủy hồ sơ thất bại", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -175,9 +225,29 @@ public class ShowDetailCopanyApprovalActivity extends AppCompatActivity {
         dialog.setContentView(v);
     }
 
-    void closeActivity(){
-        Intent intent = new Intent(ShowDetailCopanyApprovalActivity.this, AdminApprovalActivity.class);
+    void closeActivity() {
+        Intent intent = new Intent(ShowDetailCompanyApprovalActivity.this, AdminApprovalActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_admin,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.homeAdmin:
+                Intent intent = new Intent(ShowDetailCompanyApprovalActivity.this, AdminHomeActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

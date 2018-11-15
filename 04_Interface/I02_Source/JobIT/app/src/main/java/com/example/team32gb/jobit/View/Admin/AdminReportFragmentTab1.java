@@ -2,6 +2,7 @@ package com.example.team32gb.jobit.View.Admin;
 
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.team32gb.jobit.Model.Report.ReportWaitingAdminApprovalModel;
 import com.example.team32gb.jobit.Presenter.AdminApproval.PresenterAdminApprovalReport;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +56,7 @@ public class AdminReportFragmentTab1 extends Fragment {
     public static final String ID_REPORT = "id_report";
     public static final String DATE_SEND_REPORT = "date_send_report";
     public static final String ID_ACCUSED = "id_accused";
+    private ProgressDialog progressDialog;
 
 
     public AdminReportFragmentTab1() {
@@ -60,6 +64,14 @@ public class AdminReportFragmentTab1 extends Fragment {
         presenter = new PresenterAdminApprovalReport();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Đang tải dữ liệu...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +97,7 @@ public class AdminReportFragmentTab1 extends Fragment {
                         timeLeftSendReport = Util.getSubTime(model.getDateSendReport());
                         holder.txtName.setText(nameAccused);
                         holder.txtDateSendReport.setText(timeLeftSendReport);
+                        progressDialog.dismiss();
                     }
 
                     @Override

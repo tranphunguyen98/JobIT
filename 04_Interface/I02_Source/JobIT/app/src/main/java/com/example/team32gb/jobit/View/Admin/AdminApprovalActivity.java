@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,13 +27,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY;
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY_WAITING_APPROVAL;
 
-public class AdminApprovalActivity extends Activity {
+public class AdminApprovalActivity extends AppCompatActivity {
 
     public final static String ID_COMPANY = "Id company";
     public final static String DATE_SEND_APPROVAL = "Date send";
@@ -45,15 +50,25 @@ public class AdminApprovalActivity extends Activity {
     private CompanyWaitingApprovalModel model = new CompanyWaitingApprovalModel();
     private String nameCompany;
     private ProgressDialog progressDialog;
+    private Toolbar toolbar;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_approval);
         rvApproval = findViewById(R.id.rvApproval);
+        toolbar = findViewById(R.id.tbAdminApproval);
+        setSupportActionBar(toolbar);
+
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         progressDialog = new ProgressDialog(AdminApprovalActivity.this);
-        progressDialog.setTitle("Đang tải dữ liệu...");
+        progressDialog.setMessage("Đang tải dữ liệu...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
+
 
         refDatabase = FirebaseDatabase.getInstance().getReference().child(REF_INFO_COMPANY_WAITING_APPROVAL);
         refDataCompany = FirebaseDatabase.getInstance().getReference().child(REF_INFO_COMPANY);
@@ -74,6 +89,7 @@ public class AdminApprovalActivity extends Activity {
                         holder.txtCompanyNameSendApproval.setText(nameCompany);
                         String timeSendLeft = Util.getSubTime(model.getDateSendApproval());
                         holder.txtDateSendApproval.setText(timeSendLeft);
+                        progressDialog.dismiss();
                     }
 
                     @Override
@@ -94,7 +110,7 @@ public class AdminApprovalActivity extends Activity {
                     public void onClick(View v) {
                         //jum activity show detail
                         model = getItem(viewHolder.getAdapterPosition());
-                        Intent intent = new Intent(AdminApprovalActivity.this, ShowDetailCopanyApprovalActivity.class);
+                        Intent intent = new Intent(AdminApprovalActivity.this, ShowDetailCompanyApprovalActivity.class);
                         intent.putExtra(ID_COMPANY, model.getIdCompany());
                         intent.putExtra(DATE_SEND_APPROVAL, model.getDateSendApproval());
                         startActivity(intent);
@@ -106,7 +122,7 @@ public class AdminApprovalActivity extends Activity {
                     public void onItemClick(View view, int position) {
                         //jum activity show detail
                         model = getItem(viewHolder.getAdapterPosition());
-                        Intent intent = new Intent(AdminApprovalActivity.this, ShowDetailCopanyApprovalActivity.class);
+                        Intent intent = new Intent(AdminApprovalActivity.this, ShowDetailCompanyApprovalActivity.class);
                         intent.putExtra(ID_COMPANY, model.getIdCompany());
                         intent.putExtra(DATE_SEND_APPROVAL, model.getDateSendApproval());
                         startActivity(intent);
@@ -135,12 +151,6 @@ public class AdminApprovalActivity extends Activity {
         adaptor.startListening();
         rvApproval.setAdapter(adaptor);
         rvApproval.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        progressDialog.dismiss();
     }
 
     void setUpDialog(final boolean isApproval, final CompanyWaitingApprovalModel model) {
@@ -193,4 +203,23 @@ public class AdminApprovalActivity extends Activity {
         dialog.show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_admin, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.homeAdmin:
+                Intent intent = new Intent(AdminApprovalActivity.this, AdminHomeActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

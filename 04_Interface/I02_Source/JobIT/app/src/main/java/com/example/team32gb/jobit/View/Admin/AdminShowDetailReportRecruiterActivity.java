@@ -1,13 +1,17 @@
 package com.example.team32gb.jobit.View.Admin;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +27,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY;
 import static com.example.team32gb.jobit.Utility.Config.REF_JOBSEEKERS_NODE;
@@ -44,6 +50,12 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
     private ReportModel model;
     private ReportWaitingAdminApprovalModel modelReportWaiting;
     private PresenterAdminApprovalReport presenter;
+    private LinearLayout llCommentReportToJobSeeker;
+    private TextView txtTitleNameAccusedDetail;
+
+    private ProgressDialog progressDialog;
+    private Toolbar toolbar;
+    private ActionBar acitonBar;
 
     public AdminShowDetailReportRecruiterActivity() {
     }
@@ -51,7 +63,7 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_show_detail_report_jobseeker);
+        setContentView(R.layout.activity_admin_show_detail_report);
         txtDetailReportNameAccused = findViewById(R.id.txtDetailReportNameAccused);
         txtDetailReportDateSendReport = findViewById(R.id.txtDetailReportDateSendReport);
         txtDetailReportReporter = findViewById(R.id.txtDetailReportReporter);
@@ -59,7 +71,22 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
         btnShowDetailHistoryReport = findViewById(R.id.btnShowDetailHistoryReport);
         btnShowDetailReportSendWarning = findViewById(R.id.btnShowDetailReportSendWarning);
         btnShowDetailReportIgnore = findViewById(R.id.btnShowDetailReportIgnore);
+        llCommentReportToJobSeeker = findViewById(R.id.llCommentReportToJobSeeker);
+        llCommentReportToJobSeeker.setVisibility(View.GONE);    //không hiển thị commnet bị tố cáo vì nhà tuyển dụng không có phần này
+        txtTitleNameAccusedDetail = findViewById(R.id.txtTitleNameAccusedDetail);
+        txtTitleNameAccusedDetail.setText("Tên công ty bị tố cáo: ");
         presenter = new PresenterAdminApprovalReport();
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang tải dữ liệu ...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        toolbar = findViewById(R.id.tbDetailReport);
+        toolbar.setTitle("Tố cáo nhà tuyển dụng");
+        setSupportActionBar(toolbar);
+        acitonBar = getSupportActionBar();
+        acitonBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         String idReport = intent.getStringExtra(AdminReportFragmentTab2.ID_REPORT);
@@ -106,6 +133,7 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
                     }
                 });
                 txtDetailReportDateSendReport.setText(modelReportWaiting.getDateSendReport());
+                progressDialog.dismiss();
             }
 
             @Override
@@ -216,5 +244,26 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
         });
 
         dialog.show();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_admin, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.homeAdmin:
+                Intent intent = new Intent(this, AdminHomeActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

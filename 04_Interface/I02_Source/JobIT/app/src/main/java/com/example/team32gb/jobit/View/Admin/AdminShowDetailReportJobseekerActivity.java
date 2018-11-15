@@ -1,9 +1,12 @@
 package com.example.team32gb.jobit.View.Admin;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,7 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import static com.example.team32gb.jobit.Utility.Config.REF_JOBSEEKERS_NODE;
 import static com.example.team32gb.jobit.Utility.Config.REF_REPORT;
@@ -43,12 +48,15 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
     private ReportJobseekerModel model;
     private ReportWaitingAdminApprovalModel modelReportWaiting;
     private PresenterAdminApprovalReport presenter;
+    private ProgressDialog progressDialog;
+    private Toolbar toolbar;
+    private ActionBar acitonBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_show_detail_report_jobseeker);
+        setContentView(R.layout.activity_admin_show_detail_report);
         txtDetailReportNameAccused = findViewById(R.id.txtDetailReportNameAccused);
         txtDetailReportDateSendReport = findViewById(R.id.txtDetailReportDateSendReport);
         txtDetailReportCommentInvalid = findViewById(R.id.txtDetailReportCommentInvalid);
@@ -57,6 +65,18 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
         btnShowDetailHistoryReport = findViewById(R.id.btnShowDetailHistoryReport);
         btnShowDetailReportSendWarning = findViewById(R.id.btnShowDetailReportSendWarning);
         btnShowDetailReportIgnore = findViewById(R.id.btnShowDetailReportIgnore);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Đang tải dữ liệu ...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        toolbar = findViewById(R.id.tbDetailReport);
+        toolbar.setTitle("Tố cáo người tìm việc");
+        setSupportActionBar(toolbar);
+        acitonBar = getSupportActionBar();
+        acitonBar.setDisplayHomeAsUpEnabled(true);
+
         presenter = new PresenterAdminApprovalReport();
 
         Intent intent = getIntent();
@@ -98,6 +118,7 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         nameReporter = (String) dataSnapshot.getValue();
                         txtDetailReportReporter.setText(nameReporter);
+                        progressDialog.dismiss();
                     }
 
                     @Override
@@ -117,9 +138,6 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
 
             }
         });
-
-
-
         btnShowDetailHistoryReport.setOnClickListener(this);
         btnShowDetailReportIgnore.setOnClickListener(this);
         btnShowDetailReportSendWarning.setOnClickListener(this);
@@ -225,4 +243,23 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
         dialog.show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_admin, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.homeAdmin:
+                Intent intent = new Intent(this, AdminHomeActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

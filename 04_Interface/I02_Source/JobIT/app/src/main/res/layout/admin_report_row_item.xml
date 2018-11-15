@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:orientation="vertical"
-    android:background="#fff">
+    android:background="@drawable/admin_custom_background_row">
 
     <TextView
         android:id="@+id/txtNameAccused"
@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="Name accused"
-        android:textColor="#111"
-        android:textSize="15sp" />
+        android:textColor="#111"/>
 
 
     <RelativeLayout
@@ -23,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="#e7e7e7"
+        android:background="@drawable/admin_custom_sub_row"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <TextView
