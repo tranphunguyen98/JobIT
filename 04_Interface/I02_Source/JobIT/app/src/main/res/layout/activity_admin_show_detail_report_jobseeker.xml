@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Người bị tố cáo:"
+            android:textColor="#111" />
+
+        <TextView
+            android:id="@+id/txtDetailReportNameAccused"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ngày gửi tố cáo:"
+            android:textColor="#111" />
+
+        <TextView
+            android:id="@+id/txtDetailReportDateSendReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bình luận bị tố cáo"
+            android:textColor="#111" />
+
+        <TextView
+            android:id="@+id/txtDetailReportCommentInvalid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Người gửi tố cáo:"
+            android:textColor="#111" />
+
+        <TextView
+            android:id="@+id/txtDetailReportReporter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả:"
+            android:textColor="#111" />
+
+        <TextView
+            android:id="@+id/txtDetailReportDecripton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnShowDetailHistoryReport"
+            style="@style/ButtonStyleAdmin"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:text="Lịch sử tố cáo" />
+
+        <Button
+            android:id="@+id/btnShowDetailReportSendWarning"
+            style="@style/ButtonStyleAdmin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Cảnh cáo" />
+
+        <Button
+            android:id="@+id/btnShowDetailReportIgnore"
+            style="@style/ButtonStyleAdmin"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Bỏ qua" />
+    </LinearLayout>
+
+
+</RelativeLayout>
