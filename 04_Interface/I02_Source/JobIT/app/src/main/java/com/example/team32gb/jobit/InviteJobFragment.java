@@ -1,11 +1,13 @@
 package com.example.team32gb.jobit;
 
 
+import android.graphics.Canvas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,9 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.team32gb.jobit.Adapter.*;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.FragmentCallBack;
+import com.example.team32gb.jobit.View.InviteJob.InviteJobActivity;
 import com.example.team32gb.jobit.View.WaitingAcceptNTD.ViewAdapterApplied;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -81,10 +86,43 @@ public class InviteJobFragment extends Fragment implements FragmentCallBack {
                     lsData.add(dataApplied);
                 }
 
-                ViewAdapterInvite adapter = new ViewAdapterInvite(getContext(),lsData);
+                final ViewAdapterInvite adapter = new ViewAdapterInvite(getContext(),lsData);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                SwipeControllerActions swipeControllerActions = new SwipeControllerActions() {
+                    @Override
+                    public void onLeftClicked(int position) {
+                        super.onLeftClicked(position);
+                        Log.e("kiemtraSwipe","Left" + position);
+
+                    }
+
+                    @Override
+                    public void onRightClicked(int position) {
+                        super.onRightClicked(position);
+                        Log.e("kiemtraSwipe","Right" + position);
+                    }
+                };
+
+
                 recyclerView.setLayoutManager(layoutManager);
+
+
                 recyclerView.setAdapter(adapter);
+
+                final SwipeController swipeController = new SwipeController(swipeControllerActions);
+                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
+
+                itemTouchHelper.attachToRecyclerView(recyclerView);
+
+                ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+                itemTouchhelper.attachToRecyclerView(recyclerView);
+
+                recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                    @Override
+                    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                        swipeController.onDraw(c);
+                    }
+                });
             }
 
             @Override
@@ -92,5 +130,9 @@ public class InviteJobFragment extends Fragment implements FragmentCallBack {
 
             }
         });
+    }
+
+    private void setupRecyclerView() {
+
     }
 }

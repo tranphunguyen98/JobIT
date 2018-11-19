@@ -43,6 +43,23 @@
         <item>Đà Nẵng</item>
     </string-array>
 
+    <string-array name="searchs">
+        <item>Android</item>
+        <item>IOS</item>
+        <item>JAVA</item>
+        <item>.Net</item>
+        <item>Developer</item>
+        <item>Manager</item>
+        <item>Bosch</item>
+        <item>Fresher</item>
+        <item>Manager</item>
+        <item>FPT</item>
+        <item>Mobile</item>
+        <item>Swift</item>
+        <item>Tester</item>
+        <item>PHP</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

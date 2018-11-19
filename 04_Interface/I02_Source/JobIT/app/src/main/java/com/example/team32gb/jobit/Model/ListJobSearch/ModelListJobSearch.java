@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelListJobSearch {
-    List<ItemPostJob> itemPostJobs;
-    GreenRobotEventBus eventBus;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    private List<ItemPostJob> itemPostJobs;
+    private GreenRobotEventBus eventBus;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     public ModelListJobSearch() {
         itemPostJobs = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ModelListJobSearch {
             CompletionHandler completionHandler = new CompletionHandler() {
                 @Override
                 public void requestCompleted(JSONObject jsonObject, AlgoliaException e) {
-                    if(jsonObject == null && e != null) {
+                    if (jsonObject == null && e != null) {
                         Log.e("kiemtraAlgolia", e.getMessage());
                     } else {
                         Log.e("kiemtraAlgolia", jsonObject.toString());
@@ -57,15 +57,12 @@ public class ModelListJobSearch {
                             JSONArray array = jsonObject.getJSONArray("hits");
                             Log.e("kiemtraAlgolia", array.length() + "");
 
-                            if(array != null) {
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject object = (JSONObject) array.get(i);
-                                    Log.e("kiemtraAlgolia", object.getString("nameJob") + "");
-                                     itemPostJobs.add(Util.parserJSONToItemPost(object));
-                                }
-                                eventBus.post(itemPostJobs);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = (JSONObject) array.get(i);
+                                Log.e("kiemtraAlgolia", object.getString("nameJob") + "");
+                                itemPostJobs.add(Util.parserJSONToItemPost(object));
                             }
-
+                            eventBus.post(itemPostJobs);
 
 
                         } catch (JSONException e1) {

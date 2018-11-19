@@ -1,26 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:background="#fff">
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:layout_marginBottom="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/icon_app" />
 
         <TextView
             android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tên người đã nộp hồ sơ"
+            android:layout_alignTop="@id/imgAvatar"
+            android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:text="Trần Phú Nguyện"
             android:textSize="15dp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/txtTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Thời gian nộp hồ sơ"
+            android:layout_below="@id/txtName"
+            android:layout_alignStart="@id/txtName"
+            android:layout_marginEnd="16dp"
+            android:text="16 phút trước"
             android:textSize="13dp" />
-</LinearLayout>
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

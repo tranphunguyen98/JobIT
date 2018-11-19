@@ -16,7 +16,6 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-//        super.onMessageReceived(remoteMessage);
         if(remoteMessage.getNotification() != null) {
             String title = remoteMessage.getNotification().getTitle();
             String body = remoteMessage.getNotification().getBody();
@@ -36,10 +35,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             .setContentText(body)
                             .setAutoCancel(false)
                             .setContentIntent(pendingIntent)
-                            .setSmallIcon(R.drawable.ic_avatar_default)
+                            .setSmallIcon(R.drawable.icon_app)
                             .setSound(alarmSound).build();
         notificationManager.notify(0,n);
-
     }
 
 
