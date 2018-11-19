@@ -10,6 +10,7 @@ import android.os.Environment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -110,6 +111,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         nodeRoot = firebaseDatabase.getReference();
         sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
+//        if(sharedPreferences.getInt(Config.USER_TYPE,0) == Config.IS_ADMIN) {
+//            btnCreateAccount.setVisibility(View.GONE);
+//        }
+
         firebaseAuth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
 
@@ -153,9 +158,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 LoginWithFacebook();
                 break;
             case R.id.btnCreateAccount:
-                Intent intentCA = new Intent(this, SignUpActivity.class);
-                intentCA.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intentCA);
+                Util.jumpActivityRemoveStack(this,SignUpActivity.class);
                 break;
             case R.id.tvForgotPassword:
                 Intent intentFG = new Intent(this, ForgotPasswordActivity.class);
@@ -299,7 +302,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         case Config.IS_JOB_SEEKER:
                             //Nếu đã tồn tại tài khoản nhưng không phải là người tìm việc
                             if (dsRecruiter.hasChild(uid) || dsAdmin.hasChild(uid)) {
-                                Util.signOut(firebaseAuth,SignInActivity.this);
+                                Util.signOut(firebaseAuth, SignInActivity.this);
                                 Toast.makeText(SignInActivity.this, "Tài khoản của bạn đã đăng ký cho nhà tuyển dụng hoặc admin\n vui lòng đăng ký tài khoản khác", Toast.LENGTH_LONG).show();
                                 break;
                             }
@@ -325,9 +328,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         case Config.IS_RECRUITER:
                             Log.e("kiemtrasignin", uid);
                             //Nếu đã tồn tại tài khoản nhưng không phải là nhà tuyển dụng
-                            if (dsJobseeker.hasChild(uid) || dsAdmin.hasChild(uid)) {
-                                Util.signOut(firebaseAuth,SignInActivity.this);
-                                Toast.makeText(SignInActivity.this, "Tài khoản của bạn đã đăng ký cho người tìm việc hoặc admin\n vui lòng đăng nhập tài khoản khác", Toast.LENGTH_SHORT).show();
+                            if (dsJobseeker.hasChild(uid) || dsRecruiter.hasChild(uid)) {
+                                Util.signOut(firebaseAuth, SignInActivity.this);
+                                Toast.makeText(SignInActivity.this, "Không phải tài khoản\n vui lòng đăng nhập tài khoản khác", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                             DataSnapshot dsCompany = dataSnapshot.child(Config.REF_INFO_COMPANY);
@@ -344,7 +347,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                                 if (dsCompany.hasChild(uid)) {
                                     SignInActivity.this.finish();
-                                    edit.putBoolean(Config.REGESTERED_INFO,true);
+                                    edit.putBoolean(Config.REGESTERED_INFO, true);
                                     Util.jumpActivity(SignInActivity.this, HomeRecruitmentActivity.class);
                                 } else {
                                     SignInActivity.this.finish();
@@ -352,7 +355,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                     Util.jumpActivity(SignInActivity.this, SignUpAccountBusiness.class);
                                 }
                                 edit.apply();
-                                Log.e("kiemtra1","thanh cong");
+                                Log.e("kiemtra1", "thanh cong");
                             } else {
                                 //Lấy thông tin user từ FirebaseAuth
                                 model = getInfoFromFirebaseUser(user);
@@ -366,6 +369,31 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                                 SignInActivity.this.finish();
                                 Util.jumpActivity(SignInActivity.this, SignUpAccountBusiness.class);
                             }
+                            break;
+                        case Config.IS_ADMIN:
+                            //Nếu đã tồn tại tài khoản nhưng không phải là admin
+                            if (dsRecruiter.hasChild(uid) || dsAdmin.hasChild(uid)) {
+                                Util.signOut(firebaseAuth, SignInActivity.this);
+                                Toast.makeText(SignInActivity.this, "Tài khoản của bạn đã đăng ký cho nhà tuyển dụng hoặc admin\n vui lòng đăng ký tài khoản khác", Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                            //Nếu tồn tại tài khoản là admin
+                            if (dsJobseeker.hasChild(uid)) {
+                                //Lấy thông tin admin từ FirebaseDatabase
+                                model = dsJobseeker.child(uid).getValue(UserModel.class);
+                                //Lưu hình ảnh avatar vào bộ nhớ máy
+                                saveImageAvatarToExternalMemory(model, uid);
+                            } else {
+                                //Lấy thông tin user từ FirebaseAuth
+                                model = getInfoFromFirebaseUser(user);
+                                //Lưu thông tin lên firebase
+                                nodeRoot.child(Config.REF_JOBSEEKERS_NODE).child(uid).setValue(model);
+                            }
+                            saveInfoToLocal(model);
+                            saveFCMTokenToServer(uid);
+                            edit.putBoolean(Config.IS_LOGGED, true);
+                            edit.apply();
+                            Util.jumpActivityRemoveStack(SignInActivity.this, HomeJobSeekerActivity.class);
                             break;
                         default:
                             break;
