@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".View.Admin.AdminStatisticActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbAdminStatistic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:subtitle="Thống kê"
+            app:subtitleTextColor="@color/white"
+            app:title="Admin"
+            app:titleTextColor="@color/white">
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/TitleInAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Số lượng người tìm việc" />
+
+            <TextView
+                android:id="@+id/txtAdminStatisticEmployee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number employees" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TitleInAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Số lượng nhà tuyển dụng" />
+
+            <TextView
+                android:id="@+id/txtAdminStatisticRecruiter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number recruiters" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

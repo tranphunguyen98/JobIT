@@ -47,7 +47,7 @@ public class CompanyDetailActivity extends AppCompatActivity implements View.OnC
     private Button btnEdit;
     private LinearLayout lnEdit;
     private ProgressDialog progressDialog;
-    String idCompany;
+    private String idCompany;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

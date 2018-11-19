@@ -12,7 +12,9 @@ public class Config {
     public static final String REF_FCM_TOKEN = "fcm_tokens";
     public static final String REF_AWAITING_APPROVAL_RECRUITERS = "awaiting_approval_recruiters";
     public static final String REF_AWAITING_APPROVAL = "awaiting_approval_recruiters";
-
+    public static final String REF_INFO_COMPANY_WAITING_APPROVAL = "companysWaitingAdminApproval";
+    public static final String REF_REPORT_WAITING_ADMIN_APPROVAL ="reportWaitingAdminApproval";
+    public static final String REF_REPORT ="reports";
 
     //Dữ liệu offline
     public static final String SHARED_PREFERENCES_NAME = "team32gb";
@@ -38,6 +40,10 @@ public class Config {
     public static final int IS_JOB_SEEKER = 1;
     public static final int IS_RECRUITER = 2;
     public static final int IS_ADMIN = 3;
+
+    public static final long NOT_APPROVAL = 0;
+    public static final long APPROVAL_SUCCESSFUL = 1;
+    public static final long APPROVAL_FAIL = 2;
 
 
 }

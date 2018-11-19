@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/txtAdminAskBeforeApproval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bạn có chắc chắn muốn duyệt/ không duyệt hồ sơ này?"
+        android:textSize="15sp"
+        android:textColor="#111"
+        android:gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:layout_margin="30dp"/>
+    <TextView
+        android:id="@+id/txtAdminAdviceApproval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bạn nên xem chi tiết hồ sơ trước khi duyệt"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:layout_marginHorizontal="20dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/btnAdminApprovalOKDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Đồng ý"
+            android:layout_margin="20dp"
+            android:background="@drawable/custom_button_admin"/>
+        <Button
+            android:id="@+id/btnAdminApprovalCancelDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="Hủy"
+            android:layout_margin="20dp"
+            android:background="@drawable/custom_button_admin"/>
+
+    </LinearLayout>
+
+</LinearLayout>
