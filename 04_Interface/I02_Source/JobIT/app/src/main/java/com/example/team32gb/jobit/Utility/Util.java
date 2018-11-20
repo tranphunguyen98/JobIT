@@ -42,7 +42,7 @@ public class Util {
             dataPostJob.setNumberEmployer(jsonObject.getString("numberEmployer"));
             dataPostJob.setQualification(jsonObject.getString("qualification"));
             dataPostJob.setTypeJob(jsonObject.getString("typeJob"));
-            dataPostJob.setIdCompnay(jsonObject.getString("idCompany"));
+            dataPostJob.setIdCompany(jsonObject.getString("idCompany"));
             dataPostJob.setIdJob(jsonObject.getString("idJob"));
             dataPostJob.setNameCompany(jsonObject.getString("nameCompany"));
             dataPostJob.setAvatar(jsonObject.getString("avatar"));

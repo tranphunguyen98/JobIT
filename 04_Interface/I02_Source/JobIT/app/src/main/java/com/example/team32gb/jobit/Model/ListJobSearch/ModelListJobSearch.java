@@ -63,8 +63,6 @@ public class ModelListJobSearch {
                                 itemPostJobs.add(Util.parserJSONToItemPost(object));
                             }
                             eventBus.post(itemPostJobs);
-
-
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }

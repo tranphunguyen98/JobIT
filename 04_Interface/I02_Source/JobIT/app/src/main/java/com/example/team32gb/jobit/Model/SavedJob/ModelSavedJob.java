@@ -32,20 +32,16 @@ public class ModelSavedJob {
     public void getListJob(final String uid){
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot dfChoPhongVan = dataSnapshot.child("daLuus").child(uid);
-                for(DataSnapshot snapshotCompany: dfChoPhongVan.getChildren()) {
+                DataSnapshot dfDaLuu = dataSnapshot.child("daLuus").child(uid);
+                for(DataSnapshot snapshotCompany: dfDaLuu.getChildren()) {
                     for (DataSnapshot snJob : snapshotCompany.getChildren()) {
                         ItemPostJob itemPostJob = new ItemPostJob();
-                        itemPostJob.setIdJob(snJob.getKey());
-                        itemPostJob.setIdCompany(snapshotCompany.getKey());
-                        String timeApplied = snJob.child("timeApplied").getValue(String.class);
-                        itemPostJob.setTimeApplied(timeApplied);
+                        String timeSaved = snJob.child("timeSaved").getValue(String.class);
+                        itemPostJob.setTimeApplied(timeSaved);
                         String idJob = snJob.getKey();
-                        Log.e("kiemtraApply", idJob);
-                        String nameCompany = dataSnapshot.child("companys").child(itemPostJob.getIdCompany()).child("name").getValue(String.class);
-
-                        itemPostJob.setNameCompany(nameCompany);
-                        DataPostJob dataPostJob = dataSnapshot.child("tinTuyenDungs").child(itemPostJob.getIdCompany()).child(itemPostJob.getIdJob()).getValue(DataPostJob.class);
+                        String idCompany = snapshotCompany.getKey();
+                        Log.e("kiemtraApply", idJob + " : " + idCompany);
+                        DataPostJob dataPostJob = dataSnapshot.child("tinTuyenDungs").child(idCompany).child(idJob).getValue(DataPostJob.class);
                         if (dataPostJob != null) {
                             Log.e("kiemtraApply", dataPostJob.getNameJob());
                         } else {
@@ -53,6 +49,7 @@ public class ModelSavedJob {
 
                         }
                         itemPostJob.setDataPostJob(dataPostJob);
+                        Log.e("kiemtraApply", itemPostJob.getDataPostJob().getIdCompany() + " : " + itemPostJob.getDataPostJob().getIdJob());
                         itemPostJobs.add(itemPostJob);
                     }
                 }

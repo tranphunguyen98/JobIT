@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.team32gb.jobit.Model.PostJob.ItemPostJob;
 import com.example.team32gb.jobit.Presenter.SavedJob.PresenterSavedJob;
@@ -52,6 +53,7 @@ public class SavedJobActivity extends AppCompatActivity implements ViewListSaved
 
     @Override
     public void showListJob(List<ItemPostJob> itemPostJobs) {
+        Log.e("kiemtradetail", "11:" + itemPostJobs.get(0).getDataPostJob().getIdCompany() + itemPostJobs.get(0).getDataPostJob().getNameCompany());
         ListJobInterviewViewAdapter adapter = new ListJobInterviewViewAdapter(this,itemPostJobs);
         recyclerView.setAdapter(adapter);
     }

@@ -1,35 +1,19 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 admin.initializeApp()
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
 
-// Listens for new messages added to /messages/:pushId/original and creates an
-// uppercase version of the message to /messages/:pushId/uppercase
 exports.thongBaoUngVienApply = functions.database.ref('/choDuyets/{companyId}/{idJob}/{idUngVien}')
     .onCreate(async(snapshot, context) => {
      
+       
         const companyId = context.params.companyId
         const idJob = context.params.idJob
 
-        //const jobId = snapshot.key
         const idUngVien = context.params.idUngVien
-       // const id1 = snapshot.ref.child("idUngVien").once('value')
-//const id2 = snapshot.child("idUngVien").key
-
-      //  const ungVienId = context.params.idUngvien
-       //const keyUngVien = snapshot.child("idUngVien").key
-        //const companyId = snapshot.ref.parent.key
         
-        //const nameUngVien : string
-        console.log('companyId: ' + companyId + ',jobId: ' + idJob + ",idungvien: " + idUngVien)
-        const getNameUngVien = admin.database().ref('/jobseekers/' + idUngVien + '/email').once('value')
-        // .then(nameUngVienSn => {
-        //     nameUngVien = nameUngVienSn.val()
-        // });
-        const getTinTuyenDung = admin.database().ref('/tinTuyenDungs/' + companyId + '/' + idJob + '/nameJob').once('value')
-
     
+        const getNameUngVien = admin.database().ref('/jobseekers/' + idUngVien + '/email').once('value')
+        const getTinTuyenDung = admin.database().ref('/tinTuyenDungs/' + companyId + '/' + idJob + '/nameJob').once('value')
         
         const results = await Promise.all([getNameUngVien,getTinTuyenDung])
         const nameSnapshot = results[0]
@@ -37,76 +21,85 @@ exports.thongBaoUngVienApply = functions.database.ref('/choDuyets/{companyId}/{i
 
         const nameUngVien = nameSnapshot.val()
         const tinTuyenDung = tinTuyenDungSnapshot.val()
+        const timeJob = snapshot.child('timeApplied').val()
+
+        console.log('companyId: ' + companyId + ',jobId: ' + idJob + ",idungvien: " + idUngVien + ",time "  + timeJob)
 
         console.log('name: ' + nameUngVien + ' tin: ' + tinTuyenDung)
+        let tinTuyenDungStr : string = tinTuyenDung
 
         const payload = {
             notification:{
-                title: 'Co ung vien apply',
-                body: 'ung vien ' + nameUngVien + ' đã apply ' + tinTuyenDung + ' của bạn', 
+                title: 'Có ứng viên apply',
+                body: 'Ứng viên ' + nameUngVien + ' đã apply ' + tinTuyenDung + ' của bạn', 
                 badge: '1',
                 sound: 'default'
+            },
+            data:{
+            	type: 'thongBaoUngVienApply',
+            	idCompany: companyId + '',
+            	idJob: idJob + '',
+            	nameJob: tinTuyenDungStr,
+            	timeJob: timeJob + ''
             }
-        }
 
-        // return admin.database().ref('/fcm_tokens/' + companyId + '/token').once('value')
-        // .then(fcm_token => {
-        //         console.log('token available : ' + fcm_token.val())
-        //         return admin.messaging().sendToDevice(fcm_token.val(),payload)
-        // })
+        }
         return admin.database().ref('/fcm_tokens/' + companyId + '/token').once('value')
         .then(fcm_token => {
                 console.log('token available : ' + fcm_token.val())
                return admin.messaging().sendToDevice(fcm_token.val(),payload)
         })
-
-
-        // return Promise.all
     })
 
-    // exports.thongBaoChapNhanUngVien = functions.database.ref('/choDuyets/{companyId}/{idJob}')
+    // exports.thongBaoDuyetUngVienApply = functions.database.ref('/choDuyets/{companyId}/{idJob}/{idUngVien}')
     // .onCreate(async(snapshot, context) => {
      
     //     const companyId = context.params.companyId
     //     const idJob = context.params.idJob
 
-    //     const idUngVien = snapshot.child("idUngVien").val()
-
+    //     const idUngVien = context.params.idUngVien
         
-    //     //const nameUngVien : string
-    //     console.log('companyId: ' + companyId + ',jobId: ' + idJob + ",idungvien: " + idUngVien)
-    //     const getNameUngVien = admin.database().ref('/jobseekers/' + idUngVien + '/email').once('value')
-
-    //     const getTinTuyenDung = admin.database().ref('/tinTuyenDungs/' + companyId + '/' + idJob + '/nameJob').once('value')
-
     
+    //     const getNameUngVien = admin.database().ref('/jobseekers/' + idUngVien + '/email').once('value')
+    //     const getTinTuyenDung = admin.database().ref('/tinTuyenDungs/' + companyId + '/' + idJob + '/nameJob').once('value')
+       
+
         
-    //     const results = await Promise.all([getNameUngVien,getTinTuyenDung])
+    //     const results = await Promise.all([getNameUngVien,getTinTuyenDung,getTimeJob])
     //     const nameSnapshot = results[0]
     //     const tinTuyenDungSnapshot = results[1]
+    //     const timeJobSnapshot = results[2]
 
     //     const nameUngVien = nameSnapshot.val()
     //     const tinTuyenDung = tinTuyenDungSnapshot.val()
+    //     const timeJob = timeJobSnapshot.val()
+
+    //     console.log('companyId: ' + companyId + ',jobId: ' + idJob + ",idungvien: " + idUngVien + ",time "  + timeJob)
 
     //     console.log('name: ' + nameUngVien + ' tin: ' + tinTuyenDung)
+    //     let tinTuyenDungStr : string = tinTuyenDung
 
     //     const payload = {
     //         notification:{
-    //             title: 'Co ung vien apply',
-    //             body: 'ung vien ' + nameUngVien + ' đã apply ' + tinTuyenDung + ' của bạn', 
+    //             title: 'Có ứng viên apply',
+    //             body: 'Ứng viên ' + nameUngVien + ' đã apply ' + tinTuyenDung + ' của bạn', 
     //             badge: '1',
     //             sound: 'default'
+    //         },
+    //         data:{
+    //         	type: 'thongBaoUngVienApply',
+    //         	idCompany: companyId + '',
+    //         	idJob: idJob + '',
+    //         	nameJob: tinTuyenDungStr,
+    //         	timeJob: timeJob + ''
     //         }
-    //     }
 
+    //     }
     //     return admin.database().ref('/fcm_tokens/' + companyId + '/token').once('value')
     //     .then(fcm_token => {
     //             console.log('token available : ' + fcm_token.val())
     //            return admin.messaging().sendToDevice(fcm_token.val(),payload)
     //     })
-
-
-    //     // return Promise.all
     // })
 
     exports.thongBaoPheDuyetNhaTuyenDung = functions.database.ref('/companys/{companyId}/approvalMode')

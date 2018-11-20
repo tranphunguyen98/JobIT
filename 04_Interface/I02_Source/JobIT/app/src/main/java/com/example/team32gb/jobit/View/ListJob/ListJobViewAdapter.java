@@ -2,6 +2,7 @@ package com.example.team32gb.jobit.View.ListJob;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +25,12 @@ import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.View.ListJobSearch.ItemClickListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -52,10 +60,37 @@ public class ListJobViewAdapter extends RecyclerView.Adapter<ListJobViewAdapter.
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
         Log.e("kiemtra111",mdata.get(i).getDataPostJob().getNameJob() + ": " + i);
         final String idCompany = mdata.get(i).getDataPostJob().getIdCompany();
+        final String idJob = mdata.get(i).getDataPostJob().getIdJob();
+
         myViewHolder.txtNameJob.setText(mdata.get(i).getDataPostJob().getNameJob());
         myViewHolder.txtNameCompany.setText(mdata.get(i).getDataPostJob().getNameCompany());
         myViewHolder.txtProvince.setText(mdata.get(i).getDataPostJob().getProvince());
         myViewHolder.txtTime.setText(Util.getSubTime(mdata.get(i).getDataPostJob().getTime()));
+
+        final String uid = FirebaseAuth.getInstance().getUid();
+        if(uid != null && !uid.isEmpty()) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    DataSnapshot dsSaved = dataSnapshot.child("daLuus").child(uid).child(idCompany);
+                    DataSnapshot dsApplied = dataSnapshot.child("Applieds").child(uid).child(idCompany);
+                    Log.e("kiemtraaaaaa",dataSnapshot.toString());
+                    if(dsSaved.hasChild(idJob)) {
+                        mdata.get(i).setChecked(true);
+                        myViewHolder.cbSaved.setChecked(true);
+                    }
+
+                    if(dsApplied.hasChild(idJob)) {
+                        mdata.get(i).setApplied(true);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         if(idCompany != null) {
             long ONE_MEGABYTE = 1024 * 1024;
@@ -96,6 +131,7 @@ public class ListJobViewAdapter extends RecyclerView.Adapter<ListJobViewAdapter.
         private TextView txtTime;
         private TextView txtSalary;
         private TextView txtProvince;
+        private CheckBox cbSaved;
         private MaterialCardView item_listjob;
         private ImageView imageView;
         private ItemClickListener itemClickListener;
@@ -114,6 +150,7 @@ public class ListJobViewAdapter extends RecyclerView.Adapter<ListJobViewAdapter.
             txtProvince = itemView.findViewById(R.id.txtProvince);
             imageView = itemView.findViewById(R.id.imgAvatarCompany);
             item_listjob = itemView.findViewById(R.id.item_listjob);
+            cbSaved = itemView.findViewById(R.id.imgFav);
         }
 
         @Override

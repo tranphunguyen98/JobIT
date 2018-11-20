@@ -7,10 +7,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.team32gb.jobit.Lib.MyFirebaseMessagingService;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Utility.Config;
 import com.example.team32gb.jobit.Utility.Util;
@@ -20,6 +22,7 @@ import com.example.team32gb.jobit.View.HomeRecruitmentActivity.HomeRecruitmentAc
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.example.team32gb.jobit.View.SignUpAccountBusiness.SignUpAccountBusiness;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import static com.example.team32gb.jobit.Utility.Config.IS_LOGGED;
 import static com.example.team32gb.jobit.Utility.Config.IS_RECRUITER;
@@ -36,6 +39,7 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_user_type);
+
 
         btnJobSeeker = findViewById(R.id.btnJobSeeker);
         btnEmployer = findViewById(R.id.btnEmployer);
@@ -66,9 +70,12 @@ public class SelectUserTypeActivity extends AppCompatActivity implements View.On
                 break;
             case Config.IS_ADMIN:
                 if (sharedPreferencesUserType.getBoolean(IS_LOGGED, false)) {
-                    Util.jumpActivityRemoveStack(this, SignInActivity.class);
-                } else {
+                    Log.e("kiemtrajump","true");
                     Util.jumpActivityRemoveStack(this, AdminHomeActivity.class);
+                } else {
+                    Log.e("kiemtrajump","false");
+
+                    Util.jumpActivityRemoveStack(this, SignInActivity.class);
                 }
                 break;
             default:

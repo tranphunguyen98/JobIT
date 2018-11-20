@@ -26,7 +26,7 @@ public class ModelPostJob {
                 dataPostJob.setNameCompany(dataSnapshot.child("name").getValue(String.class));
                 dataPostJob.setProvince(dataSnapshot.child("province").getValue(String.class));
                 dataPostJob.setAvatar(dataSnapshot.child("avatar").getValue(String.class));
-                dataPostJob.setIdCompnay(Uid);
+                dataPostJob.setIdCompany(Uid);
                 dataPostJob.setIdJob(idJob);
                 databaseReference.child(dataPostJob.getIdCompany()).child(idJob).setValue(dataPostJob);
             }
@@ -38,7 +38,23 @@ public class ModelPostJob {
         });
 
     }
-    public void savePostEdit(String idJob, String uid, DataPostJob dataPostJob) {
-        databaseReference.child(uid).child(idJob).setValue(dataPostJob);
+    public void savePostEdit(final String idJob, final String uid, final DataPostJob dataPostJob) {
+        DatabaseReference dfCompany = FirebaseDatabase.getInstance().getReference().child("companys").child(uid);
+        dfCompany.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                dataPostJob.setNameCompany(dataSnapshot.child("name").getValue(String.class));
+                dataPostJob.setProvince(dataSnapshot.child("province").getValue(String.class));
+                dataPostJob.setAvatar(dataSnapshot.child("avatar").getValue(String.class));
+                dataPostJob.setIdCompany(uid);
+                dataPostJob.setIdJob(idJob);
+                databaseReference.child(uid).child(idJob).setValue(dataPostJob);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

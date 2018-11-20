@@ -19,6 +19,7 @@ public class ModelPostedJob {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     GreenRobotEventBus eventBus;
+
     public ModelPostedJob() {
         itemPostJobs = new ArrayList<>();
         eventBus = GreenRobotEventBus.getInstance();
@@ -26,25 +27,26 @@ public class ModelPostedJob {
         databaseReference = firebaseDatabase.getReference().child("tinTuyenDungs");
 
     }
-    public void getPost(String Uid){
+
+    public void getPost(String Uid) {
         databaseReference.child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                       DataPostJob dataPostJob = snapshot.getValue(DataPostJob.class);
-                       ItemPostJob itemPostJob = new ItemPostJob();
-                       itemPostJob.setDataPostJob(dataPostJob);
-                       itemPostJob.setIdJob(snapshot.getKey());
-                       itemPostJob.setIdCompany(dataSnapshot.getKey());
-                       itemPostJobs.add(itemPostJob);
-               }
-               eventBus.post(itemPostJobs);
-           }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    DataPostJob dataPostJob = snapshot.getValue(DataPostJob.class);
+                    dataPostJob.setIdJob(snapshot.getKey());
+                    dataPostJob.setIdCompany(dataSnapshot.getKey());
+                    ItemPostJob itemPostJob = new ItemPostJob();
+                    itemPostJob.setDataPostJob(dataPostJob);
+                    itemPostJobs.add(itemPostJob);
+                }
+                eventBus.post(itemPostJobs);
+            }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-           }
-       });
+            }
+        });
     }
 }

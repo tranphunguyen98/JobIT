@@ -37,14 +37,8 @@ import com.example.team32gb.jobit.View.HomeJobSeeker.HomeJobSeekerActivity;
 import com.example.team32gb.jobit.View.SignIn.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -97,18 +91,6 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
         btnSaveNameProfile.setOnClickListener(this);
         imgAvatarProfile.setOnClickListener(this);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         myToolBar = findViewById(R.id.tbProfile);
 
         myToolBar.setTitle("Thông tin tài khoản");
@@ -116,8 +98,6 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
@@ -127,12 +107,10 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
         user = firebaseAuth.getCurrentUser();
         uid = user.getUid();
         presenterJobSeekerProfile = new PresenterLogicJobSeekerProfile(this, uid);
-//        presenterJobSeekerProfile.getProfile();
         presenterJobSeekerProfile.onCreate();
-        // presenterJobSeekerProfile.getProfile();
 
         typeUser = sharedPreferences.getInt(Config.USER_TYPE, 0);
-        if (typeUser == Config.IS_RECRUITER) {
+        if (typeUser == Config.IS_RECRUITER || typeUser == Config.IS_ADMIN) {
             btnMyCV.setVisibility(View.GONE);
         }
         if (!sharedPreferences.getBoolean(Config.MAY_GET_LOCAL, false)) {
@@ -142,6 +120,10 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case Config.IS_RECRUITER:
                     presenterJobSeekerProfile.getProfile(Config.REF_RECRUITERS_NODE,uid);
+                    break;
+                case Config.IS_ADMIN:
+                    Log.e("kiemtraadmin","admin");
+                    presenterJobSeekerProfile.getProfile(Config.REF_ADMINS_NODE,uid);
                     break;
                 default:
                     break;
@@ -154,8 +136,6 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
             userModel.setAvatar(storageReference.child(Config.REF_FOLDER_AVATAR).child(uid).getPath());
 
             String avatarPath = Environment.getExternalStorageDirectory() + "/avatar" + "/" + uid + ".jpg";
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(avatarPath);
             showProfile(userModel, bitmap);
         }
@@ -196,6 +176,9 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                     case Config.IS_RECRUITER:
                         Util.jumpActivity(this, SignInActivity.class);
                         break;
+                    case Config.IS_ADMIN:
+                        Util.jumpActivity(this, SignInActivity.class);
+                        break;
                     default:
                         break;
                 }
@@ -220,6 +203,9 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                         break;
                     case Config.IS_RECRUITER:
                         presenterJobSeekerProfile.saveNameProfile(Config.REF_RECRUITERS_NODE,uid,name);
+                        break;
+                    case Config.IS_ADMIN:
+                        presenterJobSeekerProfile.saveNameProfile(Config.REF_ADMINS_NODE,uid,name);
                         break;
                     default:
                         break;
@@ -276,19 +262,15 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
                         case Config.IS_RECRUITER:
                             presenterJobSeekerProfile.saveImageProfile(Config.REF_RECRUITERS_NODE,uid,bitmapThumbnail);
                             break;
+                        case Config.IS_ADMIN:
+                            presenterJobSeekerProfile.saveImageProfile(Config.REF_ADMINS_NODE,uid,bitmapThumbnail);
+                            break;
                         default:
                             break;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-//                Picasso.get().load(selectedImageURI).into(imgAvatarProfile);
-
-                //Lấy type của hình ảnh
-//                ContentResolver contentResolver = this.getContentResolver();
-//                MimeTypeMap mime = MimeTypeMap.getSingleton();
-//                String type = mime.getExtensionFromMimeType(contentResolver.getType(selectedImageURI));
-//                presenterJobSeekerProfile.saveImageProfile(selectedImageURI, "");
             }
         }
     }
@@ -296,7 +278,8 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void showProfile(UserModel userModel, Bitmap bitmap) {
         Log.e("kiemtrashow", "show");
-        if (!userModel.getAvatar().equals("")) {
+        if (!userModel.getAvatar().equals("") && bitmap != null) {
+            Log.e("kiemtrashow","a");
             imgAvatarProfile.setImageBitmap(bitmap);
         }
         tvEmailProfile.setText(userModel.getEmail());
@@ -313,12 +296,6 @@ public class ProfileUserActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void showProfile(UserModel userModel, Uri uri) {
-        if (!userModel.getAvatar().equals("")) {
-            Picasso.get().load(uri).into(imgAvatarProfile);
-        }
-        tvEmailProfile.setText(userModel.getEmail());
-        tvNameProfile.setText(userModel.getName());
-
     }
 
     @Override
