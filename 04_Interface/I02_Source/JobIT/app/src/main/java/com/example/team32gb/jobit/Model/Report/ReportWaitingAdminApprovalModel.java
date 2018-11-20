@@ -1,5 +1,7 @@
 package com.example.team32gb.jobit.Model.Report;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -88,8 +90,10 @@ public class ReportWaitingAdminApprovalModel {
                         .child(idReport);
                 //Xóa tố cáo trong mục chờ duyệt
                 refWaitingReport.removeValue();
+                Log.e("Admin", "Xóa chờ tố cáo");
                 //Cập nhật isWarned = true
                 refData.child("isWarned").setValue(true);
+                Log.e("Admin", "Cập nhật isWarned");
 
             }
         });

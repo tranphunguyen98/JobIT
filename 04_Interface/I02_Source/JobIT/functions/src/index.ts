@@ -179,3 +179,32 @@ exports.thongBaoUngVienApply = functions.database.ref('/choDuyets/{companyId}/{i
                     return admin.messaging().sendToDevice(fcm_token.val(),payload)
         })
     })
+
+    exports.thongBaoCanhCaoRecruiter = functions.database.ref('/reports/recruiters/{idUser}/{idReport}/isWarned')
+    .onUpdate(async(snapshot, context) => {
+        const idUser = context.params.idUser
+        const idReport = context.params.idReport
+        const adminCommentData = admin.database().ref('/reports/recruiters/'+ idUser+  '/'+idReport + '/adminComment').once('value')
+        console.log('recruitersID: ' + idUser + ', idReport '+ idReport, ', adminComment: '+ adminCommentData)
+
+        const results = await Promise.all([adminCommentData])
+        const dataSnapshot = results[0]
+        const adminComment = dataSnapshot.val() 
+
+        
+               const payload = {
+                notification:{
+                    title: 'Cảnh cáo',
+                    body: adminComment,
+                    badge: '1',
+                    sound: 'default'
+                 }
+                }
+
+        return admin.database().ref('/fcm_tokens/' + idUser + '/token').once('value')
+        .then(fcm_token => {
+                console.log('token available : ' + fcm_token.val())
+                    return admin.messaging().sendToDevice(fcm_token.val(),payload)
+        })
+    })
+

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team32gb.jobit.Model.Report.ReportJobseekerModel;
+import com.example.team32gb.jobit.Model.Report.ReportModel;
 import com.example.team32gb.jobit.Model.Report.ReportWaitingAdminApprovalModel;
 import com.example.team32gb.jobit.Presenter.AdminApproval.PresenterAdminApprovalReport;
 import com.example.team32gb.jobit.Presenter.AdminApproval.PresenterAdminShowHistoryReport;
@@ -150,30 +151,7 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnShowDetailHistoryReport:
-                //todo: presentrt show history
-                PresenterAdminShowHistoryReport presenter = new PresenterAdminShowHistoryReport();
-
-                ViewGroup rootView = (ViewGroup) ((ViewGroup) this
-                        .findViewById(android.R.id.content)).getChildAt(0);
-                final Dialog dialogShowHistory = new Dialog(AdminShowDetailReportJobseekerActivity.this);
-                View viewHistory = LayoutInflater.from(AdminShowDetailReportJobseekerActivity.this)
-                        .inflate(R.layout.admin_show_history_report, rootView, false);
-
-                Button btnCloseHistory = viewHistory.findViewById(R.id.btnShowDetailHistoryReport);
-                TextView txtHistoryReport = viewHistory.findViewById(R.id.txtHistoryReport);
-
-                dialogShowHistory.setContentView(viewHistory);
-
-                txtHistoryReport.setText( presenter.getHistory(model.getIdAccused(), IS_JOB_SEEKER));
-
-//                btnCloseHistory.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialogShowHistory.dismiss();
-//                    }
-//                });
-
-                dialogShowHistory.show();
+                showHistory();
                 break;
             case R.id.btnShowDetailReportIgnore:
                 setupDialogIgnoreReport();
@@ -182,6 +160,58 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
                 setUpDialogSendWarning();
                 break;
         }
+    }
+
+    private void showHistory() {
+        ViewGroup rootView = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        final Dialog dialogShowHistory = new Dialog(AdminShowDetailReportJobseekerActivity.this);
+        View viewHistory = LayoutInflater.from(AdminShowDetailReportJobseekerActivity.this)
+                .inflate(R.layout.admin_show_history_report, rootView, false);
+
+        Button btnCloseHistory = viewHistory.findViewById(R.id.btnCloseHistoryReport);
+        final TextView txtHistoryReport = viewHistory.findViewById(R.id.txtHistoryReport);
+        dialogShowHistory.setContentView(viewHistory);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(REF_REPORT)
+                .child(REF_JOBSEEKERS_NODE).child(modelReportWaiting.getIdAccused());
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 StringBuilder builder = new StringBuilder();
+                int count = 0;
+                for (DataSnapshot dataChild : dataSnapshot.getChildren()){
+                    ReportModel modelData = dataChild.getValue(ReportModel.class);
+                    builder.append("LẦN ");
+                    builder.append(String.valueOf(count+1));
+                    builder.append(": \n");
+
+                    builder.append(" - Ngày bị tố cáo: \n");
+                    builder.append("\t" + modelData.getDateSendReport());
+                    builder.append("\n - Mô tả: \n");
+                    builder.append("\t" + modelData.getDecription());
+                    builder.append("\n\n");
+                    count++;
+                }
+                builder.append("\n\nTổng số lần bị tố cáo: "+count);
+                txtHistoryReport.setText(builder.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                txtHistoryReport.setText("Không thể tải lịch sử tố cáo");
+            }
+        });
+
+        btnCloseHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogShowHistory.dismiss();
+            }
+        });
+
+        dialogShowHistory.show();
     }
 
 
@@ -221,7 +251,7 @@ public class AdminShowDetailReportJobseekerActivity extends AppCompatActivity im
                     dialog.dismiss();
                     Toast.makeText(AdminShowDetailReportJobseekerActivity.this, "Đã gửi cảnh cáo", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(AdminShowDetailReportJobseekerActivity.this, AdminReportFragmentTab1.class);
+                    Intent intent = new Intent(AdminShowDetailReportJobseekerActivity.this, AdminReportActivity.class);
                     startActivity(intent);
                 }
             }

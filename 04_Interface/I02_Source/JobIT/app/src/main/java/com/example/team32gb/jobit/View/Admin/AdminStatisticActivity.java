@@ -7,17 +7,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.team32gb.jobit.Presenter.AdminStatistic.PresenterAdminStatistic;
 import com.example.team32gb.jobit.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.example.team32gb.jobit.Utility.Config.REF_JOBSEEKERS_NODE;
+import static com.example.team32gb.jobit.Utility.Config.REF_RECRUITERS_NODE;
+
 public class AdminStatisticActivity extends AppCompatActivity {
     private TextView txtAdminStatisticEmployee;
     private TextView txtAdminStatisticRecruiter;
-    private PresenterAdminStatistic presenter;
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -41,12 +48,34 @@ public class AdminStatisticActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        presenter = new PresenterAdminStatistic();
-        long countEmployee = -1;
-        long countRecuiter = -1;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        countEmployee = presenter.statisticEmployee(txtAdminStatisticEmployee, progressDialog);
-        countRecuiter = presenter.statisticRecruiter(txtAdminStatisticRecruiter, progressDialog);
+        ref.child(REF_JOBSEEKERS_NODE).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long count = dataSnapshot.getChildrenCount();
+                txtAdminStatisticEmployee.setText(String.valueOf(count));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        ref.child(REF_RECRUITERS_NODE).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long count = dataSnapshot.getChildrenCount();
+                txtAdminStatisticRecruiter.setText(String.valueOf(count));
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

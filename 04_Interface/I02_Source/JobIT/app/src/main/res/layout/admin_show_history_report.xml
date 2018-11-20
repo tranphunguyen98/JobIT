@@ -1,48 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_show_history_report"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="LỊCH SỬ TỐ CÁO"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="#111"
-        android:layout_marginTop="20dp"/>
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/colorPrimary"
-        android:layout_margin="20dp"/>
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="500dp"
+        android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="30dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_show_history_report" />
+
         <TextView
-            android:id="@+id/txtHistoryReport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đang tải dữ liệu..."/>
-    </ScrollView>
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="LỊCH SỬ TỐ CÁO"
+            android:textColor="#111"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnCloseHistoryReport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đóng"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/colorPrimary" />
+
+        <ScrollView
+            android:id="@+id/svHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/txtHistoryReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Đang tải dữ liệu..."
+                android:textSize="16sp"
+                android:textColor="#111"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnCloseHistoryReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Đóng"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
 
 </LinearLayout>

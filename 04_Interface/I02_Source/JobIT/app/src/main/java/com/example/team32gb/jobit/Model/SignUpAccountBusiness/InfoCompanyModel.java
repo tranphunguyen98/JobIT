@@ -3,11 +3,14 @@ package com.example.team32gb.jobit.Model.SignUpAccountBusiness;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import static com.example.team32gb.jobit.Utility.Config.NOT_APPROVAL;
+
 public class InfoCompanyModel implements Parcelable {
     String name;
     String type;
     String size;
     String avatar;
+    Long approvalMode;
 
     protected InfoCompanyModel(Parcel in) {
         name = in.readString();
@@ -19,6 +22,7 @@ public class InfoCompanyModel implements Parcelable {
         introduce = in.readString();
         namePresenter = in.readString();
         phoneNumberPresenter = in.readString();
+        approvalMode = NOT_APPROVAL;
     }
 
     @Override

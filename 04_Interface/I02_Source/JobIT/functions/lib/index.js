@@ -147,4 +147,93 @@ exports.thongBaoCanhCaoJobseeker = functions.database.ref('/reports/jobseekers/{
         return admin.messaging().sendToDevice(fcm_token.val(), payload);
     });
 }));
+exports.thongBaoCanhCaoRecruiter = functions.database.ref('/reports/recruiters/{idUser}/{idReport}/isWarned')
+    .onUpdate((snapshot, context) => __awaiter(this, void 0, void 0, function* () {
+    const idUser = context.params.idUser;
+    const idReport = context.params.idReport;
+    const adminCommentData = admin.database().ref('/reports/recruiters/' + idUser + '/' + idReport + '/adminComment').once('value');
+    console.log('recruitersID: ' + idUser + ', idReport ' + idReport, ', adminComment: ' + adminCommentData);
+    const results = yield Promise.all([adminCommentData]);
+    const dataSnapshot = results[0];
+    const adminComment = dataSnapshot.val();
+    const payload = {
+        notification: {
+            title: 'Cảnh cáo',
+            body: adminComment,
+            badge: '1',
+            sound: 'default'
+        }
+    };
+    return admin.database().ref('/fcm_tokens/' + idUser + '/token').once('value')
+        .then(fcm_token => {
+        console.log('token available : ' + fcm_token.val());
+        return admin.messaging().sendToDevice(fcm_token.val(), payload);
+    });
+}));
+exports.thongBaoAdminToCaoRecruiterMoi = functions.database.ref('/reports/recruiters/{idUser}/{idReport}')
+    .onCreate((snapshot, context) => __awaiter(this, void 0, void 0, function* () {
+    const idUser = context.params.idUser;
+    const name = admin.database().ref('/companys/' + idUser + '/name').once('value');
+    console.log('id user: ' + idUser + ', name user: ' + name);
+    const results = yield Promise.all([name]);
+    const dataSnapshot = results[0];
+    const nameCompany = dataSnapshot.val();
+    const payload = {
+        notification: {
+            title: 'Tố cáo mới',
+            body: 'Đơn vị bị tố cáo: ' + nameCompany,
+            badge: '1',
+            sound: 'default'
+        }
+    };
+    return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02' + '/token').once('value')
+        .then(fcm_token => {
+        console.log('token available : ' + fcm_token.val());
+        return admin.messaging().sendToDevice(fcm_token.val(), payload);
+    });
+}));
+exports.thongBaoAdminToCaoJobSeekerMoi = functions.database.ref('/reports/jobseekers/{idUser}/{idReport}')
+    .onCreate((snapshot, context) => __awaiter(this, void 0, void 0, function* () {
+    const idUser = context.params.idUser;
+    const name = admin.database().ref('/jobseekers/' + idUser + '/name').once('value');
+    console.log('id user: ' + idUser + ', name user: ' + name);
+    const results = yield Promise.all([name]);
+    const dataSnapshot = results[0];
+    const nameJobseeker = dataSnapshot.val();
+    const payload = {
+        notification: {
+            title: 'Tố cáo mới',
+            body: 'Người bị tố cáo: ' + nameJobseeker,
+            badge: '1',
+            sound: 'default'
+        }
+    };
+    return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02/token').once('value')
+        .then(fcm_token => {
+        console.log('token available : ' + fcm_token.val());
+        return admin.messaging().sendToDevice(fcm_token.val(), payload);
+    });
+}));
+exports.thongBaoAdminHoSoMoi = functions.database.ref('/companysWaitingAdminApproval/{idCompany}')
+    .onCreate((snapshot, context) => __awaiter(this, void 0, void 0, function* () {
+    const idCompany = context.params.idCompany;
+    const name = admin.database().ref('/companys/' + idCompany + '/name').once('value');
+    console.log('id company: ' + idCompany + ', name company: ' + name);
+    const results = yield Promise.all([name]);
+    const dataSnapshot = results[0];
+    const nameCompany = dataSnapshot.val();
+    const payload = {
+        notification: {
+            title: 'Hồ sơ cần duyệt mới',
+            body: 'Tên công ty: ' + nameCompany,
+            badge: '1',
+            sound: 'default'
+        }
+    };
+    return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02/token').once('value')
+        .then(fcm_token => {
+        console.log('token available : ' + fcm_token.val());
+        return admin.messaging().sendToDevice(fcm_token.val(), payload);
+    });
+}));
 //# sourceMappingURL=index.js.map
