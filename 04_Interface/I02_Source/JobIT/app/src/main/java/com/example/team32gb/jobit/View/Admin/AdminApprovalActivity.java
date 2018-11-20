@@ -33,14 +33,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.team32gb.jobit.Utility.Config.DATE_SEND_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_COMPANY_KEY;
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY;
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY_WAITING_APPROVAL;
 
 public class AdminApprovalActivity extends AppCompatActivity {
-
-    public final static String ID_COMPANY = "Id company";
-    public final static String DATE_SEND_APPROVAL = "Date send";
-
     private RecyclerView rvApproval;
     private FirebaseRecyclerAdapter<CompanyWaitingApprovalModel, AdminApprovalViewHolder> adaptor;
     private DatabaseReference refDatabase;
@@ -111,8 +109,9 @@ public class AdminApprovalActivity extends AppCompatActivity {
                         //jum activity show detail
                         model = getItem(viewHolder.getAdapterPosition());
                         Intent intent = new Intent(AdminApprovalActivity.this, ShowDetailCompanyApprovalActivity.class);
-                        intent.putExtra(ID_COMPANY, model.getIdCompany());
-                        intent.putExtra(DATE_SEND_APPROVAL, model.getDateSendApproval());
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ID_COMPANY_KEY, model.getIdCompany());
+                        bundle.putString(DATE_SEND_KEY, model.getDateSendApproval());
                         startActivity(intent);
                     }
                 });
@@ -123,8 +122,9 @@ public class AdminApprovalActivity extends AppCompatActivity {
                         //jum activity show detail
                         model = getItem(viewHolder.getAdapterPosition());
                         Intent intent = new Intent(AdminApprovalActivity.this, ShowDetailCompanyApprovalActivity.class);
-                        intent.putExtra(ID_COMPANY, model.getIdCompany());
-                        intent.putExtra(DATE_SEND_APPROVAL, model.getDateSendApproval());
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ID_COMPANY_KEY, model.getIdCompany());
+                        bundle.putString(DATE_SEND_KEY, model.getDateSendApproval());
                         startActivity(intent);
                     }
                 });

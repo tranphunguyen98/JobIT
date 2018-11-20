@@ -16,6 +16,9 @@ import android.util.Log;
 import com.example.team32gb.jobit.ListCandidateAcvitity;
 import com.example.team32gb.jobit.R;
 import com.example.team32gb.jobit.Test.TestDuyet;
+import com.example.team32gb.jobit.View.Admin.AdminShowDetailReportJobseekerActivity;
+import com.example.team32gb.jobit.View.Admin.AdminShowDetailReportRecruiterActivity;
+import com.example.team32gb.jobit.View.Admin.ShowDetailCompanyApprovalActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -24,6 +27,10 @@ import java.util.Map;
 import androidx.annotation.RequiresApi;
 
 import static android.app.NotificationManager.*;
+import static com.example.team32gb.jobit.Utility.Config.DATE_SEND_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_ACCUSED_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_COMPANY_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_REPORT_KEY;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
@@ -34,16 +41,32 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Map<String, String> dataMap = remoteMessage.getData();
             Bundle bundle = new Bundle();
             String type = dataMap.get("type");
-            String idCompany = dataMap.get("idCompany");
-            String idJob = dataMap.get("idJob");
-            String nameJob = dataMap.get("nameJob");
-            String timeJob = dataMap.get("timeJob");
+            if (type.equals("thongBaoUngVienApply")) {
+                String idCompany = dataMap.get("idCompany");
+                String idJob = dataMap.get("idJob");
+                String nameJob = dataMap.get("nameJob");
+                String timeJob = dataMap.get("timeJob");
+                Log.e("kiemtraFCM", idCompany + " : " + idJob + " : " + nameJob + " : " + timeJob);
+                bundle.putString("idCompany", dataMap.get("idCompany"));
+                bundle.putString("idJob", dataMap.get("idJob"));
+                bundle.putString("nameJob", dataMap.get("nameJob"));
+                bundle.putString("timeJob", dataMap.get("timeJob"));
+            }
+            else if (type.equals("thongBaoAdminToCaoRecruiterMoi") || type.equals("thongBaoAdminToCaoJobSeekerMoi")){
+                String idreport = dataMap.get(ID_REPORT_KEY);
+                String datesend = dataMap.get(DATE_SEND_KEY);
+                String idaccused = dataMap.get(ID_ACCUSED_KEY);
+                Log.e("kiemtraFCM", "id report: "+ idreport + " date: "+datesend +" id accused: "+ idaccused);
+                bundle.putString(ID_REPORT_KEY, idreport);
+                bundle.putString(DATE_SEND_KEY, datesend);
+                bundle.putString(ID_ACCUSED_KEY, idaccused);
+            }
+            else if (type.equals("thongBaoAdminHoSoMoi")){
+                bundle.putString(ID_COMPANY_KEY, dataMap.get(ID_COMPANY_KEY));
+                bundle.putString(DATE_SEND_KEY, dataMap.get(DATE_SEND_KEY));
+            }
 
-            Log.e("kiemtraFCM", idCompany + " : " + idJob + " : " + nameJob + " : " + timeJob);
-            bundle.putString("idCompany", dataMap.get("idCompany"));
-            bundle.putString("idJob", dataMap.get("idJob"));
-            bundle.putString("nameJob", dataMap.get("nameJob"));
-            bundle.putString("timeJob", dataMap.get("timeJob"));
+
             Log.e("kiemtraFCM", type + " : " + title + " : " + body);
             showNotification(title, body, type, bundle);
         }
@@ -67,9 +90,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (type.equals("thongBaoUngVienApply")) {
             intent = new Intent(this, ListCandidateAcvitity.class);
             intent.putExtra("bundle", bundle);
-        } else {
+        }
+        else if(type.equals("thongBaoAdminToCaoRecruiterMoi")){
+            intent = new Intent(this, AdminShowDetailReportRecruiterActivity.class);
+            intent.putExtra("bundle", bundle);
+        }
+        else if (type.equals("thongBaoAdminToCaoJobSeekerMoi")){
+            intent = new Intent(this, AdminShowDetailReportJobseekerActivity.class);
+            intent.putExtra("bundle", bundle);
+        }
+        else if (type.equals("thongBaoAdminHoSoMoi")){
+            intent = new Intent(this, ShowDetailCompanyApprovalActivity.class);
+            intent.putExtra("bundle", bundle);
+        }
+        else {
             intent = new Intent(this, TestDuyet.class);
         }
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Notification.Builder builder;

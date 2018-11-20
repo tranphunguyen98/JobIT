@@ -7,86 +7,89 @@
     tools:context=".View.Admin.AdminHomeActivity"
     android:orientation="vertical">
 
-
-
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:layout_margin="20dp"
         android:text="Admin"
         android:gravity="center"
-        android:textSize="35sp"
+        android:textSize="36sp"
         android:textColor="#fff"
-        android:layout_margin="20dp"
         android:background="@color/colorPrimary"
         android:drawableBottom="@drawable/ic_admin_home2"
-        android:paddingBottom="20dp"/>
-    <View
+/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-    <Button
+        android:layout_weight="10"
+        android:orientation="vertical">
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAccount"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Tài khoản"
         android:background="@drawable/custom_button_admin"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:paddingHorizontal="50dp"
-        android:drawableLeft="@drawable/ic_report_admin"/>
+        app:icon="@drawable/ic_account_admin"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnReport"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Tố cáo"
         android:background="@drawable/custom_button_admin"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:paddingHorizontal="50dp"
-        android:drawableLeft="@drawable/ic_report_admin"/>
+        app:icon="@drawable/ic_report_admin"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnApproval"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Phê duyệt"
         android:background="@drawable/custom_button_admin"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:paddingHorizontal="50dp"
-        android:drawableLeft="@drawable/ic_approval_admin"/>
+        app:icon="@drawable/ic_approval_admin"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnStatistic"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Thống kê"
         android:background="@drawable/custom_button_admin"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:paddingHorizontal="50dp"
-        android:drawableStart="@drawable/ic_statistic_admin"/>
+        app:icon="@drawable/ic_statistic_admin"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnChangeUserType"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="Chuyển đổi chức năng"
+        android:textColor="@color/colorSecondary"
         android:background="@drawable/custom_button_admin"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:paddingHorizontal="50dp"
         android:drawableStart="@drawable/ic_statistic_admin"/>
 
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
         android:text="Team 32GB"
         android:gravity="center"
         android:textColor="#6c6c6c"

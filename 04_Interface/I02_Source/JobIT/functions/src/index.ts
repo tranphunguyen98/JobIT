@@ -201,3 +201,113 @@ exports.thongBaoUngVienApply = functions.database.ref('/choDuyets/{companyId}/{i
         })
     })
 
+    exports.thongBaoAdminToCaoRecruiterMoi = functions.database.ref('/reports/recruiters/{idUser}/{idReport}')
+    .onCreate(async(snapshot, context) => {
+        const idUser = context.params.idUser
+        const idReport = context.params.idReport
+
+        const name = admin.database().ref('/companys/'+ idUser+  '/name').once('value')
+        const dateSend = admin.database().ref('/reportWaitingAdminApproval/recruiters/'+ idReport+  '/dateSendReport').once('value')
+        console.log('id user: ' + idUser + ', name user: '+ name)
+
+        const results = await Promise.all([name, dateSend])
+        const dataSnapshot = results[0]
+        const nameCompany = dataSnapshot.val() 
+        const dataDate = results[1]
+        const date = dataDate.val()
+                
+        const payload = {
+                notification:{
+                    title: 'Tố cáo mới',
+                    body: 'Đơn vị bị tố cáo: '+ nameCompany,
+                    badge: '1',
+                    sound: 'default'
+                 },
+                 data:{
+                    type: 'thongBaoAdminToCaoRecruiterMoi',
+                    idReport: idReport +'',
+                    idUser: idUser+'',
+                    date: date,
+                    idAccused: idUser+''
+                }
+        }
+
+        return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02' + '/token').once('value')
+        .then(fcm_token => {
+                console.log('token available : ' + fcm_token.val())
+                    return admin.messaging().sendToDevice(fcm_token.val(),payload)
+        })
+    })
+
+    exports.thongBaoAdminToCaoJobSeekerMoi = functions.database.ref('/reports/jobseekers/{idUser}/{idReport}')
+    .onCreate(async(snapshot, context) => {
+        const idUser = context.params.idUser
+        const idReport = context.params.idReport
+        const name = admin.database().ref('/jobseekers/'+ idUser+  '/name').once('value')
+        const dateSend = admin.database().ref('/reportWaitingAdminApproval/jobseekers/'+ idReport+  '/dateSendReport').once('value')
+        console.log('id user: ' + idUser + ', name user: '+ name)
+
+        const results = await Promise.all([name, dateSend])
+        const dataSnapshot = results[0]
+        const nameJobseeker = dataSnapshot.val() 
+        const dataDate = results[1]
+        const date = dataDate.val()
+                
+        const payload = {
+                notification:{
+                    title: 'Tố cáo mới',
+                    body: 'Người bị tố cáo: '+ nameJobseeker,
+                    badge: '1',
+                    sound: 'default'
+                 },
+                 data:{
+                    type: 'thongBaoAdminToCaoJobSeekerMoi',
+                    idReport: idReport +'',
+                    idUser: idUser+'',
+                    date: date,
+                    idAccused: idUser+''
+                }
+        }
+
+        return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02/token').once('value')
+        .then(fcm_token => {
+                console.log('token available : ' + fcm_token.val())
+                    return admin.messaging().sendToDevice(fcm_token.val(),payload)
+        })
+    })
+
+    exports.thongBaoAdminHoSoMoi = functions.database.ref('/companysWaitingAdminApproval/{idCompany}')
+    .onCreate(async(snapshot, context) => {
+        const idCompany = context.params.idCompany
+        
+        const name = admin.database().ref('/companys/'+ idCompany+  '/name').once('value')
+        const dateSend = admin.database().ref('/companysWaitingAdminApproval/'+ idCompany+  '/dateSendApproval').once('value')
+        console.log('id company: ' + idCompany + ', name company: '+ name)
+
+        const results = await Promise.all([name, dateSend])
+        const dataSnapshot = results[0]
+        const nameCompany = dataSnapshot.val() 
+        const dataDate = results[1]
+        const date = dataDate.val()
+                
+        const payload = {
+                notification:{
+                    title: 'Hồ sơ cần duyệt mới',
+                    body: 'Tên công ty: '+ nameCompany,
+                    badge: '1',
+                    sound: 'default'
+                 },
+                 
+                 data:{
+                    type: 'thongBaoAdminHoSoMoi',
+                    idCompany: idCompany +'',
+                    date: date
+                }
+        }
+
+        return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02/token').once('value')
+        .then(fcm_token => {
+                console.log('token available : ' + fcm_token.val())
+                    return admin.messaging().sendToDevice(fcm_token.val(),payload)
+        })
+    })

@@ -28,10 +28,6 @@ public class Config {
     public static final String IS_ACTIVITY_APPLY = "IS_ACTIVITY_APPLY" ;
     public static final String REGESTERED_INFO = "IS_ACTIVITY_APPLY" ;
 
-
-
-
-
     public static final String REF_CVS_NODE = "cvs";
 
     public static final String REF_FOLDER_AVATAR = "images/avatars";
@@ -45,5 +41,9 @@ public class Config {
     public static final long APPROVAL_SUCCESSFUL = 1;
     public static final long APPROVAL_FAIL = 2;
 
+    public static final String ID_REPORT_KEY = "idreport";
+    public static final String DATE_SEND_KEY = "date";
+    public static final String ID_ACCUSED_KEY = "idaccused";
+    public static final String ID_COMPANY_KEY ="idcompany";
 
 }

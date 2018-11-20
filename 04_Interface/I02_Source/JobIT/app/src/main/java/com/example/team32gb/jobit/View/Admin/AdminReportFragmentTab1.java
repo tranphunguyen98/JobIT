@@ -36,6 +36,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.team32gb.jobit.Utility.Config.DATE_SEND_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_ACCUSED_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_REPORT_KEY;
 import static com.example.team32gb.jobit.Utility.Config.REF_JOBSEEKERS_NODE;
 import static com.example.team32gb.jobit.Utility.Config.REF_REPORT_WAITING_ADMIN_APPROVAL;
 
@@ -53,9 +56,6 @@ public class AdminReportFragmentTab1 extends Fragment {
     private String timeLeftSendReport;
     private ReportWaitingAdminApprovalModel modelReportWaiting;
     private PresenterAdminApprovalReport presenter;
-    public static final String ID_REPORT = "id_report";
-    public static final String DATE_SEND_REPORT = "date_send_report";
-    public static final String ID_ACCUSED = "id_accused";
     private ProgressDialog progressDialog;
 
 
@@ -107,9 +107,10 @@ public class AdminReportFragmentTab1 extends Fragment {
                 });
 
             }
+
             @NonNull
             @Override
-            public AdminListReportViewHolder onCreateViewHolder(@NonNull  ViewGroup viewGroup, int pos) {
+            public AdminListReportViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int pos) {
                 View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_report_row_item, viewGroup, false);
                 final AdminListReportViewHolder viewHolder = new AdminListReportViewHolder(v);
 
@@ -121,10 +122,11 @@ public class AdminReportFragmentTab1 extends Fragment {
                         //todo: jum Activity
                         //Nhảy qua activity show detail report
                         Intent intent = new Intent(getActivity(), AdminShowDetailReportJobseekerActivity.class);
-
-                        intent.putExtra(ID_REPORT, modelReportWaiting.getIdReport());
-                        intent.putExtra(DATE_SEND_REPORT, modelReportWaiting.getDateSendReport());
-                        intent.putExtra(ID_ACCUSED, modelReportWaiting.getIdAccused());
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ID_REPORT_KEY, modelReportWaiting.getIdReport());
+                        bundle.putString(DATE_SEND_KEY, modelReportWaiting.getDateSendReport());
+                        bundle.putString(ID_ACCUSED_KEY, modelReportWaiting.getIdAccused());
+                        intent.putExtra("bundle", bundle);
                         startActivity(intent);
                     }
                 });
@@ -133,14 +135,14 @@ public class AdminReportFragmentTab1 extends Fragment {
                     @Override
                     public void onClick(View v) {
                         modelReportWaiting = getItem(viewHolder.getAdapterPosition());
-                        setUpDialogSendWarning( modelReportWaiting);
+                        setUpDialogSendWarning(modelReportWaiting);
                     }
                 });
                 viewHolder.ibtnIgnoreReportJobSeeker.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         modelReportWaiting = getItem(viewHolder.getAdapterPosition());
-                        setupDialogIgnoreReport( modelReportWaiting);
+                        setupDialogIgnoreReport(modelReportWaiting);
                     }
                 });
                 return viewHolder;
@@ -200,11 +202,10 @@ public class AdminReportFragmentTab1 extends Fragment {
             @Override
             public void onClick(View v) {
                 String message = edtMessageFromAdmin.getText().toString();
-                if (message.equals("")){
+                if (message.equals("")) {
                     edtMessageFromAdmin.setError("Bạn phải nhập nhắc nhở cảnh báo");
-                }
-                else{
-                    presenter.onSendWarningReportToJobseeker(model,message);
+                } else {
+                    presenter.onSendWarningReportToJobseeker(model, message);
                     dialog.dismiss();
                 }
             }
@@ -213,7 +214,7 @@ public class AdminReportFragmentTab1 extends Fragment {
         dialog.show();
     }
 
-    public void setupDialogIgnoreReport( final ReportWaitingAdminApprovalModel model){
+    public void setupDialogIgnoreReport(final ReportWaitingAdminApprovalModel model) {
         Button btnIgnoreReportCancel;
         Button btnIgnoreReportOK;
 

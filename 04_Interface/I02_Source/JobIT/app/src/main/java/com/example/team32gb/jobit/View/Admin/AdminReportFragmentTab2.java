@@ -30,6 +30,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.team32gb.jobit.Utility.Config.DATE_SEND_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_ACCUSED_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_REPORT_KEY;
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY;
 import static com.example.team32gb.jobit.Utility.Config.REF_RECRUITERS_NODE;
 import static com.example.team32gb.jobit.Utility.Config.REF_REPORT_WAITING_ADMIN_APPROVAL;
@@ -43,9 +46,6 @@ public class AdminReportFragmentTab2 extends Fragment {
     private FirebaseRecyclerAdapter<ReportWaitingAdminApprovalModel, AdminListReportViewHolder> adapter;
     private String nameCompany;
     private String dateSend;
-    public static final String ID_REPORT = "idreport";
-    public static final String DATE_SEND_REPORT = "datesend";
-    public static final String ID_ACCUSED = "idaccused";
     private ReportWaitingAdminApprovalModel reportModel;
     private PresenterAdminApprovalReport presenter;
 
@@ -107,10 +107,11 @@ public class AdminReportFragmentTab2 extends Fragment {
                         //todo: jum Activity
                         //Nhảy qua activity show detail report
                         Intent intent = new Intent(getActivity(), AdminShowDetailReportRecruiterActivity.class);
-
-                        intent.putExtra(ID_REPORT, reportModel.getIdReport());
-                        intent.putExtra(DATE_SEND_REPORT, reportModel.getDateSendReport());
-                        intent.putExtra(ID_ACCUSED, reportModel.getIdAccused());
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ID_REPORT_KEY, reportModel.getIdReport());
+                        bundle.putString(DATE_SEND_KEY, reportModel.getDateSendReport());
+                        bundle.putString(ID_ACCUSED_KEY, reportModel.getIdAccused());
+                        intent.putExtra("bundle", bundle);
                         startActivity(intent);
                     }
                 });

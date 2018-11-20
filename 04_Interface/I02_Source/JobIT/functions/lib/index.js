@@ -170,17 +170,28 @@ exports.thongBaoCanhCaoRecruiter = functions.database.ref('/reports/recruiters/{
 exports.thongBaoAdminToCaoRecruiterMoi = functions.database.ref('/reports/recruiters/{idUser}/{idReport}')
     .onCreate((snapshot, context) => __awaiter(this, void 0, void 0, function* () {
     const idUser = context.params.idUser;
+    const idReport = context.params.idReport;
     const name = admin.database().ref('/companys/' + idUser + '/name').once('value');
+    const dateSend = admin.database().ref('/reportWaitingAdminApproval/recruiters/' + idReport + '/dateSendReport').once('value');
     console.log('id user: ' + idUser + ', name user: ' + name);
-    const results = yield Promise.all([name]);
+    const results = yield Promise.all([name, dateSend]);
     const dataSnapshot = results[0];
     const nameCompany = dataSnapshot.val();
+    const dataDate = results[1];
+    const date = dataDate.val();
     const payload = {
         notification: {
             title: 'Tố cáo mới',
             body: 'Đơn vị bị tố cáo: ' + nameCompany,
             badge: '1',
             sound: 'default'
+        },
+        data: {
+            type: 'thongBaoAdminToCaoRecruiterMoi',
+            idReport: idReport + '',
+            idUser: idUser + '',
+            date: date,
+            idAccused: idUser + ''
         }
     };
     return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02' + '/token').once('value')
@@ -192,17 +203,28 @@ exports.thongBaoAdminToCaoRecruiterMoi = functions.database.ref('/reports/recrui
 exports.thongBaoAdminToCaoJobSeekerMoi = functions.database.ref('/reports/jobseekers/{idUser}/{idReport}')
     .onCreate((snapshot, context) => __awaiter(this, void 0, void 0, function* () {
     const idUser = context.params.idUser;
+    const idReport = context.params.idReport;
     const name = admin.database().ref('/jobseekers/' + idUser + '/name').once('value');
+    const dateSend = admin.database().ref('/reportWaitingAdminApproval/jobseekers/' + idReport + '/dateSendReport').once('value');
     console.log('id user: ' + idUser + ', name user: ' + name);
-    const results = yield Promise.all([name]);
+    const results = yield Promise.all([name, dateSend]);
     const dataSnapshot = results[0];
     const nameJobseeker = dataSnapshot.val();
+    const dataDate = results[1];
+    const date = dataDate.val();
     const payload = {
         notification: {
             title: 'Tố cáo mới',
             body: 'Người bị tố cáo: ' + nameJobseeker,
             badge: '1',
             sound: 'default'
+        },
+        data: {
+            type: 'thongBaoAdminToCaoJobSeekerMoi',
+            idReport: idReport + '',
+            idUser: idUser + '',
+            date: date,
+            idAccused: idUser + ''
         }
     };
     return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02/token').once('value')
@@ -215,16 +237,24 @@ exports.thongBaoAdminHoSoMoi = functions.database.ref('/companysWaitingAdminAppr
     .onCreate((snapshot, context) => __awaiter(this, void 0, void 0, function* () {
     const idCompany = context.params.idCompany;
     const name = admin.database().ref('/companys/' + idCompany + '/name').once('value');
+    const dateSend = admin.database().ref('/companysWaitingAdminApproval/' + idCompany + '/dateSendApproval').once('value');
     console.log('id company: ' + idCompany + ', name company: ' + name);
-    const results = yield Promise.all([name]);
+    const results = yield Promise.all([name, dateSend]);
     const dataSnapshot = results[0];
     const nameCompany = dataSnapshot.val();
+    const dataDate = results[1];
+    const date = dataDate.val();
     const payload = {
         notification: {
             title: 'Hồ sơ cần duyệt mới',
             body: 'Tên công ty: ' + nameCompany,
             badge: '1',
             sound: 'default'
+        },
+        data: {
+            type: 'thongBaoAdminHoSoMoi',
+            idCompany: idCompany + '',
+            date: date
         }
     };
     return admin.database().ref('/fcm_tokens/Xf48VViAaoMAcNvgWvveiDepiq02/token').once('value')

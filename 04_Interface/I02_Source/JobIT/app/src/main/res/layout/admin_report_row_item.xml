@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="20dp"
     android:orientation="vertical"
     android:background="@drawable/admin_custom_background_row">
 
@@ -52,8 +54,5 @@
             android:background="@drawable/ic_hide_admin" />
 
     </RelativeLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
 
 </LinearLayout>

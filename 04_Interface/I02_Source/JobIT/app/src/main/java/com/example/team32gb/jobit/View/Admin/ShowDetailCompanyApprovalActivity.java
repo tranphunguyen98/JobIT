@@ -39,6 +39,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.example.team32gb.jobit.Utility.Config.DATE_SEND_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_COMPANY_KEY;
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY;
 
 public class ShowDetailCompanyApprovalActivity extends AppCompatActivity {
@@ -99,55 +101,58 @@ public class ShowDetailCompanyApprovalActivity extends AppCompatActivity {
         progressDialog.show();
 
         Intent intent = getIntent();
-        idCompany = intent.getStringExtra(AdminApprovalActivity.ID_COMPANY);
-        dateSendApproval = intent.getStringExtra(AdminApprovalActivity.DATE_SEND_APPROVAL);
-        modelCompanyWaiting = new CompanyWaitingApprovalModel(idCompany, dateSendApproval);
+        Bundle bundle = intent.getBundleExtra("bundle");
+        if (bundle!=null) {
+            idCompany = bundle.getString(ID_COMPANY_KEY);
+            dateSendApproval = bundle.getString(DATE_SEND_KEY);
+            modelCompanyWaiting = new CompanyWaitingApprovalModel(idCompany, dateSendApproval);
 
-        refData = FirebaseDatabase.getInstance().getReference().child(REF_INFO_COMPANY).child(idCompany);
-        if (refData != null) {
-            refData.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    model = dataSnapshot.getValue(InfoCompanyModel.class);
-                    Log.e("admin", "get model company");
-                    txtName.setText(model.getName());
-                    Log.e("admin", "Set text name company");
-                    txtDate.setText("Ngày gửi yêu cầu: " + dateSendApproval);
-                    txtType.setText("Kiểu công ty: " + model.getType());
-                    txtSize.setText("Quy mô công ty: " + model.getSize());
-                    txtAddress.setText("Địa chỉ: " + model.getAddress());
-                    txtIntroduce.setText("Giới thiệu: " + model.getIntroduce());
-                    txtNamePresenter.setText("Liên hệ: " + model.getNamePresenter());
-                    txtPhoneNumberPresenter.setText("Số điện thoại: " + model.getPhoneNumberPresenter());
+            refData = FirebaseDatabase.getInstance().getReference().child(REF_INFO_COMPANY).child(idCompany);
+            if (refData != null) {
+                refData.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        model = dataSnapshot.getValue(InfoCompanyModel.class);
+                        Log.e("admin", "get model company");
+                        txtName.setText(model.getName());
+                        Log.e("admin", "Set text name company");
+                        txtDate.setText("Ngày gửi yêu cầu: " + dateSendApproval);
+                        txtType.setText("Kiểu công ty: " + model.getType());
+                        txtSize.setText("Quy mô công ty: " + model.getSize());
+                        txtAddress.setText("Địa chỉ: " + model.getAddress());
+                        txtIntroduce.setText("Giới thiệu: " + model.getIntroduce());
+                        txtNamePresenter.setText("Liên hệ: " + model.getNamePresenter());
+                        txtPhoneNumberPresenter.setText("Số điện thoại: " + model.getPhoneNumberPresenter());
 
-                    btnApprovalGreen.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.e("admin", "test btn");
-                            isApproval = true;
+                        btnApprovalGreen.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.e("admin", "test btn");
+                                isApproval = true;
 
-                            setUpDialog();
-                            dialog.show();
-                        }
-                    });
-                    btnApprovalCancelRed.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.e("admin", "test btn");
-                            isApproval = false;
+                                setUpDialog();
+                                dialog.show();
+                            }
+                        });
+                        btnApprovalCancelRed.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.e("admin", "test btn");
+                                isApproval = false;
 
-                            setUpDialog();
-                            dialog.show();
-                        }
-                    });
-                    progressDialog.dismiss();
-                }
+                                setUpDialog();
+                                dialog.show();
+                            }
+                        });
+                        progressDialog.dismiss();
+                    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+                    }
+                });
+            }
         }
 
     }

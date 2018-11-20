@@ -31,6 +31,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.example.team32gb.jobit.Utility.Config.DATE_SEND_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_ACCUSED_KEY;
+import static com.example.team32gb.jobit.Utility.Config.ID_REPORT_KEY;
 import static com.example.team32gb.jobit.Utility.Config.REF_INFO_COMPANY;
 import static com.example.team32gb.jobit.Utility.Config.REF_JOBSEEKERS_NODE;
 import static com.example.team32gb.jobit.Utility.Config.REF_RECRUITERS_NODE;
@@ -89,59 +92,62 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
         acitonBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String idReport = intent.getStringExtra(AdminReportFragmentTab2.ID_REPORT);
-        String date = intent.getStringExtra(AdminReportFragmentTab2.DATE_SEND_REPORT);
-        String idAccused = intent.getStringExtra(AdminReportFragmentTab2.ID_ACCUSED);
-        modelReportWaiting= new ReportWaitingAdminApprovalModel(idReport, idAccused, date);
+        Bundle bundle = intent.getBundleExtra("bundle");
+        String idReport, date, idAccused;
+        if (bundle!=null) {
+            idReport = bundle.getString(ID_REPORT_KEY);
+            date = bundle.getString(DATE_SEND_KEY);
+            idAccused = bundle.getString(ID_ACCUSED_KEY);
+            modelReportWaiting = new ReportWaitingAdminApprovalModel(idReport, idAccused, date);
 
-        //Lấy model report
-        refReport = FirebaseDatabase.getInstance().getReference().
-                child(REF_REPORT).child(REF_RECRUITERS_NODE).child(idAccused).child(idReport);
-        refReport.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                model = new ReportJobseekerModel();
-                model = dataSnapshot.getValue(ReportModel.class);
-                txtDetailReportDecripton.setText(model.getDecription());
+            //Lấy model report
+            refReport = FirebaseDatabase.getInstance().getReference().
+                    child(REF_REPORT).child(REF_RECRUITERS_NODE).child(idAccused).child(idReport);
+            refReport.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    model = new ReportJobseekerModel();
+                    model = dataSnapshot.getValue(ReportModel.class);
+                    txtDetailReportDecripton.setText(model.getDecription());
 
-                DatabaseReference refData = FirebaseDatabase.getInstance().getReference();
-                /*Lấy tên công ty bị tố cáo*/
-                refData.child(REF_INFO_COMPANY).child(model.getIdAccused()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        nameAccused = (String) dataSnapshot.getValue();
-                        txtDetailReportNameAccused.setText(nameAccused);
-                    }
+                    DatabaseReference refData = FirebaseDatabase.getInstance().getReference();
+                    /*Lấy tên công ty bị tố cáo*/
+                    refData.child(REF_INFO_COMPANY).child(model.getIdAccused()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            nameAccused = (String) dataSnapshot.getValue();
+                            txtDetailReportNameAccused.setText(nameAccused);
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
 
-                /*Lấy tên người tố cáo*/
-                refData.child(REF_JOBSEEKERS_NODE).child(model.getIdReporter()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        nameReporter = (String) dataSnapshot.getValue();
-                        txtDetailReportReporter.setText(nameReporter);
-                    }
+                    /*Lấy tên người tố cáo*/
+                    refData.child(REF_JOBSEEKERS_NODE).child(model.getIdReporter()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            nameReporter = (String) dataSnapshot.getValue();
+                            txtDetailReportReporter.setText(nameReporter);
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-                txtDetailReportDateSendReport.setText(modelReportWaiting.getDateSendReport());
-                progressDialog.dismiss();
-            }
+                        }
+                    });
+                    txtDetailReportDateSendReport.setText(modelReportWaiting.getDateSendReport());
+                    progressDialog.dismiss();
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
+                }
+            });
+        }
         btnShowDetailHistoryReport.setOnClickListener(this);
         btnShowDetailReportIgnore.setOnClickListener(this);
         btnShowDetailReportSendWarning.setOnClickListener(this);
@@ -195,7 +201,7 @@ public class AdminShowDetailReportRecruiterActivity extends AppCompatActivity im
                         builder.append("\n\n");
                         count++;
                     }
-                    builder.append("\n\nTổng số lần bị tố cáo: "+count);
+                    builder.append("\n\nTổng số lần bị tố cáo: "+count+"\n\n");
                     txtHistoryReport.setText(builder.toString());
                 }
 
