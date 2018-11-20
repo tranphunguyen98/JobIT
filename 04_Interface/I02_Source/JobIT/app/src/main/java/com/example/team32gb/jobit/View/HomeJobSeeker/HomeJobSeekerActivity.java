@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import androidx.appcompat.widget.SearchView;
+
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -28,7 +32,7 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
     private Button btnAccount;
     private Button btnSignOut;
     private Button btnChangeUserType;
-    private EditText edtTimKiem,edtDiaDiem;
+    private AppCompatAutoCompleteTextView edtTimKiem, edtDiaDiem;
     private SharedPreferences sharedPreferences;
     FirebaseAuth firebaseAuth;
 
@@ -48,6 +52,19 @@ public class HomeJobSeekerActivity extends AppCompatActivity implements View.OnC
         btnAccount = findViewById(R.id.btnAccount);
         btnSignOut = findViewById(R.id.btnSignOut);
         btnChangeUserType = findViewById(R.id.btnChangeUserType);
+
+        String countries[] = getResources().getStringArray(R.array.TinhThanh);
+        ArrayAdapter adapterProvince = new ArrayAdapter(this,android.R.layout.simple_list_item_1,countries);
+        edtDiaDiem.setAdapter(adapterProvince);
+        edtDiaDiem.setThreshold(1);
+
+        String searchs[] = getResources().getStringArray(R.array.searchs);
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,searchs);
+        edtTimKiem.setAdapter(adapter);
+        edtTimKiem.setThreshold(1);
+
+
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         sharedPreferences = getSharedPreferences(Config.SHARED_PREFERENCES_NAME, MODE_PRIVATE);

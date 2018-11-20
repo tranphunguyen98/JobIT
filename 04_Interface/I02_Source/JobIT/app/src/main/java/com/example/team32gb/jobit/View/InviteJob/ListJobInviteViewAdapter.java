@@ -57,7 +57,7 @@ public class ListJobInviteViewAdapter extends RecyclerView.Adapter<ListJobInvite
         myViewHolder.txtSalary.setText("Từ $" + minSalary + " đến $" + maxSalary);
 
         long ONE_MEGABYTE = 1024 * 1024;
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR).child(mdata.get(i).getIdCompany());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_LOGO).child(mdata.get(i).getIdCompany());
         storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {

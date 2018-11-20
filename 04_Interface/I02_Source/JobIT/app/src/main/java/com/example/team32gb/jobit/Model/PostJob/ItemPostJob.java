@@ -9,6 +9,13 @@ public class ItemPostJob implements Parcelable{
     String nameCompany;
     String timeApplied;
     DataPostJob dataPostJob;
+    boolean checked;
+    boolean applied;
+
+    public ItemPostJob() {
+        checked = false;
+        applied = false;
+    }
 
 
     protected ItemPostJob(Parcel in) {
@@ -17,6 +24,8 @@ public class ItemPostJob implements Parcelable{
         nameCompany = in.readString();
         timeApplied = in.readString();
         dataPostJob = in.readParcelable(DataPostJob.class.getClassLoader());
+        checked = in.readByte() != 0;
+        applied = in.readByte() != 0;
     }
 
     @Override
@@ -26,6 +35,8 @@ public class ItemPostJob implements Parcelable{
         dest.writeString(nameCompany);
         dest.writeString(timeApplied);
         dest.writeParcelable(dataPostJob, flags);
+        dest.writeByte((byte) (checked ? 1 : 0));
+        dest.writeByte((byte) (applied ? 1 : 0));
     }
 
     @Override
@@ -44,6 +55,22 @@ public class ItemPostJob implements Parcelable{
             return new ItemPostJob[size];
         }
     };
+
+    public boolean isApplied() {
+        return applied;
+    }
+
+    public void setApplied(boolean applied) {
+        this.applied = applied;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
     public String getTimeApplied() {
         return timeApplied;
@@ -70,9 +97,6 @@ public class ItemPostJob implements Parcelable{
         this.dataPostJob = dataPostJob;
     }
 
-    public ItemPostJob() {
-
-    }
 
     public String getIdJob() {
         return idJob;

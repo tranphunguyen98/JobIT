@@ -32,10 +32,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.Evaluation.MainActivity"/>
         <activity android:name=".View.SelectUserType.SelectUserTypeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -73,7 +73,6 @@
         <activity android:name=".View.CompanyDetail.CompanyDetailActivity" />
         <activity android:name=".View.InviteJob.InviteJobActivity" />
         <activity android:name=".View.SavedJob.SavedJobActivity" />
-        <activity android:name=".View.WatchCV.WatchCVActivity"></activity>
         <activity android:name=".View.Admin.AdminHomeActivity" />
         <activity android:name=".View.Admin.ShowDetailCompanyApprovalActivity" />
         <activity android:name=".View.Admin.AdminShowDetailReportJobseekerActivity" />

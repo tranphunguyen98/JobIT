@@ -48,17 +48,17 @@ public class ListJobInterviewViewAdapter extends RecyclerView.Adapter<ListJobInt
 
     @Override
     public void onBindViewHolder(@NonNull final ListJobInterviewViewAdapter.MyViewHolder myViewHolder, final int i) {
-        Log.e("kiemtraid", "onBindViewHolder" + mdata.get(i).getTimeApplied());
+        String idCompany = mdata.get(i).getDataPostJob().getIdCompany();
+        Log.e("kiemtraid", "onBindViewHolder" + mdata.get(i).getTimeApplied() + ":" + idCompany);
         myViewHolder.txtNameJob.setText(mdata.get(i).getDataPostJob().getNameJob());
         myViewHolder.txtNameCompany.setText(mdata.get(i).getNameCompany());
         myViewHolder.txtTime.setText(Util.getSubTime(mdata.get(i).getTimeApplied()));
-        myViewHolder.txtTime.setText(Util.getSubTime(mdata.get(i).getDataPostJob().getTime()));
         String minSalary = mdata.get(i).getDataPostJob().getMinSalary();
         String maxSalary = mdata.get(i).getDataPostJob().getMaxSalary();
         myViewHolder.txtSalary.setText("Từ $" + minSalary + " đến $" + maxSalary);
 
         long ONE_MEGABYTE = 1024 * 1024;
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_AVATAR).child(mdata.get(i).getIdCompany());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Config.REF_FOLDER_LOGO).child(idCompany);
         storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {

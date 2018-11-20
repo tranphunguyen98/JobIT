@@ -1,5 +1,7 @@
 package com.example.team32gb.jobit.Model.CreateCV;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,8 +68,8 @@ public class CVEmployeeModel {
         return isMale;
     }
 
-    public void setIsMale(Boolean isMale) {
-        isMale = isMale;
+    public void setIsMale(Boolean male) {
+        this.isMale = male;
     }
 
     public String getEmail() {

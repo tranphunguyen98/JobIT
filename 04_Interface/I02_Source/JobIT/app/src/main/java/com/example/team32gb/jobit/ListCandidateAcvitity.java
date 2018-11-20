@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,9 +48,10 @@ public class ListCandidateAcvitity extends AppCompatActivity {
             timeJob = bundle.getString("timeJob");
             idCompany = bundle.getString("idCompany");
             idJob = bundle.getString("idJob");
+            Log.e("kiemtraDetail",idJob);
 
             txtNameJob.setText(nameJob);
-            Util.setSubTime(timeJob,txtTimeJob);
+           // Util.setSubTime(timeJob,txtTimeJob);
         }
 
         myToolBar.setTitle("");

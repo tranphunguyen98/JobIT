@@ -80,7 +80,7 @@
             android:paddingTop="2dp"
             android:paddingEnd="2dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_cv1"
+            android:src="@drawable/ic_save"
             android:visibility="gone" />
 
     </RelativeLayout>

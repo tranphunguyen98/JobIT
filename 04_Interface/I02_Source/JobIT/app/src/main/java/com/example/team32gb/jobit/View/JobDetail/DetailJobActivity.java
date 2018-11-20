@@ -154,30 +154,15 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
             }
         });
         if (isLogged && typeUser == Config.IS_JOB_SEEKER) {
-            nodeRoot.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    DataSnapshot dsApplied = dataSnapshot.child("Applieds").child(uid).child(idCompany);
-                    if (dsApplied.hasChild(idJob)) {
+                    if (itemPostJob.isApplied()) {
                         btnApply.setText("Applied");
                         btnApply.setEnabled(false);
                     }
-                    DataSnapshot dsSaved = dataSnapshot.child("daLuus").child(uid).child(idCompany);
-                    if (dsSaved.hasChild(idJob)) {
+                    if (itemPostJob.isChecked()) {
                         btnSave.setText("Đã Lưu");
                         btnSave.setEnabled(false);
                     }
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-
-        }
-
         progressDialog.dismiss();
     }
 
@@ -235,7 +220,7 @@ public class DetailJobActivity extends AppCompatActivity implements View.OnClick
                 if (sharedPreferencesSave.getBoolean(Config.IS_LOGGED, false)) {
                     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
                     String currentDate = sdf.format(new Date());
-                    DatabaseReference dfDaLuus = nodeRoot.child("daLuus").child(uid).child(idCompany).child(idJob).child("timeApplied");
+                    DatabaseReference dfDaLuus = nodeRoot.child("daLuus").child(uid).child(idCompany).child(idJob).child("timeSaved");
                     dfDaLuus.setValue(currentDate).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {

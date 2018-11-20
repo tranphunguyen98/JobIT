@@ -47,7 +47,7 @@ public class ModelCreateCV {
     public void getCurrentUserCV(){
     }
     public void saveCV(String uid, CVEmployeeModel cvEmployeeModel, List<ProjectInCVModel> projectInCVModels) {
-        Log.e("kiemtra", uid + ":" + cvEmployeeModel.nameUser + "");
+        Log.e("kiemtramale", uid + ":" + cvEmployeeModel.getIsMale() + " saveCV");
         dfCVsNode.child(uid).setValue(cvEmployeeModel);
     }
 

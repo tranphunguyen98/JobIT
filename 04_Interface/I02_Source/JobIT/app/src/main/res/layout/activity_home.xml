@@ -43,13 +43,14 @@
                     app:helperText="Chức danh, từ khóa hoặc công ty"
                     app:helperTextEnabled="true">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/edtTimKiem"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:drawableEnd="@drawable/ic_search"
-                        android:drawablePadding="8dp"
-                        android:hint="Tìm Kiếm" />
+                        android:paddingEnd="8dp"
+                        android:hint="Tìm Kiếm"
+                        android:paddingStart="8dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -57,15 +58,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-
                     app:helperText="Tỉnh hoặc thành phố"
                     app:helperTextEnabled="true">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/edtDiaDiem"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:drawableEnd="@drawable/ic_location"
+                        android:paddingStart="8dp"
+                        android:drawablePadding="8dp"
                         android:hint="Địa điểm" />
                 </com.google.android.material.textfield.TextInputLayout>
 

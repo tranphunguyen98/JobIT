@@ -14,7 +14,7 @@ public class DataPostJob implements Parcelable {
     String qualification;
     String time;
     String idJob;
-    String idCompnay;
+    String idCompany;
     String avatar;
 
     protected DataPostJob(Parcel in) {
@@ -28,7 +28,7 @@ public class DataPostJob implements Parcelable {
         qualification = in.readString();
         time = in.readString();
         idJob = in.readString();
-        idCompnay = in.readString();
+        idCompany = in.readString();
         avatar = in.readString();
         nameCompany = in.readString();
         province = in.readString();
@@ -46,7 +46,7 @@ public class DataPostJob implements Parcelable {
         dest.writeString(qualification);
         dest.writeString(time);
         dest.writeString(idJob);
-        dest.writeString(idCompnay);
+        dest.writeString(idCompany);
         dest.writeString(avatar);
         dest.writeString(nameCompany);
         dest.writeString(province);
@@ -69,20 +69,20 @@ public class DataPostJob implements Parcelable {
         }
     };
 
+    public String getIdCompany() {
+        return idCompany;
+    }
+
+    public void setIdCompany(String idCompany) {
+        this.idCompany = idCompany;
+    }
+
     public String getIdJob() {
         return idJob;
     }
 
     public void setIdJob(String idJob) {
         this.idJob = idJob;
-    }
-
-    public String getIdCompany() {
-        return idCompnay;
-    }
-
-    public void setIdCompnay(String idCompnay) {
-        this.idCompnay = idCompnay;
     }
 
     public String getAvatar() {

@@ -80,14 +80,16 @@
         android:text="Thời gian đăng việc"
         android:textSize="10dp" />
 
-    <ImageView
+    <CheckBox
         android:id="@+id/imgFav"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_favorite" />
+        android:checked="false"
+        android:button="@drawable/custom_checkbox_saved"
+        />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
 </layout>

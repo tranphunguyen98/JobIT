@@ -81,7 +81,7 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
         Intent intent = getIntent();
         dataPostJobEdit = intent.getParcelableExtra("detail");
-        idJobEdit = intent.getStringExtra("idJob");
+        idJobEdit = dataPostJobEdit.getIdJob();
 
 //        if(idJobEdit != null) {
 //            Log.e("kiemtraid",idJobEdit + dataPostJobEdit);
@@ -338,7 +338,7 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
         presenter = new PresenterPostJob(this);
         String uid = FirebaseAuth.getInstance().getUid();
-        Log.e("kt",FirebaseAuth.getInstance().getUid() + "");
+        Log.e("kiemtraDetail",uid + ":" + idJobEdit);
         if(isEdit) {
             presenter.SavePostEdit(idJobEdit,uid,dataPostJob);
         } else {
