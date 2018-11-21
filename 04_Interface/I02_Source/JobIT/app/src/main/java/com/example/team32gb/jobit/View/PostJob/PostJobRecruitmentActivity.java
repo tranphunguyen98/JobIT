@@ -81,7 +81,10 @@ public class PostJobRecruitmentActivity extends AppCompatActivity implements Vie
 
         Intent intent = getIntent();
         dataPostJobEdit = intent.getParcelableExtra("detail");
-        idJobEdit = dataPostJobEdit.getIdJob();
+        if(dataPostJobEdit != null) {
+            idJobEdit = dataPostJobEdit.getIdJob();
+        }
+
 
 //        if(idJobEdit != null) {
 //            Log.e("kiemtraid",idJobEdit + dataPostJobEdit);

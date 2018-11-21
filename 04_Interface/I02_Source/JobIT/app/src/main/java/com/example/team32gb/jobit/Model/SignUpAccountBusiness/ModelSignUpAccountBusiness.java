@@ -75,12 +75,12 @@ public class ModelSignUpAccountBusiness {
         refData.child(uid).setValue(newCompany).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("kietra1",e.getMessage());
+              //  Log.e("kietra1",e.getMessage());
             }
         }).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.e("kietra1",aVoid.toString() + "thanh cong");
+             //   Log.e("kietra1",aVoid.toString() + "thanh cong");
 
             }
         });

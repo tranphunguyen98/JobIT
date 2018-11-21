@@ -65,8 +65,8 @@ public class ViewAdapterPosted extends RecyclerView.Adapter<ViewAdapterPosted.My
                 bundle.putString("nameJob",itemPostJobs.get(i).getDataPostJob().getNameJob());
                 Log.e("kiemtratime",itemPostJobs.get(i).getDataPostJob().getTime());
                 bundle.putString("timeJob",itemPostJobs.get(i).getDataPostJob().getTime());
-                bundle.putString("idCompany",itemPostJobs.get(i).getIdCompany());
-                bundle.putString("idJob",itemPostJobs.get(i).getIdJob());
+                bundle.putString("idCompany",itemPostJobs.get(i).getDataPostJob().getIdCompany());
+                bundle.putString("idJob",itemPostJobs.get(i).getDataPostJob().getIdJob());
                 intent.putExtra("bundle",bundle);
                 context.getApplicationContext().startActivity(intent);
             }
